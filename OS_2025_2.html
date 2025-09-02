@@ -164,8 +164,9 @@
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             z-index: 1000;
-            min-width: 300px;
-            max-width: 400px;
+            min-width: 450px;
+            max-width: 600px;
+            width: auto;
         }
         
         .course-popup h3 {
@@ -185,11 +186,14 @@
             margin-right: 10px;
             min-width: 80px;
             color: #6b7280;
+            flex-shrink: 0;
         }
         
         .course-popup .detail-value {
             color: #374151;
             flex: 1;
+            white-space: nowrap;
+            overflow: visible;
         }
         
         .course-popup .close-btn {
@@ -287,7 +291,7 @@
 <body>
     <div class="header">
         <h1>AoPS Course Schedule Calendar</h1>
-        <p>Academic Year 2025 - Updated from Database on September 01, 2025 at 08:52 PM</p>
+        <p>Academic Year 2025 - Updated from Database on September 01, 2025 at 08:56 PM</p>
     </div>
     
     <div class="controls">
@@ -346,7 +350,7 @@
     <div class="calendar-container" id="calendarContainer"></div>
 
     <script>
-        // Course data - pulled from database on 2025-09-01 20:52:04
+        // Course data - pulled from database on 2025-09-01 20:56:57
         const courseData = [
             {
                         "course": "maa-amc12",
