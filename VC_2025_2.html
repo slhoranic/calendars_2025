@@ -145,17 +145,75 @@
             transform: scale(1.02);
         }
         
-        .course-VC { background: #3b82f6; }
-        .course-AB { background: #10b981; }
-        .course-CD { background: #f59e0b; }
-        .course-A { background: #ef4444; }
-        .course-B { background: #8b5cf6; }
-        .course-HSCM { background: #06b6d4; }
-        .course-10 { background: #84cc16; }
-        .course-Calc { background: #f97316; }
-        .course-LA3A, .course-LA4A, .course-LA5A, .course-LA6A, .course-LA7A { background: #ec4899; }
-        .course-LA4B, .course-LA5B, .course-LA6B, .course-LA7B { background: #be185d; }
+        /* Course detail popup */
+        .course-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            min-width: 450px;
+            max-width: 600px;
+            width: auto;
+        }
         
+        .course-popup h3 {
+            margin: 0 0 15px 0;
+            color: #1e293b;
+            font-size: 1.2rem;
+        }
+        
+        .course-popup .detail-row {
+            display: flex;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+        
+        .course-popup .detail-label {
+            font-weight: 600;
+            margin-right: 10px;
+            min-width: 80px;
+            color: #6b7280;
+            flex-shrink: 0;
+        }
+        
+        .course-popup .detail-value {
+            color: #374151;
+            flex: 1;
+            white-space: nowrap;
+            overflow: visible;
+        }
+        
+        .course-popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        .course-popup .close-btn:hover {
+            color: #374151;
+        }
+        
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        
+        /* Dynamic course colors based on data */
         .today {
             background-color: #fef3c7 !important;
             border: 2px solid #f59e0b;
@@ -208,7 +266,7 @@
 <body>
     <div class="header">
         <h1>VC Class Schedule Calendar</h1>
-        <p>Academic Year 2025</p>
+        <p>Academic Year 2025 - Updated from Database on September 01, 2025 at 09:13 PM</p>
     </div>
     
     <div class="controls">
@@ -218,21 +276,15 @@
                 <option value="all">All Months</option>
                 <option value="8">August 2025</option>
                 <option value="9">September 2025</option>
+                <option value="10">October 2025</option>
+                <option value="11">November 2025</option>
+                <option value="12">December 2025</option>
             </select>
         </div>
         <div class="filter-group">
             <label for="courseFilter">Course Type:</label>
             <select id="courseFilter">
                 <option value="all">All Courses</option>
-                <option value="VC">VC Courses</option>
-                <option value="AB">AB Courses</option>
-                <option value="CD">CD Courses</option>
-                <option value="A">A Courses</option>
-                <option value="B">B Courses</option>
-                <option value="HSCM">HSCM Courses</option>
-                <option value="10">10 Courses</option>
-                <option value="Calc">Calc Courses</option>
-                <option value="LA">LA Courses</option>
             </select>
         </div>
     </div>
@@ -257,314 +309,2204 @@
     <div class="calendar-container" id="calendarContainer"></div>
 
     <script>
-        // Course data
+        // Course data - pulled from database on 2025-09-01 21:13:24
         const courseData = [
-            {course: "2AB", date: "9/2/25"},
-            {course: "2AB", date: "9/9/25"},
-            {course: "2AB", date: "8/12/25"},
-            {course: "2AB", date: "9/16/25"},
-            {course: "2AB", date: "9/2/25"},
-            {course: "2AB", date: "9/23/25"},
-            {course: "2AB", date: "8/27/25"},
-            {course: "2AB", date: "9/10/25"},
-            {course: "2AB", date: "8/24/25"},
-            {course: "2AB", date: "9/14/25"},
-            {course: "2CD", date: "8/26/25"},
-            {course: "2CD", date: "9/16/25"},
-            {course: "3AB", date: "9/8/25"},
-            {course: "3AB", date: "9/2/25"},
-            {course: "3AB", date: "8/26/25"},
-            {course: "3AB", date: "9/9/25"},
-            {course: "3AB", date: "9/23/25"},
-            {course: "3AB", date: "8/12/25"},
-            {course: "3AB", date: "8/26/25"},
-            {course: "3AB", date: "9/2/25"},
-            {course: "3AB", date: "9/9/25"},
-            {course: "3AB", date: "8/27/25"},
-            {course: "3AB", date: "8/20/25"},
-            {course: "3AB", date: "8/27/25"},
-            {course: "3AB", date: "9/17/25"},
-            {course: "3AB", date: "9/3/25"},
-            {course: "3AB", date: "8/10/25"},
-            {course: "3AB", date: "9/7/25"},
-            {course: "3AB", date: "8/24/25"},
-            {course: "3AB", date: "9/21/25"},
-            {course: "3CD", date: "9/2/25"},
-            {course: "3CD", date: "8/19/25"},
-            {course: "3CD", date: "9/16/25"},
-            {course: "3CD", date: "8/27/25"},
-            {course: "3CD", date: "9/14/25"},
-            {course: "4AB", date: "9/2/25"},
-            {course: "4AB", date: "8/26/25"},
-            {course: "4AB", date: "9/9/25"},
-            {course: "4AB", date: "8/26/25"},
-            {course: "4AB", date: "9/2/25"},
-            {course: "4AB", date: "9/16/25"},
-            {course: "4AB", date: "9/23/25"},
-            {course: "4AB", date: "8/19/25"},
-            {course: "4AB", date: "9/9/25"},
-            {course: "4AB", date: "9/10/25"},
-            {course: "4AB", date: "8/27/25"},
-            {course: "4AB", date: "9/3/25"},
-            {course: "4AB", date: "9/17/25"},
-            {course: "4AB", date: "8/6/25"},
-            {course: "4AB", date: "9/10/25"},
-            {course: "4AB", date: "8/24/25"},
-            {course: "4AB", date: "9/14/25"},
-            {course: "4AB", date: "8/24/25"},
-            {course: "4AB", date: "9/21/25"},
-            {course: "4AB", date: "8/10/25"},
-            {course: "4AB", date: "9/7/25"},
-            {course: "4CD", date: "9/16/25"},
-            {course: "4CD", date: "8/19/25"},
-            {course: "4CD", date: "9/2/25"},
-            {course: "4CD", date: "9/10/25"},
-            {course: "4CD", date: "8/6/25"},
-            {course: "4CD", date: "9/7/25"},
-            {course: "5AB", date: "9/8/25"},
-            {course: "5AB", date: "9/2/25"},
-            {course: "5AB", date: "8/26/25"},
-            {course: "5AB", date: "8/19/25"},
-            {course: "5AB", date: "9/9/25"},
-            {course: "5AB", date: "9/23/25"},
-            {course: "5AB", date: "8/26/25"},
-            {course: "5AB", date: "9/16/25"},
-            {course: "5AB", date: "8/5/25"},
-            {course: "5AB", date: "9/2/25"},
-            {course: "5AB", date: "9/10/25"},
-            {course: "5AB", date: "8/27/25"},
-            {course: "5AB", date: "9/17/25"},
-            {course: "5AB", date: "8/6/25"},
-            {course: "5AB", date: "9/3/25"},
-            {course: "5AB", date: "9/10/25"},
-            {course: "5AB", date: "9/5/25"},
-            {course: "5AB", date: "8/24/25"},
-            {course: "5AB", date: "8/24/25"},
-            {course: "5AB", date: "9/21/25"},
-            {course: "5AB", date: "8/17/25"},
-            {course: "5AB", date: "9/14/25"},
-            {course: "5AB", date: "9/7/25"},
-            {course: "5CD", date: "9/2/25"},
-            {course: "5CD", date: "9/9/25"},
-            {course: "5CD", date: "8/19/25"},
-            {course: "5CD", date: "8/10/25"},
-            {course: "5CD", date: "9/21/25"},
-            {course: "6A", date: "8/25/25"},
-            {course: "6A", date: "9/15/25"},
-            {course: "6A+", date: "9/22/25"},
-            {course: "6A", date: "9/8/25"},
-            {course: "6A", date: "9/2/25"},
-            {course: "6A", date: "9/9/25"},
-            {course: "6A", date: "8/19/25"},
-            {course: "6A", date: "9/2/25"},
-            {course: "6A", date: "8/26/25"},
-            {course: "6A", date: "9/23/25"},
-            {course: "6A+", date: "9/3/25"},
-            {course: "6A", date: "8/27/25"},
-            {course: "6A+", date: "8/27/25"},
-            {course: "6A+", date: "9/10/25"},
-            {course: "6A", date: "9/10/25"},
-            {course: "6A", date: "8/13/25"},
-            {course: "6A", date: "8/27/25"},
-            {course: "6A+", date: "8/29/25"},
-            {course: "6A+", date: "9/12/25"},
-            {course: "6A", date: "9/5/25"},
-            {course: "6A", date: "9/14/25"},
-            {course: "6A", date: "8/17/25"},
-            {course: "6A+", date: "8/24/25"},
-            {course: "6A", date: "9/21/25"},
-            {course: "6A+", date: "9/7/25"},
-            {course: "6A+", date: "8/17/25"},
-            {course: "6A", date: "9/7/25"},
-            {course: "6A+", date: "9/21/25"},
-            {course: "6A", date: "8/24/25"},
-            {course: "6A+", date: "9/14/25"},
-            {course: "6B", date: "8/25/25"},
-            {course: "6B", date: "8/19/25"},
-            {course: "6B", date: "9/14/25"},
-            {course: "6B+", date: "9/21/25"},
-            {course: "6B+", date: "8/24/25"},
-            {course: "7A", date: "8/25/25"},
-            {course: "7A", date: "8/25/25"},
-            {course: "7A", date: "9/8/25"},
-            {course: "7A", date: "8/27/25"},
-            {course: "7A", date: "8/27/25"},
-            {course: "7A", date: "9/3/25"},
-            {course: "7A", date: "9/10/25"},
-            {course: "7A", date: "9/17/25"},
-            {course: "7A", date: "8/22/25"},
-            {course: "7A", date: "9/5/25"},
-            {course: "7A", date: "9/12/25"},
-            {course: "7A", date: "8/17/25"},
-            {course: "7A", date: "9/7/25"},
-            {course: "7A", date: "9/14/25"},
-            {course: "7A", date: "9/28/25"},
-            {course: "7A", date: "8/24/25"},
-            {course: "7A", date: "9/7/25"},
-            {course: "7A", date: "9/21/25"},
-            {course: "7A", date: "8/17/25"},
-            {course: "7A", date: "9/14/25"},
-            {course: "7A+", date: "8/25/25"},
-            {course: "7A+", date: "8/25/25"},
-            {course: "7A+", date: "9/10/25"},
-            {course: "7A+", date: "8/27/25"},
-            {course: "7A+", date: "9/3/25"},
-            {course: "7A+", date: "9/10/25"},
-            {course: "7A+", date: "8/22/25"},
-            {course: "7A+", date: "9/12/25"},
-            {course: "7A+", date: "8/24/25"},
-            {course: "7A+", date: "9/21/25"},
-            {course: "7A+", date: "8/24/25"},
-            {course: "7A+", date: "9/7/25"},
-            {course: "7A+", date: "8/17/25"},
-            {course: "7B", date: "9/8/25"},
-            {course: "7B", date: "8/22/25"},
-            {course: "7B", date: "8/10/25"},
-            {course: "7B", date: "9/21/25"},
-            {course: "7B+", date: "8/25/25"},
-            {course: "7B+", date: "9/21/25"},
-            {course: "8A", date: "9/8/25"},
-            {course: "8A", date: "8/25/25"},
-            {course: "8A", date: "8/27/25"},
-            {course: "8A", date: "9/3/25"},
-            {course: "8A", date: "8/27/25"},
-            {course: "7.5A", date: "8/27/25"},
-            {course: "7.5A", date: "9/12/25"},
-            {course: "7.5A", date: "8/24/25"},
-            {course: "7.5A", date: "9/7/25"},
-            {course: "8A", date: "9/10/25"},
-            {course: "8A", date: "9/5/25"},
-            {course: "8A", date: "9/19/25"},
-            {course: "8A", date: "9/14/25"},
-            {course: "8A", date: "9/21/25"},
-            {course: "8A", date: "8/24/25"},
-            {course: "8A", date: "9/7/25"},
-            {course: "8A", date: "8/17/25"},
-            {course: "8A+", date: "8/25/25"},
-            {course: "8A+", date: "8/27/25"},
-            {course: "8A+", date: "9/5/25"},
-            {course: "8A+", date: "9/12/25"},
-            {course: "8A+", date: "9/7/25"},
-            {course: "8A+", date: "8/24/25"},
-            {course: "8A+", date: "9/21/25"},
-            {course: "8A+", date: "9/14/25"},
-            {course: "9", date: "9/15/25"},
-            {course: "9", date: "8/20/25"},
-            {course: "9", date: "8/27/25"},
-            {course: "9", date: "9/5/25"},
-            {course: "9", date: "9/12/25"},
-            {course: "9", date: "8/24/25"},
-            {course: "9", date: "9/7/25"},
-            {course: "9", date: "9/14/25"},
-            {course: "HSCM", date: "9/22/25"},
-            {course: "HSCM", date: "9/3/25"},
-            {course: "HSCM", date: "9/14/25"},
-            {course: "HSCM", date: "8/24/25"},
-            {course: "10", date: "8/18/25"},
-            {course: "10", date: "8/25/25"},
-            {course: "10", date: "8/27/25"},
-            {course: "10", date: "9/26/25"},
-            {course: "10", date: "9/7/25"},
-            {course: "10", date: "9/14/25"},
-            {course: "Calc", date: "8/25/25"},
-            {course: "Calc", date: "9/10/25"},
-            {course: "Calc", date: "9/7/25"},
-            {course: "LA3A", date: "9/9/25"},
-            {course: "LA3A", date: "8/19/25"},
-            {course: "LA3A", date: "8/26/25"},
-            {course: "LA3A", date: "9/2/25"},
-            {course: "LA3A", date: "8/27/25"},
-            {course: "LA3A", date: "9/10/25"},
-            {course: "LA3A", date: "9/21/25"},
-            {course: "LA3A", date: "9/7/25"},
-            {course: "LA4A", date: "9/2/25"},
-            {course: "LA4A", date: "8/26/25"},
-            {course: "LA4A", date: "9/16/25"},
-            {course: "LA4A", date: "8/19/25"},
-            {course: "LA4A", date: "9/9/25"},
-            {course: "LA4A", date: "8/27/25"},
-            {course: "LA4A", date: "9/10/25"},
-            {course: "LA4A", date: "9/21/25"},
-            {course: "LA4A", date: "9/7/25"},
-            {course: "LA4A", date: "8/10/25"},
-            {course: "LA4B", date: "9/21/25"},
-            {course: "LA5A", date: "9/9/25"},
-            {course: "LA5A", date: "8/26/25"},
-            {course: "LA5A", date: "9/16/25"},
-            {course: "LA5A", date: "9/2/25"},
-            {course: "LA5A", date: "8/27/25"},
-            {course: "LA5A", date: "9/10/25"},
-            {course: "LA5A", date: "9/3/25"},
-            {course: "LA5A", date: "9/11/25"},
-            {course: "LA5A", date: "8/24/25"},
-            {course: "LA5A", date: "9/21/25"},
-            {course: "LA5B", date: "9/7/25"},
-            {course: "LA6A", date: "8/26/25"},
-            {course: "LA6A", date: "9/9/25"},
-            {course: "LA6A", date: "8/27/25"},
-            {course: "LA6A", date: "8/28/25"},
-            {course: "LA6A", date: "8/14/25"},
-            {course: "LA6A", date: "9/4/25"},
-            {course: "LA6A", date: "9/5/25"},
-            {course: "LA6A", date: "8/24/25"},
-            {course: "LA6A", date: "9/21/25"},
-            {course: "LA6A", date: "9/14/25"},
-            {course: "LA6A", date: "9/7/25"},
-            {course: "LA6A", date: "8/24/25"},
-            {course: "LA6B", date: "9/21/25"},
-            {course: "LA7A", date: "9/2/25"},
-            {course: "LA7A", date: "9/16/25"},
-            {course: "LA7A", date: "8/12/25"},
-            {course: "LA7A", date: "8/28/25"},
-            {course: "LA7A", date: "8/28/25"},
-            {course: "LA7A", date: "9/11/25"},
-            {course: "LA7A", date: "9/7/25"},
-            {course: "LA7A", date: "8/24/25"},
-            {course: "LA7A", date: "9/14/25"},
-            {course: "LA7B", date: "8/26/25"}
-        ];
+            {
+                        "course": "vacad-summer-math-5",
+                        "date": "8/4/25",
+                        "class_id": "27718",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-4",
+                        "date": "8/4/25",
+                        "class_id": "27713",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-6",
+                        "date": "8/4/25",
+                        "class_id": "27724",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-7-8",
+                        "date": "8/4/25",
+                        "class_id": "27730",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-3b",
+                        "date": "8/4/25",
+                        "class_id": "27830",
+                        "schedule": "Mon-Fri 4:00 - 5:30 PM ET / 1:00 - 2:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-3a",
+                        "date": "8/4/25",
+                        "class_id": "27826",
+                        "schedule": "Mon-Fri 8:00 - 9:30 PM ET / 5:00 - 6:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-amc",
+                        "date": "8/4/25",
+                        "class_id": "27698",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-mythology",
+                        "date": "8/4/25",
+                        "class_id": "35088",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-essay-writing",
+                        "date": "8/4/25",
+                        "class_id": "27692",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-4",
+                        "date": "8/4/25",
+                        "class_id": "27712",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-essay-writing",
+                        "date": "8/4/25",
+                        "class_id": "35011",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-7-8",
+                        "date": "8/4/25",
+                        "class_id": "27729",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-mock-trial",
+                        "date": "8/4/25",
+                        "class_id": "27748",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-amc",
+                        "date": "8/4/25",
+                        "class_id": "35156",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-spotlight",
+                        "date": "8/4/25",
+                        "class_id": "27754",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-3a",
+                        "date": "8/4/25",
+                        "class_id": "35077",
+                        "schedule": "Mon-Fri 8:00 - 9:30 PM ET / 5:00 - 6:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-8-9",
+                        "date": "8/4/25",
+                        "class_id": "35127",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET"
+            },
+            {
+                        "course": "vacad-summer-la-essay-writing",
+                        "date": "8/4/25",
+                        "class_id": "27691",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-6",
+                        "date": "8/4/25",
+                        "class_id": "27723",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-mythology",
+                        "date": "8/4/25",
+                        "class_id": "27752",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-msmc-ac",
+                        "date": "8/4/25",
+                        "class_id": "27739",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-5",
+                        "date": "8/4/25",
+                        "class_id": "27717",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-triathlon",
+                        "date": "8/4/25",
+                        "class_id": "27707",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-msmc",
+                        "date": "8/4/25",
+                        "class_id": "27745",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-mock-trial",
+                        "date": "8/4/25",
+                        "class_id": "27749",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-math-calculus",
+                        "date": "8/4/25",
+                        "class_id": "35087",
+                        "schedule": "[[\"2025-08-04\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-summer-la-elem-creative",
+                        "date": "8/4/25",
+                        "class_id": "27702",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-elem-creative",
+                        "date": "8/4/25",
+                        "class_id": "35126",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-la-triathlon",
+                        "date": "8/4/25",
+                        "class_id": "27708",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-8-9",
+                        "date": "8/4/25",
+                        "class_id": "27734",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-amc",
+                        "date": "8/4/25",
+                        "class_id": "27699",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-msmc-ac",
+                        "date": "8/4/25",
+                        "class_id": "27740",
+                        "schedule": "Mon-Fri 4:00 - 7:00 PM ET / 1:00 - 4:00 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-6",
+                        "date": "8/4/25",
+                        "class_id": "35074",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "8/5/25",
+                        "class_id": "28092",
+                        "schedule": "[[\"2025-08-05\",\"19:45\",\"20:40\"],[\"2025-08-07\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "8/6/25",
+                        "class_id": "28067",
+                        "schedule": "[[\"2025-08-06\",\"19:00\",\"19:55\"],[\"2025-08-08\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-2pw",
+                        "date": "8/6/25",
+                        "class_id": "28079",
+                        "schedule": "[[\"2025-08-06\",\"19:00\",\"19:55\"],[\"2025-08-08\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "8/6/25",
+                        "class_id": "28096",
+                        "schedule": "[[\"2025-08-06\",\"19:00\",\"19:55\"],[\"2025-08-08\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7b",
+                        "date": "8/10/25",
+                        "class_id": "28184",
+                        "schedule": "[[\"2025-08-10\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-1pw",
+                        "date": "8/10/25",
+                        "class_id": "28045",
+                        "schedule": "[[\"2025-08-10\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-1pw",
+                        "date": "8/10/25",
+                        "class_id": "28107",
+                        "schedule": "[[\"2025-08-10\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "8/10/25",
+                        "class_id": "28073",
+                        "schedule": "[[\"2025-08-10\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-summer-math-msmc-ac",
+                        "date": "8/11/25",
+                        "class_id": "27741",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-amc",
+                        "date": "8/11/25",
+                        "class_id": "27700",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-msmc",
+                        "date": "8/11/25",
+                        "class_id": "27746",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-summer-math-amc",
+                        "date": "8/11/25",
+                        "class_id": "35152",
+                        "schedule": "Mon-Fri 12:30 - 3:30 PM ET / 9:30 - 12:30 PM PT"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "8/12/25",
+                        "class_id": "28021",
+                        "schedule": "[[\"2025-08-12\",\"18:20\",\"19:15\"],[\"2025-08-14\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "8/12/25",
+                        "class_id": "28036",
+                        "schedule": "[[\"2025-08-12\",\"18:20\",\"19:15\"],[\"2025-08-14\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "8/12/25",
+                        "class_id": "28275",
+                        "schedule": "[[\"2025-08-12\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "8/13/25",
+                        "class_id": "28124",
+                        "schedule": "[[\"2025-08-13\",\"19:00\",\"19:55\"],[\"2025-08-15\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-4a",
+                        "date": "8/17/25",
+                        "class_id": "28247",
+                        "schedule": "[[\"2025-08-17\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "8/17/25",
+                        "class_id": "28200",
+                        "schedule": "[[\"2025-08-17\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "8/17/25",
+                        "class_id": "28134",
+                        "schedule": "[[\"2025-08-17\",\"15:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/17/25",
+                        "class_id": "28160",
+                        "schedule": "[[\"2025-08-17\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "8/17/25",
+                        "class_id": "28181",
+                        "schedule": "[[\"2025-08-17\",\"18:45\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/17/25",
+                        "class_id": "28167",
+                        "schedule": "[[\"2025-08-17\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "8/17/25",
+                        "class_id": "28130",
+                        "schedule": "[[\"2025-08-17\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "8/17/25",
+                        "class_id": "28101",
+                        "schedule": "[[\"2025-08-17\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5b",
+                        "date": "8/17/25",
+                        "class_id": "28013",
+                        "schedule": "[[\"2025-08-17\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "8/18/25",
+                        "class_id": "35082",
+                        "schedule": "[[\"2025-08-18\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "8/18/25",
+                        "class_id": "28221",
+                        "schedule": "[[\"2025-08-18\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6b-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28140",
+                        "schedule": "[[\"2025-08-19\",\"19:45\",\"20:40\"],[\"2025-08-21\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28076",
+                        "schedule": "[[\"2025-08-19\",\"18:20\",\"19:15\"],[\"2025-08-21\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-3a-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28231",
+                        "schedule": "[[\"2025-08-19\",\"18:20\",\"19:15\"],[\"2025-08-21\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28061",
+                        "schedule": "[[\"2025-08-19\",\"19:45\",\"20:40\"],[\"2025-08-21\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28115",
+                        "schedule": "[[\"2025-08-19\",\"18:20\",\"19:15\"],[\"2025-08-21\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "8/19/25",
+                        "class_id": "35154",
+                        "schedule": "[[\"2025-08-19\",\"18:20\",\"19:15\"],[\"2025-08-21\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28106",
+                        "schedule": "[[\"2025-08-19\",\"19:45\",\"20:40\"],[\"2025-08-21\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28087",
+                        "schedule": "[[\"2025-08-19\",\"18:20\",\"19:15\"],[\"2025-08-21\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-4a-2pw",
+                        "date": "8/19/25",
+                        "class_id": "28241",
+                        "schedule": "[[\"2025-08-19\",\"19:45\",\"20:40\"],[\"2025-08-21\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "8/20/25",
+                        "class_id": "28210",
+                        "schedule": "[[\"2025-08-20\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "8/20/25",
+                        "class_id": "28041",
+                        "schedule": "[[\"2025-08-20\",\"19:00\",\"19:55\"],[\"2025-08-22\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "8/21/25",
+                        "class_id": "29947",
+                        "schedule": "[[\"2025-08-21\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "8/21/25",
+                        "class_id": "28264",
+                        "schedule": "[[\"2025-08-21\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7b",
+                        "date": "8/22/25",
+                        "class_id": "28183",
+                        "schedule": "[[\"2025-08-22\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "8/22/25",
+                        "class_id": "28175",
+                        "schedule": "[[\"2025-08-22\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/22/25",
+                        "class_id": "28157",
+                        "schedule": "[[\"2025-08-22\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-1pw",
+                        "date": "8/24/25",
+                        "class_id": "28027",
+                        "schedule": "[[\"2025-08-24\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "8/24/25",
+                        "class_id": "28179",
+                        "schedule": "[[\"2025-08-24\",\"15:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "8/24/25",
+                        "class_id": "28198",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "8/24/25",
+                        "class_id": "28071",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5a",
+                        "date": "8/24/25",
+                        "class_id": "28147",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "8/24/25",
+                        "class_id": "28206",
+                        "schedule": "[[\"2025-08-24\",\"15:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "8/24/25",
+                        "class_id": "28214",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "8/24/25",
+                        "class_id": "28267",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6b",
+                        "date": "8/24/25",
+                        "class_id": "28390",
+                        "schedule": "[[\"2025-08-24\",\"15:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "8/24/25",
+                        "class_id": "28280",
+                        "schedule": "[[\"2025-08-24\",\"15:45\",\"16:45\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "8/24/25",
+                        "class_id": "28271",
+                        "schedule": "[[\"2025-08-24\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-la-5a",
+                        "date": "8/24/25",
+                        "class_id": "28257",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "8/24/25",
+                        "class_id": "35102",
+                        "schedule": "[[\"2025-08-24\",\"18:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-1pw",
+                        "date": "8/24/25",
+                        "class_id": "28047",
+                        "schedule": "[[\"2025-08-24\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "8/24/25",
+                        "class_id": "28137",
+                        "schedule": "[[\"2025-08-24\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/24/25",
+                        "class_id": "28164",
+                        "schedule": "[[\"2025-08-24\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "8/24/25",
+                        "class_id": "35147",
+                        "schedule": "[[\"2025-08-24\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "8/24/25",
+                        "class_id": "29949",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"13:45\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "8/24/25",
+                        "class_id": "28084",
+                        "schedule": "[[\"2025-08-24\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "8/24/25",
+                        "class_id": "28069",
+                        "schedule": "[[\"2025-08-24\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "8/24/25",
+                        "class_id": "28131",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "8/24/25",
+                        "class_id": "28099",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "8/24/25",
+                        "class_id": "28177",
+                        "schedule": "[[\"2025-08-24\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "8/25/25",
+                        "class_id": "28201",
+                        "schedule": "[[\"2025-08-25\",\"16:45\",\"18:45\"]]"
+            },
+            {
+                        "course": "vacad-math-calculus",
+                        "date": "8/25/25",
+                        "class_id": "28227",
+                        "schedule": "[[\"2025-08-25\",\"19:15\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/25/25",
+                        "class_id": "28149",
+                        "schedule": "[[\"2025-08-25\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "8/25/25",
+                        "class_id": "28170",
+                        "schedule": "[[\"2025-08-25\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "8/25/25",
+                        "class_id": "28169",
+                        "schedule": "[[\"2025-08-25\",\"16:45\",\"18:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/25/25",
+                        "class_id": "28150",
+                        "schedule": "[[\"2025-08-25\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "8/25/25",
+                        "class_id": "28222",
+                        "schedule": "[[\"2025-08-25\",\"19:15\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "8/25/25",
+                        "class_id": "28189",
+                        "schedule": "[[\"2025-08-25\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6b",
+                        "date": "8/25/25",
+                        "class_id": "28139",
+                        "schedule": "[[\"2025-08-25\",\"19:15\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "8/25/25",
+                        "class_id": "28109",
+                        "schedule": "[[\"2025-08-25\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7b",
+                        "date": "8/25/25",
+                        "class_id": "28186",
+                        "schedule": "[[\"2025-08-25\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28037",
+                        "schedule": "[[\"2025-08-26\",\"19:45\",\"20:40\"],[\"2025-08-28\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "8/26/25",
+                        "class_id": "29945",
+                        "schedule": "[[\"2025-08-26\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-2cd-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28029",
+                        "schedule": "[[\"2025-08-26\",\"18:20\",\"19:15\"],[\"2025-08-28\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-5a-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28250",
+                        "schedule": "[[\"2025-08-26\",\"18:20\",\"19:15\"],[\"2025-08-28\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28033",
+                        "schedule": "[[\"2025-08-26\",\"16:45\",\"17:40\"],[\"2025-08-28\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28086",
+                        "schedule": "[[\"2025-08-26\",\"16:45\",\"17:40\"],[\"2025-08-28\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28117",
+                        "schedule": "[[\"2025-08-26\",\"19:45\",\"20:40\"],[\"2025-08-28\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-4a-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28239",
+                        "schedule": "[[\"2025-08-26\",\"18:20\",\"19:15\"],[\"2025-08-28\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "8/26/25",
+                        "class_id": "28260",
+                        "schedule": "[[\"2025-08-26\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28090",
+                        "schedule": "[[\"2025-08-26\",\"19:45\",\"20:40\"],[\"2025-08-28\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-7b-v2",
+                        "date": "8/26/25",
+                        "class_id": "28282",
+                        "schedule": "[[\"2025-08-26\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-la-3a-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28232",
+                        "schedule": "[[\"2025-08-26\",\"19:45\",\"20:40\"],[\"2025-08-28\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28055",
+                        "schedule": "[[\"2025-08-26\",\"16:45\",\"17:40\"],[\"2025-08-28\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "8/26/25",
+                        "class_id": "28057",
+                        "schedule": "[[\"2025-08-26\",\"18:20\",\"19:15\"],[\"2025-08-28\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "8/27/25",
+                        "class_id": "28192",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "8/27/25",
+                        "class_id": "28172",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-3cd-2pw",
+                        "date": "8/27/25",
+                        "class_id": "28052",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"19:55\"],[\"2025-08-29\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-5a-2pw",
+                        "date": "8/27/25",
+                        "class_id": "28253",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"19:55\"],[\"2025-08-29\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "8/27/25",
+                        "class_id": "28064",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "8/27/25",
+                        "class_id": "28223",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "8/27/25",
+                        "class_id": "28121",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-1pw",
+                        "date": "8/27/25",
+                        "class_id": "28040",
+                        "schedule": "[[\"2025-08-27\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-la-3a-2pw",
+                        "date": "8/27/25",
+                        "class_id": "28234",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"19:55\"],[\"2025-08-29\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "8/27/25",
+                        "class_id": "28190",
+                        "schedule": "[[\"2025-08-27\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "8/27/25",
+                        "class_id": "28025",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"19:55\"],[\"2025-08-29\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/27/25",
+                        "class_id": "28153",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "8/27/25",
+                        "class_id": "28152",
+                        "schedule": "[[\"2025-08-27\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "8/27/25",
+                        "class_id": "28202",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "8/27/25",
+                        "class_id": "28211",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "8/27/25",
+                        "class_id": "28262",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-4a-2pw",
+                        "date": "8/27/25",
+                        "class_id": "28243",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"19:55\"],[\"2025-08-29\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "8/27/25",
+                        "class_id": "28094",
+                        "schedule": "[[\"2025-08-27\",\"17:30\",\"18:25\"],[\"2025-08-29\",\"17:30\",\"18:25\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5a",
+                        "date": "8/27/25",
+                        "class_id": "28145",
+                        "schedule": "[[\"2025-08-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "8/28/25",
+                        "class_id": "28276",
+                        "schedule": "[[\"2025-08-28\",\"16:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "8/28/25",
+                        "class_id": "28277",
+                        "schedule": "[[\"2025-08-28\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "8/28/25",
+                        "class_id": "28263",
+                        "schedule": "[[\"2025-08-28\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "8/29/25",
+                        "class_id": "28126",
+                        "schedule": "[[\"2025-08-29\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "9/2/25",
+                        "class_id": "28273",
+                        "schedule": "[[\"2025-09-02\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28058",
+                        "schedule": "[[\"2025-09-02\",\"18:20\",\"19:15\"],[\"2025-09-04\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28077",
+                        "schedule": "[[\"2025-09-02\",\"19:45\",\"20:40\"],[\"2025-09-04\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28104",
+                        "schedule": "[[\"2025-09-02\",\"16:45\",\"17:40\"],[\"2025-09-04\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28019",
+                        "schedule": "[[\"2025-09-02\",\"14:00\",\"14:55\"],[\"2025-09-04\",\"14:00\",\"14:55\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28038",
+                        "schedule": "[[\"2025-09-02\",\"19:45\",\"20:40\"],[\"2025-09-04\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-5a-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28252",
+                        "schedule": "[[\"2025-09-02\",\"19:45\",\"20:40\"],[\"2025-09-04\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28085",
+                        "schedule": "[[\"2025-09-02\",\"14:00\",\"14:55\"],[\"2025-09-04\",\"14:00\",\"14:55\"]]"
+            },
+            {
+                        "course": "vacad-la-4a-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28238",
+                        "schedule": "[[\"2025-09-02\",\"16:45\",\"17:40\"],[\"2025-09-04\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-la-3a-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28233",
+                        "schedule": "[[\"2025-09-02\",\"19:45\",\"20:40\"],[\"2025-09-04\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28032",
+                        "schedule": "[[\"2025-09-02\",\"14:00\",\"14:55\"],[\"2025-09-04\",\"14:00\",\"14:55\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28054",
+                        "schedule": "[[\"2025-09-02\",\"14:00\",\"14:55\"],[\"2025-09-04\",\"14:00\",\"14:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28113",
+                        "schedule": "[[\"2025-09-02\",\"14:00\",\"14:55\"],[\"2025-09-04\",\"14:00\",\"14:55\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28023",
+                        "schedule": "[[\"2025-09-02\",\"19:45\",\"20:40\"],[\"2025-09-04\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-3cd-2pw",
+                        "date": "9/2/25",
+                        "class_id": "28049",
+                        "schedule": "[[\"2025-09-02\",\"16:45\",\"17:40\"],[\"2025-09-04\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "9/3/25",
+                        "class_id": "28097",
+                        "schedule": "[[\"2025-09-03\",\"19:00\",\"19:55\"],[\"2025-09-05\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "9/3/25",
+                        "class_id": "28119",
+                        "schedule": "[[\"2025-09-03\",\"16:45\",\"18:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "9/3/25",
+                        "class_id": "28120",
+                        "schedule": "[[\"2025-09-03\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/3/25",
+                        "class_id": "28065",
+                        "schedule": "[[\"2025-09-03\",\"19:00\",\"19:55\"],[\"2025-09-05\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "9/3/25",
+                        "class_id": "28125",
+                        "schedule": "[[\"2025-09-03\",\"20:25\",\"21:20\"],[\"2025-09-05\",\"20:25\",\"21:20\"]]"
+            },
+            {
+                        "course": "vacad-math-hscm",
+                        "date": "9/3/25",
+                        "class_id": "28218",
+                        "schedule": "[[\"2025-09-03\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "9/3/25",
+                        "class_id": "28191",
+                        "schedule": "[[\"2025-09-03\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-5a-2pw",
+                        "date": "9/3/25",
+                        "class_id": "28255",
+                        "schedule": "[[\"2025-09-03\",\"20:25\",\"21:20\"],[\"2025-09-05\",\"20:25\",\"21:20\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "9/3/25",
+                        "class_id": "28173",
+                        "schedule": "[[\"2025-09-03\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/3/25",
+                        "class_id": "28154",
+                        "schedule": "[[\"2025-09-03\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "9/4/25",
+                        "class_id": "28265",
+                        "schedule": "[[\"2025-09-04\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "9/5/25",
+                        "class_id": "29948",
+                        "schedule": "[[\"2025-09-05\",\"16:30\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "9/5/25",
+                        "class_id": "28128",
+                        "schedule": "[[\"2025-09-05\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/5/25",
+                        "class_id": "28158",
+                        "schedule": "[[\"2025-09-05\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "9/5/25",
+                        "class_id": "28212",
+                        "schedule": "[[\"2025-09-05\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "9/5/25",
+                        "class_id": "28266",
+                        "schedule": "[[\"2025-09-05\",\"16:30\",\"18:15\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "9/5/25",
+                        "class_id": "28203",
+                        "schedule": "[[\"2025-09-05\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "9/5/25",
+                        "class_id": "28083",
+                        "schedule": "[[\"2025-09-05\",\"16:30\",\"18:15\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/7/25",
+                        "class_id": "28165",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-la-5b",
+                        "date": "9/7/25",
+                        "class_id": "28259",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "9/7/25",
+                        "class_id": "28180",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "9/7/25",
+                        "class_id": "28199",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5a",
+                        "date": "9/7/25",
+                        "class_id": "28148",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "9/7/25",
+                        "class_id": "28133",
+                        "schedule": "[[\"2025-09-07\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "9/7/25",
+                        "class_id": "28135",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-1pw",
+                        "date": "9/7/25",
+                        "class_id": "28080",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-hscm",
+                        "date": "9/7/25",
+                        "class_id": "28220",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "9/7/25",
+                        "class_id": "28215",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "9/7/25",
+                        "class_id": "28225",
+                        "schedule": "[[\"2025-09-07\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-la-3a",
+                        "date": "9/7/25",
+                        "class_id": "28237",
+                        "schedule": "[[\"2025-09-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "9/7/25",
+                        "class_id": "28074",
+                        "schedule": "[[\"2025-09-07\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-calculus",
+                        "date": "9/7/25",
+                        "class_id": "28229",
+                        "schedule": "[[\"2025-09-07\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "9/7/25",
+                        "class_id": "28103",
+                        "schedule": "[[\"2025-09-07\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "9/7/25",
+                        "class_id": "28279",
+                        "schedule": "[[\"2025-09-07\",\"12:45\",\"13:45\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "9/7/25",
+                        "class_id": "28205",
+                        "schedule": "[[\"2025-09-07\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "9/7/25",
+                        "class_id": "29951",
+                        "schedule": "[[\"2025-09-07\",\"18:45\",\"19:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/7/25",
+                        "class_id": "28161",
+                        "schedule": "[[\"2025-09-07\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-1pw",
+                        "date": "9/7/25",
+                        "class_id": "28046",
+                        "schedule": "[[\"2025-09-07\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "9/7/25",
+                        "class_id": "35166",
+                        "schedule": "[[\"2025-09-07\",\"18:45\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7b",
+                        "date": "9/8/25",
+                        "class_id": "28182",
+                        "schedule": "[[\"2025-09-08\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-1pw",
+                        "date": "9/8/25",
+                        "class_id": "28031",
+                        "schedule": "[[\"2025-09-08\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/8/25",
+                        "class_id": "28151",
+                        "schedule": "[[\"2025-09-08\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "9/8/25",
+                        "class_id": "28112",
+                        "schedule": "[[\"2025-09-08\",\"19:15\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "9/8/25",
+                        "class_id": "28081",
+                        "schedule": "[[\"2025-09-08\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "9/8/25",
+                        "class_id": "28188",
+                        "schedule": "[[\"2025-09-08\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-la-4a-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28242",
+                        "schedule": "[[\"2025-09-09\",\"19:45\",\"20:40\"],[\"2025-09-11\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-3a-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28230",
+                        "schedule": "[[\"2025-09-09\",\"16:45\",\"17:40\"],[\"2025-09-11\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28088",
+                        "schedule": "[[\"2025-09-09\",\"18:20\",\"19:15\"],[\"2025-09-11\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "9/9/25",
+                        "class_id": "28261",
+                        "schedule": "[[\"2025-09-09\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28114",
+                        "schedule": "[[\"2025-09-09\",\"16:45\",\"17:40\"],[\"2025-09-11\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "9/9/25",
+                        "class_id": "29946",
+                        "schedule": "[[\"2025-09-09\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28056",
+                        "schedule": "[[\"2025-09-09\",\"16:45\",\"17:40\"],[\"2025-09-11\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28105",
+                        "schedule": "[[\"2025-09-09\",\"18:20\",\"19:15\"],[\"2025-09-11\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28062",
+                        "schedule": "[[\"2025-09-09\",\"19:45\",\"20:40\"],[\"2025-09-11\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28116",
+                        "schedule": "[[\"2025-09-09\",\"18:20\",\"19:15\"],[\"2025-09-11\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28093",
+                        "schedule": "[[\"2025-09-09\",\"19:45\",\"20:40\"],[\"2025-09-11\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-5a-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28249",
+                        "schedule": "[[\"2025-09-09\",\"16:45\",\"17:40\"],[\"2025-09-11\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28034",
+                        "schedule": "[[\"2025-09-09\",\"16:45\",\"17:40\"],[\"2025-09-11\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "9/9/25",
+                        "class_id": "28020",
+                        "schedule": "[[\"2025-09-09\",\"16:45\",\"17:40\"],[\"2025-09-11\",\"16:45\",\"17:40\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-2pw",
+                        "date": "9/10/25",
+                        "class_id": "28078",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"19:55\"],[\"2025-09-12\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-5a-2pw",
+                        "date": "9/10/25",
+                        "class_id": "28254",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"19:55\"],[\"2025-09-12\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/10/25",
+                        "class_id": "28044",
+                        "schedule": "[[\"2025-09-10\",\"20:25\",\"21:20\"],[\"2025-09-12\",\"20:25\",\"21:20\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "9/10/25",
+                        "class_id": "28193",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "9/10/25",
+                        "class_id": "28026",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"19:55\"],[\"2025-09-12\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "9/10/25",
+                        "class_id": "28063",
+                        "schedule": "[[\"2025-09-10\",\"16:45\",\"18:30\"]]"
+            },
+            {
+                        "course": "vacad-math-calculus",
+                        "date": "9/10/25",
+                        "class_id": "28228",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "9/10/25",
+                        "class_id": "28123",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"19:55\"],[\"2025-09-12\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/10/25",
+                        "class_id": "28042",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"19:55\"],[\"2025-09-12\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "9/10/25",
+                        "class_id": "28174",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "9/10/25",
+                        "class_id": "28082",
+                        "schedule": "[[\"2025-09-10\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-5a",
+                        "date": "9/11/25",
+                        "class_id": "28256",
+                        "schedule": "[[\"2025-09-11\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "9/11/25",
+                        "class_id": "28278",
+                        "schedule": "[[\"2025-09-11\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "9/12/25",
+                        "class_id": "28213",
+                        "schedule": "[[\"2025-09-12\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5a",
+                        "date": "9/12/25",
+                        "class_id": "28146",
+                        "schedule": "[[\"2025-09-12\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "9/12/25",
+                        "class_id": "28176",
+                        "schedule": "[[\"2025-09-12\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "9/12/25",
+                        "class_id": "28204",
+                        "schedule": "[[\"2025-09-12\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/14/25",
+                        "class_id": "28162",
+                        "schedule": "[[\"2025-09-14\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "9/14/25",
+                        "class_id": "28281",
+                        "schedule": "[[\"2025-09-14\",\"15:45\",\"16:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/14/25",
+                        "class_id": "28168",
+                        "schedule": "[[\"2025-09-14\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "9/14/25",
+                        "class_id": "28102",
+                        "schedule": "[[\"2025-09-14\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "9/14/25",
+                        "class_id": "28208",
+                        "schedule": "[[\"2025-09-14\",\"18:45\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "9/14/25",
+                        "class_id": "28226",
+                        "schedule": "[[\"2025-09-14\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6b",
+                        "date": "9/14/25",
+                        "class_id": "28141",
+                        "schedule": "[[\"2025-09-14\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-1pw",
+                        "date": "9/14/25",
+                        "class_id": "28028",
+                        "schedule": "[[\"2025-09-14\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-3cd-1pw",
+                        "date": "9/14/25",
+                        "class_id": "28053",
+                        "schedule": "[[\"2025-09-14\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "9/14/25",
+                        "class_id": "28196",
+                        "schedule": "[[\"2025-09-14\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-la-4a",
+                        "date": "9/14/25",
+                        "class_id": "28246",
+                        "schedule": "[[\"2025-09-14\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-hscm",
+                        "date": "9/14/25",
+                        "class_id": "28219",
+                        "schedule": "[[\"2025-09-14\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "9/14/25",
+                        "class_id": "28216",
+                        "schedule": "[[\"2025-09-14\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "9/14/25",
+                        "class_id": "28129",
+                        "schedule": "[[\"2025-09-14\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "9/14/25",
+                        "class_id": "28070",
+                        "schedule": "[[\"2025-09-14\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "9/14/25",
+                        "class_id": "28269",
+                        "schedule": "[[\"2025-09-14\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "9/14/25",
+                        "class_id": "28138",
+                        "schedule": "[[\"2025-09-14\",\"18:45\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "9/15/25",
+                        "class_id": "28110",
+                        "schedule": "[[\"2025-09-15\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "9/15/25",
+                        "class_id": "28209",
+                        "schedule": "[[\"2025-09-15\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28059",
+                        "schedule": "[[\"2025-09-16\",\"18:20\",\"19:15\"],[\"2025-09-18\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28091",
+                        "schedule": "[[\"2025-09-16\",\"19:45\",\"20:40\"],[\"2025-09-18\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28039",
+                        "schedule": "[[\"2025-09-16\",\"19:45\",\"20:40\"],[\"2025-09-18\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-4a-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28240",
+                        "schedule": "[[\"2025-09-16\",\"18:20\",\"19:15\"],[\"2025-09-18\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28022",
+                        "schedule": "[[\"2025-09-16\",\"18:20\",\"19:15\"],[\"2025-09-18\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28075",
+                        "schedule": "[[\"2025-09-16\",\"18:20\",\"19:15\"],[\"2025-09-18\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-2cd-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28030",
+                        "schedule": "[[\"2025-09-16\",\"19:45\",\"20:40\"],[\"2025-09-18\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-la-5a-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28251",
+                        "schedule": "[[\"2025-09-16\",\"18:20\",\"19:15\"],[\"2025-09-18\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "9/16/25",
+                        "class_id": "28274",
+                        "schedule": "[[\"2025-09-16\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-3cd-2pw",
+                        "date": "9/16/25",
+                        "class_id": "28051",
+                        "schedule": "[[\"2025-09-16\",\"19:45\",\"20:40\"],[\"2025-09-18\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "9/17/25",
+                        "class_id": "28095",
+                        "schedule": "[[\"2025-09-17\",\"19:00\",\"19:55\"],[\"2025-09-19\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-4a-2pw",
+                        "date": "9/17/25",
+                        "class_id": "28244",
+                        "schedule": "[[\"2025-09-17\",\"19:00\",\"19:55\"],[\"2025-09-19\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/17/25",
+                        "class_id": "28066",
+                        "schedule": "[[\"2025-09-17\",\"19:00\",\"19:55\"],[\"2025-09-19\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-3a-2pw",
+                        "date": "9/17/25",
+                        "class_id": "28235",
+                        "schedule": "[[\"2025-09-17\",\"19:00\",\"19:55\"],[\"2025-09-19\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "9/19/25",
+                        "class_id": "28195",
+                        "schedule": "[[\"2025-09-19\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/21/25",
+                        "class_id": "28166",
+                        "schedule": "[[\"2025-09-21\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-la-6b",
+                        "date": "9/21/25",
+                        "class_id": "28272",
+                        "schedule": "[[\"2025-09-21\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6b",
+                        "date": "9/21/25",
+                        "class_id": "28389",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-la-4b",
+                        "date": "9/21/25",
+                        "class_id": "28248",
+                        "schedule": "[[\"2025-09-21\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a",
+                        "date": "9/21/25",
+                        "class_id": "28132",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "9/21/25",
+                        "class_id": "28100",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "9/21/25",
+                        "class_id": "35220",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "9/21/25",
+                        "class_id": "28197",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7a",
+                        "date": "9/21/25",
+                        "class_id": "28178",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-la-4a",
+                        "date": "9/21/25",
+                        "class_id": "28245",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7b",
+                        "date": "9/21/25",
+                        "class_id": "28185",
+                        "schedule": "[[\"2025-09-21\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-1pw",
+                        "date": "9/21/25",
+                        "class_id": "28048",
+                        "schedule": "[[\"2025-09-21\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-la-5a",
+                        "date": "9/21/25",
+                        "class_id": "28258",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "9/21/25",
+                        "class_id": "28268",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-1pw",
+                        "date": "9/21/25",
+                        "class_id": "28108",
+                        "schedule": "[[\"2025-09-21\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7b",
+                        "date": "9/21/25",
+                        "class_id": "28187",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "9/21/25",
+                        "class_id": "28072",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-la-3a",
+                        "date": "9/21/25",
+                        "class_id": "28236",
+                        "schedule": "[[\"2025-09-21\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-1pw",
+                        "date": "9/22/25",
+                        "class_id": "35232",
+                        "schedule": "[[\"2025-09-22\",\"19:15\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-hscm",
+                        "date": "9/22/25",
+                        "class_id": "28217",
+                        "schedule": "[[\"2025-09-22\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6a",
+                        "date": "9/22/25",
+                        "class_id": "28388",
+                        "schedule": "[[\"2025-09-22\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-2ab-2pw",
+                        "date": "9/23/25",
+                        "class_id": "28024",
+                        "schedule": "[[\"2025-09-23\",\"19:45\",\"20:40\"],[\"2025-09-25\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "9/23/25",
+                        "class_id": "28118",
+                        "schedule": "[[\"2025-09-23\",\"19:45\",\"20:40\"],[\"2025-09-25\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "9/23/25",
+                        "class_id": "28089",
+                        "schedule": "[[\"2025-09-23\",\"18:20\",\"19:15\"],[\"2025-09-25\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/23/25",
+                        "class_id": "28035",
+                        "schedule": "[[\"2025-09-23\",\"18:20\",\"19:15\"],[\"2025-09-25\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "9/23/25",
+                        "class_id": "28060",
+                        "schedule": "[[\"2025-09-23\",\"19:45\",\"20:40\"],[\"2025-09-25\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "9/24/25",
+                        "class_id": "28043",
+                        "schedule": "[[\"2025-09-24\",\"19:00\",\"19:55\"],[\"2025-09-26\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/24/25",
+                        "class_id": "28156",
+                        "schedule": "[[\"2025-09-24\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "9/25/25",
+                        "class_id": "35231",
+                        "schedule": "[[\"2025-09-25\",\"19:00\",\"20:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "9/26/25",
+                        "class_id": "35165",
+                        "schedule": "[[\"2025-09-26\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "9/26/25",
+                        "class_id": "28224",
+                        "schedule": "[[\"2025-09-26\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "9/28/25",
+                        "class_id": "28163",
+                        "schedule": "[[\"2025-09-28\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "9/28/25",
+                        "class_id": "28207",
+                        "schedule": "[[\"2025-09-28\",\"15:45\",\"17:45\"]]"
+            },
+            {
+                        "course": "vacad-la-8-v2",
+                        "date": "9/28/25",
+                        "class_id": "29950",
+                        "schedule": "[[\"2025-09-28\",\"15:45\",\"16:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6a-2pw",
+                        "date": "9/30/25",
+                        "class_id": "35121",
+                        "schedule": "[[\"2025-09-30\",\"18:20\",\"19:15\"],[\"2025-10-02\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5b",
+                        "date": "10/5/25",
+                        "class_id": "35125",
+                        "schedule": "[[\"2025-10-05\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6b",
+                        "date": "10/8/25",
+                        "class_id": "35122",
+                        "schedule": "[[\"2025-10-08\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-2cd-2pw",
+                        "date": "10/8/25",
+                        "class_id": "35117",
+                        "schedule": "[[\"2025-10-08\",\"19:00\",\"19:55\"],[\"2025-10-10\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-5a",
+                        "date": "10/9/25",
+                        "class_id": "35263",
+                        "schedule": "[[\"2025-10-09\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-1pw",
+                        "date": "10/12/25",
+                        "class_id": "35120",
+                        "schedule": "[[\"2025-10-12\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-la-3a",
+                        "date": "10/12/25",
+                        "class_id": "35256",
+                        "schedule": "[[\"2025-10-12\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-la-7a-v2",
+                        "date": "10/12/25",
+                        "class_id": "35262",
+                        "schedule": "[[\"2025-10-12\",\"12:45\",\"13:45\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-2pw",
+                        "date": "10/14/25",
+                        "class_id": "35119",
+                        "schedule": "[[\"2025-10-14\",\"19:45\",\"20:40\"],[\"2025-10-16\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-3cd-2pw",
+                        "date": "10/15/25",
+                        "class_id": "35118",
+                        "schedule": "[[\"2025-10-15\",\"19:00\",\"19:55\"],[\"2025-10-17\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-hscm",
+                        "date": "10/17/25",
+                        "class_id": "29935",
+                        "schedule": "[[\"2025-10-17\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "10/19/25",
+                        "class_id": "35124",
+                        "schedule": "[[\"2025-10-19\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest7b",
+                        "date": "10/19/25",
+                        "class_id": "35123",
+                        "schedule": "[[\"2025-10-19\",\"18:45\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "10/20/25",
+                        "class_id": "29932",
+                        "schedule": "[[\"2025-10-20\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-2pw",
+                        "date": "10/21/25",
+                        "class_id": "35202",
+                        "schedule": "[[\"2025-10-21\",\"18:20\",\"19:15\"],[\"2025-10-23\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4ab-2pw",
+                        "date": "10/21/25",
+                        "class_id": "35201",
+                        "schedule": "[[\"2025-10-21\",\"18:20\",\"19:15\"],[\"2025-10-23\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-2pw",
+                        "date": "10/21/25",
+                        "class_id": "35198",
+                        "schedule": "[[\"2025-10-21\",\"19:45\",\"20:40\"],[\"2025-10-23\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-2pw",
+                        "date": "10/22/25",
+                        "class_id": "35209",
+                        "schedule": "[[\"2025-10-22\",\"19:00\",\"19:55\"],[\"2025-10-24\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "10/22/25",
+                        "class_id": "29933",
+                        "schedule": "[[\"2025-10-22\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5b",
+                        "date": "10/24/25",
+                        "class_id": "35221",
+                        "schedule": "[[\"2025-10-24\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "10/26/25",
+                        "class_id": "29938",
+                        "schedule": "[[\"2025-10-26\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7a",
+                        "date": "10/27/25",
+                        "class_id": "35238",
+                        "schedule": "[[\"2025-10-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-calculus",
+                        "date": "10/27/25",
+                        "class_id": "35086",
+                        "schedule": "[[\"2025-10-27\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-2pw",
+                        "date": "10/28/25",
+                        "class_id": "35207",
+                        "schedule": "[[\"2025-10-28\",\"18:20\",\"19:15\"],[\"2025-10-30\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-3cd-2pw",
+                        "date": "10/28/25",
+                        "class_id": "35200",
+                        "schedule": "[[\"2025-10-28\",\"18:20\",\"19:15\"],[\"2025-10-30\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-la-6a",
+                        "date": "10/28/25",
+                        "class_id": "35236",
+                        "schedule": "[[\"2025-10-28\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-2pw",
+                        "date": "10/28/25",
+                        "class_id": "35205",
+                        "schedule": "[[\"2025-10-28\",\"18:20\",\"19:15\"],[\"2025-10-30\",\"18:20\",\"19:15\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6b-2pw",
+                        "date": "10/29/25",
+                        "class_id": "35211",
+                        "schedule": "[[\"2025-10-29\",\"19:00\",\"19:55\"],[\"2025-10-31\",\"19:00\",\"19:55\"]]"
+            },
+            {
+                        "course": "vacad-la-6b",
+                        "date": "10/30/25",
+                        "class_id": "35218",
+                        "schedule": "[[\"2025-10-30\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors6b",
+                        "date": "11/2/25",
+                        "class_id": "35212",
+                        "schedule": "[[\"2025-11-02\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-4cd-1pw",
+                        "date": "11/2/25",
+                        "class_id": "35204",
+                        "schedule": "[[\"2025-11-02\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7b",
+                        "date": "11/3/25",
+                        "class_id": "35214",
+                        "schedule": "[[\"2025-11-03\",\"19:15\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-5cd-2pw",
+                        "date": "11/4/25",
+                        "class_id": "35208",
+                        "schedule": "[[\"2025-11-04\",\"19:45\",\"20:40\"],[\"2025-11-06\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-contest8",
+                        "date": "11/5/25",
+                        "class_id": "35217",
+                        "schedule": "[[\"2025-11-05\",\"19:00\",\"21:00\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7-5a",
+                        "date": "11/5/25",
+                        "class_id": "35255",
+                        "schedule": "[[\"2025-11-05\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "11/9/25",
+                        "class_id": "29934",
+                        "schedule": "[[\"2025-11-09\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors7b",
+                        "date": "11/9/25",
+                        "class_id": "35215",
+                        "schedule": "[[\"2025-11-09\",\"10:30\",\"12:15\"]]"
+            },
+            {
+                        "course": "vacad-math-3ab-1pw",
+                        "date": "11/9/25",
+                        "class_id": "35199",
+                        "schedule": "[[\"2025-11-09\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-contest6b",
+                        "date": "11/9/25",
+                        "class_id": "35213",
+                        "schedule": "[[\"2025-11-09\",\"18:45\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-la-4b-2pw",
+                        "date": "11/11/25",
+                        "class_id": "35227",
+                        "schedule": "[[\"2025-11-11\",\"19:45\",\"20:40\"],[\"2025-11-13\",\"19:45\",\"20:40\"]]"
+            },
+            {
+                        "course": "vacad-math-honors8",
+                        "date": "11/16/25",
+                        "class_id": "35216",
+                        "schedule": "[[\"2025-11-16\",\"18:45\",\"20:30\"]]"
+            },
+            {
+                        "course": "vacad-math-hscm",
+                        "date": "11/16/25",
+                        "class_id": "29936",
+                        "schedule": "[[\"2025-11-16\",\"12:45\",\"14:45\"]]"
+            },
+            {
+                        "course": "vacad-math-5ab-1pw",
+                        "date": "11/16/25",
+                        "class_id": "35206",
+                        "schedule": "[[\"2025-11-16\",\"12:45\",\"14:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors10",
+                        "date": "12/1/25",
+                        "class_id": "29937",
+                        "schedule": "[[\"2025-12-01\",\"19:00\",\"20:45\"]]"
+            },
+            {
+                        "course": "vacad-math-calculus",
+                        "date": "12/7/25",
+                        "class_id": "29940",
+                        "schedule": "[[\"2025-12-07\",\"15:45\",\"17:30\"]]"
+            },
+            {
+                        "course": "vacad-math-honors9",
+                        "date": "12/12/25",
+                        "class_id": "35085",
+                        "schedule": "[[\"2025-12-12\",\"19:00\",\"20:45\"]]"
+            }
+];
 
-        // Process data
+        // Process data and determine colors dynamically
         const processedData = courseData.map(item => {
             const [month, day, year] = item.date.split('/');
             const date = new Date(2000 + parseInt(year), parseInt(month) - 1, parseInt(day));
-            const courseType = item.course.replace(/[0-9.+]/g, '');
+            
+            // Extract course type from course name
+            const courseTypeMatch = item.course.match(/^([A-Za-z]+)/);
+            const courseType = courseTypeMatch ? courseTypeMatch[1] : 'Other';
+            
             return {
                 ...item,
                 fullDate: date,
                 month: parseInt(month),
                 day: parseInt(day),
                 year: 2000 + parseInt(year),
-                courseType: courseType
+                courseType: courseType,
+                displayName: item.course
             };
+        });
+
+        // Generate dynamic colors for course types
+        const uniqueTypes = [...new Set(processedData.map(item => item.courseType))];
+        const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#14b8a6', '#6366f1', '#f43f5e'];
+        
+        const courseColors = {};
+        uniqueTypes.forEach((type, index) => {
+            courseColors[type] = colors[index % colors.length];
         });
 
         // Get unique months
         const months = [...new Set(processedData.map(item => item.month))].sort((a, b) => a - b);
         const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         
-        // Course type colors
-        const courseColors = {
-            'VC': '#3b82f6',
-            'AB': '#10b981',
-            'CD': '#f59e0b',
-            'A': '#ef4444',
-            'B': '#8b5cf6',
-            'HSCM': '#06b6d4',
-            '': '#84cc16', // For courses like "10", "9"
-            'Calc': '#f97316',
-            'LA': '#ec4899'
-        };
+        function showCoursePopup(course) {
+            // Remove any existing popup
+            const existingPopup = document.querySelector('.popup-overlay');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+            
+            // Create popup overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            overlay.onclick = () => overlay.remove();
+            
+            // Create popup content
+            const popup = document.createElement('div');
+            popup.className = 'course-popup';
+            
+            popup.innerHTML = `
+                <button class="close-btn" onclick="this.closest('.popup-overlay').remove()">&times;</button>
+                <h3>${course.displayName}</h3>
+                <div class="detail-row">
+                    <span class="detail-label">📅 Date:</span>
+                    <span class="detail-value">${course.date}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🕐 Schedule:</span>
+                    <span class="detail-value">${course.schedule || 'TBD'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🆔 Class ID:</span>
+                    <span class="detail-value">${course.class_id}</span>
+                </div>
+            `;
+            
+            overlay.appendChild(popup);
+            document.body.appendChild(overlay);
+            
+            // Prevent popup from closing when clicking inside it
+            popup.onclick = (e) => e.stopPropagation();
+        }
 
         function updateStats() {
             const filtered = getFilteredData();
             document.getElementById('totalCourses').textContent = filtered.length;
             
-            const uniqueTypes = [...new Set(filtered.map(item => item.courseType || 'Other'))];
+            const uniqueTypes = [...new Set(filtered.map(item => item.courseType))];
             document.getElementById('uniqueTypes').textContent = uniqueTypes.length;
             
             // Calculate average per week (roughly)
-            const avgPerWeek = Math.round(filtered.length / 4); // Rough estimate
+            const avgPerWeek = Math.round(filtered.length / 4);
             document.getElementById('avgPerWeek').textContent = avgPerWeek;
         }
 
@@ -572,7 +2514,7 @@
             const legend = document.getElementById('legend');
             legend.innerHTML = '';
             
-            const uniqueTypes = [...new Set(processedData.map(item => item.courseType || 'Other'))];
+            const uniqueTypes = [...new Set(processedData.map(item => item.courseType))].sort();
             
             uniqueTypes.forEach(type => {
                 const item = document.createElement('div');
@@ -583,11 +2525,29 @@
                 color.style.backgroundColor = courseColors[type] || '#6b7280';
                 
                 const label = document.createElement('span');
-                label.textContent = type || 'Numeric Courses';
+                label.textContent = type;
                 
                 item.appendChild(color);
                 item.appendChild(label);
                 legend.appendChild(item);
+            });
+        }
+
+        function populateCourseFilter() {
+            const courseFilter = document.getElementById('courseFilter');
+            const uniqueTypes = [...new Set(processedData.map(item => item.courseType))].sort();
+            
+            // Clear existing options except "All Courses"
+            while (courseFilter.children.length > 1) {
+                courseFilter.removeChild(courseFilter.lastChild);
+            }
+            
+            // Add options for each course type
+            uniqueTypes.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = `${type} Courses`;
+                courseFilter.appendChild(option);
             });
         }
 
@@ -602,13 +2562,7 @@
             }
             
             if (courseFilter !== 'all') {
-                if (courseFilter === 'LA') {
-                    filtered = filtered.filter(item => item.courseType === 'LA');
-                } else {
-                    filtered = filtered.filter(item => item.courseType === courseFilter || 
-                        (courseFilter === '10' && item.course === '10') ||
-                        (courseFilter === '9' && item.course === '9'));
-                }
+                filtered = filtered.filter(item => item.courseType === courseFilter);
             }
             
             return filtered;
@@ -687,10 +2641,16 @@
                     
                     coursesForDay.forEach(course => {
                         const courseItem = document.createElement('div');
-                        courseItem.className = `course-item course-${course.courseType || 'other'}`;
+                        courseItem.className = 'course-item';
                         courseItem.textContent = course.course;
                         courseItem.style.backgroundColor = courseColors[course.courseType] || '#6b7280';
-                        courseItem.title = `${course.course} - ${course.date}`;
+                        
+                        // Add click event for popup
+                        courseItem.onclick = () => showCoursePopup(course);
+                        
+                        // Simple hover tooltip
+                        courseItem.title = `Click for details: ${course.course}`;
+                        
                         dayCell.appendChild(courseItem);
                     });
                     
@@ -723,6 +2683,7 @@
         });
 
         // Initialize
+        populateCourseFilter();
         createLegend();
         createCalendar();
         updateStats();
