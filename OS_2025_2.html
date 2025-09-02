@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Schedule Calendar</title>
+    <title>AoPS Course Schedule Calendar</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -223,7 +223,7 @@
 <body>
     <div class="header">
         <h1>AoPS Course Schedule Calendar</h1>
-        <p>Academic Year 2025</p>
+        <p>Academic Year 2025 - Updated from Database on September 01, 2025 at 08:38 PM</p>
     </div>
     
     <div class="controls">
@@ -282,130 +282,684 @@
     <div class="calendar-container" id="calendarContainer"></div>
 
     <script>
-        // Course data - parsed from your schedule with correct date format
+        // Course data - pulled from database on 2025-09-01 20:38:08
         const courseData = [
-            {course: "prealgebra1", date: "8/17/2025"},
-            {course: "prealgebra1", date: "8/26/2025"},
-            {course: "prealgebra1", date: "9/5/2025"},
-            {course: "prealgebra1", date: "9/8/2025"},
-            {course: "prealgebra1", date: "9/21/2025"},
-            {course: "prealgebra1", date: "9/16/2025"},
-            {course: "prealgebra1", date: "9/25/2025"},
-            {course: "prealgebra1", date: "10/22/2025"},
-            {course: "prealgebra1", date: "11/4/2025"},
-            {course: "prealgebra1", date: "12/12/2025"},
-            {course: "prealgebra2", date: "8/17/2025"},
-            {course: "prealgebra2", date: "9/9/2025"},
-            {course: "prealgebra2", date: "9/25/2025"},
-            {course: "prealgebra2", date: "10/19/2025"},
-            {course: "prealgebra2", date: "10/27/2025"},
-            {course: "prealgebra2", date: "11/12/2025"},
-            {course: "algebra-a", date: "8/17/2025"},
-            {course: "algebra-a", date: "8/27/2025"},
-            {course: "algebra-a", date: "9/5/2025"},
-            {course: "algebra-a", date: "9/11/2025"},
-            {course: "algebra-a", date: "9/28/2025"},
-            {course: "algebra-a", date: "10/6/2025"},
-            {course: "algebra-a", date: "10/21/2025"},
-            {course: "algebra-a", date: "11/9/2025"},
-            {course: "algebra-a", date: "12/5/2025"},
-            {course: "intro-counting", date: "8/11/2025"},
-            {course: "intro-counting", date: "9/3/2025"},
-            {course: "intro-counting", date: "9/21/2025"},
-            {course: "intro-counting", date: "10/3/2025"},
-            {course: "intro-counting", date: "10/19/2025"},
-            {course: "intro-counting", date: "11/4/2025"},
-            {course: "intro-counting", date: "12/7/2025"},
-            {course: "intro-numbertheory", date: "8/13/2025"},
-            {course: "intro-numbertheory", date: "9/12/2025"},
-            {course: "intro-numbertheory", date: "10/26/2025"},
-            {course: "intro-numbertheory", date: "12/1/2025"},
-            {course: "intro-physics", date: "9/2/2025"},
-            {course: "intro-physics", date: "10/5/2025"},
-            {course: "intro-physics", date: "12/10/2025"},
-            {course: "physics1", date: "9/21/2025"},
-            {course: "physics1", date: "10/26/2025"},
-            {course: "algebra-b", date: "8/7/2025"},
-            {course: "algebra-b", date: "8/18/2025"},
-            {course: "algebra-b", date: "9/7/2025"},
-            {course: "algebra-b", date: "9/11/2025"},
-            {course: "algebra-b", date: "9/24/2025"},
-            {course: "algebra-b", date: "10/26/2025"},
-            {course: "algebra-b", date: "11/4/2025"},
-            {course: "algebra-b", date: "12/1/2025"},
-            {course: "intro-geometry", date: "8/13/2025"},
-            {course: "intro-geometry", date: "8/26/2025"},
-            {course: "intro-geometry", date: "9/7/2025"},
-            {course: "intro-geometry", date: "9/11/2025"},
-            {course: "intro-geometry", date: "9/24/2025"},
-            {course: "intro-geometry", date: "10/26/2025"},
-            {course: "intro-geometry", date: "11/3/2025"},
-            {course: "intro-geometry", date: "12/5/2025"},
-            {course: "intermediate-algebra", date: "8/8/2025"},
-            {course: "intermediate-algebra", date: "8/26/2025"},
-            {course: "intermediate-algebra", date: "9/28/2025"},
-            {course: "intermediate-algebra", date: "10/8/2025"},
-            {course: "intermediate-algebra", date: "11/16/2025"},
-            {course: "intermediate-algebra", date: "12/11/2025"},
-            {course: "precalc", date: "8/6/2025"},
-            {course: "precalc", date: "9/9/2025"},
-            {course: "precalc", date: "9/21/2025"},
-            {course: "precalc", date: "10/20/2025"},
-            {course: "precalc", date: "12/14/2025"},
-            {course: "intermediate-counting", date: "9/28/2025"},
-            {course: "intermediate-counting", date: "11/4/2025"},
-            {course: "intermediate-numbertheory", date: "9/24/2025"},
-            {course: "calculus", date: "9/7/2025"},
-            {course: "calculus", date: "9/24/2025"},
-            {course: "calculus", date: "11/14/2025"},
-            {course: "fma", date: "9/16/2025"},
-            {course: "fma", date: "10/17/2025"},
-            {course: "mathcounts-basics", date: "8/17/2025"},
-            {course: "mathcounts-basics", date: "9/3/2025"},
-            {course: "mathcounts-basics", date: "9/16/2025"},
-            {course: "mathcounts-basics", date: "9/21/2025"},
-            {course: "mathcounts-basics", date: "10/6/2025"},
-            {course: "mathcounts-basics", date: "10/16/2025"},
-            {course: "mathcounts-basics", date: "12/9/2025"},
-            {course: "mathcounts-advanced", date: "8/17/2025"},
-            {course: "mathcounts-advanced", date: "8/26/2025"},
-            {course: "mathcounts-advanced", date: "9/4/2025"},
-            {course: "mathcounts-advanced", date: "9/12/2025"},
-            {course: "mathcounts-advanced", date: "9/15/2025"},
-            {course: "mathcounts-advanced", date: "10/5/2025"},
-            {course: "mathcounts-advanced", date: "10/15/2025"},
-            {course: "mathcounts-advanced", date: "12/2/2025"},
-            {course: "mathcounts-advanced", date: "12/8/2025"},
-            {course: "maa-amc10", date: "8/10/2025"},
-            {course: "maa-amc10", date: "8/14/2025"},
-            {course: "maa-amc10", date: "8/19/2025"},
-            {course: "maa-amc10", date: "9/15/2025"},
-            {course: "maa-amc10", date: "10/6/2025"},
-            {course: "maa-amc10", date: "10/7/2025"},
-            {course: "maa-amc10-final-five", date: "8/15/2025"},
-            {course: "maa-amc10-final-five", date: "9/7/2025"},
-            {course: "maa-amc10-final-five", date: "9/9/2025"},
-            {course: "maa-amc10-final-five", date: "9/22/2025"},
-            {course: "maa-amc10-final-five", date: "9/28/2025"},
-            {course: "maa-amc10-final-five", date: "10/8/2025"},
-            {course: "maa-amc10-final-five", date: "10/9/2025"},
-            {course: "maa-amc12", date: "8/10/2025"},
-            {course: "maa-amc12", date: "8/18/2025"},
-            {course: "maa-amc12", date: "9/15/2025"},
-            {course: "maa-amc12", date: "10/7/2025"},
-            {course: "maa-amc12-final-five", date: "9/4/2025"},
-            {course: "maa-amc12-final-five", date: "9/28/2025"},
-            {course: "maa-amc12-final-five", date: "10/7/2025"},
-            {course: "maa-aimeb", date: "9/2/2025"},
-            {course: "maa-aimea", date: "10/23/2025"},
-            {course: "python1", date: "8/14/2025"},
-            {course: "python1", date: "9/7/2025"},
-            {course: "python1", date: "12/2/2025"},
-            {course: "python2", date: "10/3/2025"},
-            {course: "cs-bronze", date: "9/3/2025"},
-            {course: "cs-bronze", date: "10/30/2025"},
-            {course: "cs-bronze", date: "12/2/2025"}
-        ];
+            {
+                        "course": "maa-amc12",
+                        "date": "8/6/2025",
+                        "class_id": "4360"
+            },
+            {
+                        "course": "precalc",
+                        "date": "8/6/2025",
+                        "class_id": "4497"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "8/7/2025",
+                        "class_id": "4474"
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "date": "8/8/2025",
+                        "class_id": "4490"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "8/10/2025",
+                        "class_id": "4523"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "8/10/2025",
+                        "class_id": "4578"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "8/10/2025",
+                        "class_id": "4577"
+            },
+            {
+                        "course": "maa-amc12",
+                        "date": "8/10/2025",
+                        "class_id": "4536"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "8/11/2025",
+                        "class_id": "4458"
+            },
+            {
+                        "course": "maa-amc12",
+                        "date": "8/11/2025",
+                        "class_id": "4537"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "8/13/2025",
+                        "class_id": "4482"
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "date": "8/13/2025",
+                        "class_id": "4465"
+            },
+            {
+                        "course": "python1",
+                        "date": "8/14/2025",
+                        "class_id": "4545"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "8/14/2025",
+                        "class_id": "4524"
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "date": "8/15/2025",
+                        "class_id": "4529"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "8/17/2025",
+                        "class_id": "4506"
+            },
+            {
+                        "course": "prealgebra2",
+                        "date": "8/17/2025",
+                        "class_id": "4441"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "8/17/2025",
+                        "class_id": "4431"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "8/17/2025",
+                        "class_id": "4514"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "8/17/2025",
+                        "class_id": "4449"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "8/18/2025",
+                        "class_id": "4475"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "8/19/2025",
+                        "class_id": "4525"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "8/26/2025",
+                        "class_id": "4483"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "8/26/2025",
+                        "class_id": "4432"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "8/26/2025",
+                        "class_id": "4515"
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "date": "8/26/2025",
+                        "class_id": "4491"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "8/27/2025",
+                        "class_id": "4450"
+            },
+            {
+                        "course": "intro-physics",
+                        "date": "9/2/2025",
+                        "class_id": "4469"
+            },
+            {
+                        "course": "woot-math-1",
+                        "date": "9/2/2025",
+                        "class_id": "4380"
+            },
+            {
+                        "course": "maa-aimeb",
+                        "date": "9/2/2025",
+                        "class_id": "4543"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "9/3/2025",
+                        "class_id": "4459"
+            },
+            {
+                        "course": "cs-bronze",
+                        "date": "9/3/2025",
+                        "class_id": "4549"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "9/3/2025",
+                        "class_id": "4508"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "9/4/2025",
+                        "class_id": "4516"
+            },
+            {
+                        "course": "maa-amc12-final-five",
+                        "date": "9/4/2025",
+                        "class_id": "4540"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "9/5/2025",
+                        "class_id": "4451"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "9/5/2025",
+                        "class_id": "4433"
+            },
+            {
+                        "course": "woot-math-2",
+                        "date": "9/5/2025",
+                        "class_id": "4381"
+            },
+            {
+                        "course": "python1",
+                        "date": "9/7/2025",
+                        "class_id": "4546"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "9/7/2025",
+                        "class_id": "4476"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "9/7/2025",
+                        "class_id": "4484"
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "date": "9/7/2025",
+                        "class_id": "4530"
+            },
+            {
+                        "course": "calculus",
+                        "date": "9/7/2025",
+                        "class_id": "4443"
+            },
+            {
+                        "course": "woot-code",
+                        "date": "9/8/2025",
+                        "class_id": "4379"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "9/8/2025",
+                        "class_id": "4434"
+            },
+            {
+                        "course": "precalc",
+                        "date": "9/9/2025",
+                        "class_id": "4498"
+            },
+            {
+                        "course": "prealgebra2",
+                        "date": "9/9/2025",
+                        "class_id": "4442"
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "date": "9/9/2025",
+                        "class_id": "4531"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "9/11/2025",
+                        "class_id": "4452"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "9/11/2025",
+                        "class_id": "4485"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "9/12/2025",
+                        "class_id": "4517"
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "date": "9/12/2025",
+                        "class_id": "4466"
+            },
+            {
+                        "course": "paradoxes-seminar",
+                        "date": "9/13/2025",
+                        "class_id": "4558"
+            },
+            {
+                        "course": "maa-amc12",
+                        "date": "9/15/2025",
+                        "class_id": "4538"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "9/15/2025",
+                        "class_id": "4526"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "9/15/2025",
+                        "class_id": "4518"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "9/16/2025",
+                        "class_id": "4510"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "9/16/2025",
+                        "class_id": "4436"
+            },
+            {
+                        "course": "fma",
+                        "date": "9/16/2025",
+                        "class_id": "4501"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "9/18/2025",
+                        "class_id": "4477"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "9/21/2025",
+                        "class_id": "4509"
+            },
+            {
+                        "course": "precalc",
+                        "date": "9/21/2025",
+                        "class_id": "4499"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "9/21/2025",
+                        "class_id": "4460"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "9/21/2025",
+                        "class_id": "4435"
+            },
+            {
+                        "course": "physics1",
+                        "date": "9/21/2025",
+                        "class_id": "4472"
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "date": "9/22/2025",
+                        "class_id": "4532"
+            },
+            {
+                        "course": "calculus",
+                        "date": "9/24/2025",
+                        "class_id": "4445"
+            },
+            {
+                        "course": "woot-chem",
+                        "date": "9/24/2025",
+                        "class_id": "4376"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "9/24/2025",
+                        "class_id": "4478"
+            },
+            {
+                        "course": "intermediate-numbertheory",
+                        "date": "9/24/2025",
+                        "class_id": "4507"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "9/24/2025",
+                        "class_id": "4486"
+            },
+            {
+                        "course": "prealgebra2",
+                        "date": "9/25/2025",
+                        "class_id": "4444"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "9/25/2025",
+                        "class_id": "4437"
+            },
+            {
+                        "course": "woot-physics",
+                        "date": "9/25/2025",
+                        "class_id": "4378"
+            },
+            {
+                        "course": "maa-amc12-final-five",
+                        "date": "9/28/2025",
+                        "class_id": "4541"
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "date": "9/28/2025",
+                        "class_id": "4533"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "9/28/2025",
+                        "class_id": "4453"
+            },
+            {
+                        "course": "intermediate-counting",
+                        "date": "9/28/2025",
+                        "class_id": "4504"
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "date": "9/28/2025",
+                        "class_id": "4492"
+            },
+            {
+                        "course": "python2",
+                        "date": "10/3/2025",
+                        "class_id": "4548"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "10/3/2025",
+                        "class_id": "4461"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "10/5/2025",
+                        "class_id": "4519"
+            },
+            {
+                        "course": "intro-physics",
+                        "date": "10/5/2025",
+                        "class_id": "4470"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "10/6/2025",
+                        "class_id": "4527"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "10/6/2025",
+                        "class_id": "4511"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "10/6/2025",
+                        "class_id": "4454"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "10/7/2025",
+                        "class_id": "4528"
+            },
+            {
+                        "course": "maa-amc12",
+                        "date": "10/7/2025",
+                        "class_id": "4539"
+            },
+            {
+                        "course": "maa-amc12-final-five",
+                        "date": "10/7/2025",
+                        "class_id": "4542"
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "date": "10/8/2025",
+                        "class_id": "4534"
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "date": "10/8/2025",
+                        "class_id": "4493"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "10/9/2025",
+                        "class_id": "4512"
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "date": "10/9/2025",
+                        "class_id": "4535"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "10/15/2025",
+                        "class_id": "4520"
+            },
+            {
+                        "course": "fma",
+                        "date": "10/17/2025",
+                        "class_id": "4503"
+            },
+            {
+                        "course": "prealgebra2",
+                        "date": "10/19/2025",
+                        "class_id": "4446"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "10/19/2025",
+                        "class_id": "4462"
+            },
+            {
+                        "course": "precalc",
+                        "date": "10/20/2025",
+                        "class_id": "4500"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "10/21/2025",
+                        "class_id": "4455"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "10/22/2025",
+                        "class_id": "4438"
+            },
+            {
+                        "course": "maa-aimea",
+                        "date": "10/23/2025",
+                        "class_id": "4544"
+            },
+            {
+                        "course": "maa-amc10-special",
+                        "date": "10/25/2025",
+                        "class_id": "4560"
+            },
+            {
+                        "course": "maa-amc12-special",
+                        "date": "10/25/2025",
+                        "class_id": "4561"
+            },
+            {
+                        "course": "physics1",
+                        "date": "10/26/2025",
+                        "class_id": "4473"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "10/26/2025",
+                        "class_id": "4479"
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "date": "10/26/2025",
+                        "class_id": "4467"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "10/26/2025",
+                        "class_id": "4487"
+            },
+            {
+                        "course": "prealgebra2",
+                        "date": "10/27/2025",
+                        "class_id": "4447"
+            },
+            {
+                        "course": "cs-bronze",
+                        "date": "10/30/2025",
+                        "class_id": "4550"
+            },
+            {
+                        "course": "maa-amc12-special-b",
+                        "date": "11/1/2025",
+                        "class_id": "4563"
+            },
+            {
+                        "course": "maa-amc10-special-b",
+                        "date": "11/1/2025",
+                        "class_id": "4562"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "11/3/2025",
+                        "class_id": "4488"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "11/4/2025",
+                        "class_id": "4439"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "11/4/2025",
+                        "class_id": "4463"
+            },
+            {
+                        "course": "intermediate-counting",
+                        "date": "11/4/2025",
+                        "class_id": "4505"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "11/4/2025",
+                        "class_id": "4480"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "11/9/2025",
+                        "class_id": "4456"
+            },
+            {
+                        "course": "prealgebra2",
+                        "date": "11/12/2025",
+                        "class_id": "4448"
+            },
+            {
+                        "course": "calculus",
+                        "date": "11/14/2025",
+                        "class_id": "4496"
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "date": "11/16/2025",
+                        "class_id": "4494"
+            },
+            {
+                        "course": "algebra-b",
+                        "date": "12/1/2025",
+                        "class_id": "4481"
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "date": "12/1/2025",
+                        "class_id": "4468"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "12/2/2025",
+                        "class_id": "4521"
+            },
+            {
+                        "course": "cs-bronze",
+                        "date": "12/2/2025",
+                        "class_id": "4551"
+            },
+            {
+                        "course": "python1",
+                        "date": "12/2/2025",
+                        "class_id": "4547"
+            },
+            {
+                        "course": "algebra-a",
+                        "date": "12/5/2025",
+                        "class_id": "4457"
+            },
+            {
+                        "course": "intro-geometry",
+                        "date": "12/5/2025",
+                        "class_id": "4489"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "12/7/2025",
+                        "class_id": "4464"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "12/8/2025",
+                        "class_id": "4522"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "12/9/2025",
+                        "class_id": "4513"
+            },
+            {
+                        "course": "intro-physics",
+                        "date": "12/10/2025",
+                        "class_id": "4471"
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "date": "12/11/2025",
+                        "class_id": "4495"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "12/12/2025",
+                        "class_id": "4440"
+            },
+            {
+                        "course": "relativity-seminar",
+                        "date": "12/13/2025",
+                        "class_id": "4557"
+            },
+            {
+                        "course": "precalc",
+                        "date": "12/14/2025",
+                        "class_id": "4502"
+            }
+];
 
         // Process data
         const processedData = courseData.map(item => {
@@ -586,7 +1140,7 @@
                         courseItem.className = `course-item course-${course.courseType}`;
                         courseItem.textContent = course.displayName;
                         courseItem.style.backgroundColor = courseInfo[course.courseType]?.color || '#6b7280';
-                        courseItem.title = `${course.displayName} - ${course.date}`;
+                        courseItem.title = `${course.displayName} - ${course.date} (ID: ${course.class_id})`;
                         dayCell.appendChild(courseItem);
                     });
                     
