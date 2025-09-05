@@ -291,7 +291,7 @@
 <body>
     <div class="header">
         <h1>AoPS Course Schedule Calendar</h1>
-        <p>Academic Year 2025 - Updated from Database on September 01, 2025 at 08:56 PM</p>
+        <p>Academic Year 2025 - Updated from Database on September 05, 2025 at 06:55 AM</p>
     </div>
     
     <div class="controls">
@@ -350,18 +350,18 @@
     <div class="calendar-container" id="calendarContainer"></div>
 
     <script>
-        // Course data - pulled from database on 2025-09-01 20:56:57
+        // Course data - pulled from database on 2025-09-05 06:55:24
         const courseData = [
-            {
-                        "course": "maa-amc12",
-                        "date": "8/6/2025",
-                        "class_id": "4360",
-                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
             {
                         "course": "precalc",
                         "date": "8/6/2025",
                         "class_id": "4497",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "maa-amc12",
+                        "date": "8/6/2025",
+                        "class_id": "4360",
                         "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -383,9 +383,9 @@
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "maa-amc10",
+                        "course": "maa-amc12",
                         "date": "8/10/2025",
-                        "class_id": "4578",
+                        "class_id": "4536",
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -395,9 +395,9 @@
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "maa-amc12",
+                        "course": "maa-amc10",
                         "date": "8/10/2025",
-                        "class_id": "4536",
+                        "class_id": "4578",
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -425,15 +425,15 @@
                         "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "python1",
-                        "date": "8/14/2025",
-                        "class_id": "4545",
-                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
                         "course": "maa-amc10",
                         "date": "8/14/2025",
                         "class_id": "4524",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "python1",
+                        "date": "8/14/2025",
+                        "class_id": "4545",
                         "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -443,10 +443,10 @@
                         "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "mathcounts-basics",
+                        "course": "prealgebra1",
                         "date": "8/17/2025",
-                        "class_id": "4506",
-                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+                        "class_id": "4431",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
             },
             {
                         "course": "prealgebra2",
@@ -455,21 +455,21 @@
                         "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
             },
             {
-                        "course": "prealgebra1",
+                        "course": "mathcounts-basics",
                         "date": "8/17/2025",
-                        "class_id": "4431",
-                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
-            },
-            {
-                        "course": "mathcounts-advanced",
-                        "date": "8/17/2025",
-                        "class_id": "4514",
+                        "class_id": "4506",
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
                         "course": "algebra-a",
                         "date": "8/17/2025",
                         "class_id": "4449",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "8/17/2025",
+                        "class_id": "4514",
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -485,9 +485,9 @@
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "intro-geometry",
+                        "course": "intermediate-algebra",
                         "date": "8/26/2025",
-                        "class_id": "4483",
+                        "class_id": "4491",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -497,15 +497,15 @@
                         "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
             },
             {
-                        "course": "mathcounts-advanced",
+                        "course": "intro-geometry",
                         "date": "8/26/2025",
-                        "class_id": "4515",
+                        "class_id": "4483",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "intermediate-algebra",
+                        "course": "mathcounts-advanced",
                         "date": "8/26/2025",
-                        "class_id": "4491",
+                        "class_id": "4515",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -515,9 +515,9 @@
                         "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "intro-physics",
+                        "course": "maa-aimeb",
                         "date": "9/2/2025",
-                        "class_id": "4469",
+                        "class_id": "4543",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -527,9 +527,9 @@
                         "schedule": "Tue & Sun 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT), and Fri 9:30 - 11:30 PM ET (7:30 - 9:30 PM PT)"
             },
             {
-                        "course": "maa-aimeb",
+                        "course": "intro-physics",
                         "date": "9/2/2025",
-                        "class_id": "4543",
+                        "class_id": "4469",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -581,9 +581,9 @@
                         "schedule": "Tue & Fri 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)"
             },
             {
-                        "course": "python1",
+                        "course": "intro-geometry",
                         "date": "9/7/2025",
-                        "class_id": "4546",
+                        "class_id": "4484",
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -593,10 +593,10 @@
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "intro-geometry",
+                        "course": "calculus",
                         "date": "9/7/2025",
-                        "class_id": "4484",
-                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+                        "class_id": "4443",
+                        "schedule": "Sun 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)"
             },
             {
                         "course": "maa-amc10-final-five",
@@ -605,10 +605,10 @@
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "calculus",
+                        "course": "python1",
                         "date": "9/7/2025",
-                        "class_id": "4443",
-                        "schedule": "Sun 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)"
+                        "class_id": "4546",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
                         "course": "woot-code",
@@ -629,16 +629,16 @@
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "prealgebra2",
-                        "date": "9/9/2025",
-                        "class_id": "4442",
-                        "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
-            },
-            {
                         "course": "maa-amc10-final-five",
                         "date": "9/9/2025",
                         "class_id": "4531",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "prealgebra2",
+                        "date": "9/9/2025",
+                        "class_id": "4442",
+                        "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
             },
             {
                         "course": "algebra-a",
@@ -653,15 +653,15 @@
                         "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "mathcounts-advanced",
-                        "date": "9/12/2025",
-                        "class_id": "4517",
-                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
                         "course": "intro-numbertheory",
                         "date": "9/12/2025",
                         "class_id": "4466",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "date": "9/12/2025",
+                        "class_id": "4517",
                         "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -677,21 +677,27 @@
                         "schedule": "Mon & Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "maa-amc10",
-                        "date": "9/15/2025",
-                        "class_id": "4526",
-                        "schedule": "Mon & Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
                         "course": "mathcounts-advanced",
                         "date": "9/15/2025",
                         "class_id": "4518",
                         "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
+                        "course": "maa-amc10",
+                        "date": "9/15/2025",
+                        "class_id": "4526",
+                        "schedule": "Mon & Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
                         "course": "mathcounts-basics",
                         "date": "9/16/2025",
                         "class_id": "4510",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "fma",
+                        "date": "9/16/2025",
+                        "class_id": "4501",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -701,34 +707,10 @@
                         "schedule": "Tue 4:30 - 5:45 PM ET (1:30 - 2:45 PM PT)"
             },
             {
-                        "course": "fma",
-                        "date": "9/16/2025",
-                        "class_id": "4501",
-                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
                         "course": "algebra-b",
                         "date": "9/18/2025",
                         "class_id": "4477",
                         "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
-                        "course": "mathcounts-basics",
-                        "date": "9/21/2025",
-                        "class_id": "4509",
-                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)"
-            },
-            {
-                        "course": "precalc",
-                        "date": "9/21/2025",
-                        "class_id": "4499",
-                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
-                        "course": "intro-counting",
-                        "date": "9/21/2025",
-                        "class_id": "4460",
-                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)"
             },
             {
                         "course": "prealgebra1",
@@ -737,10 +719,28 @@
                         "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
             },
             {
+                        "course": "precalc",
+                        "date": "9/21/2025",
+                        "class_id": "4499",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
                         "course": "physics1",
                         "date": "9/21/2025",
                         "class_id": "4472",
                         "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "9/21/2025",
+                        "class_id": "4509",
+                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)"
+            },
+            {
+                        "course": "intro-counting",
+                        "date": "9/21/2025",
+                        "class_id": "4460",
+                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)"
             },
             {
                         "course": "maa-amc10-final-five",
@@ -749,10 +749,10 @@
                         "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "calculus",
+                        "course": "intermediate-numbertheory",
                         "date": "9/24/2025",
-                        "class_id": "4445",
-                        "schedule": "Wed 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)"
+                        "class_id": "4507",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
                         "course": "woot-chem",
@@ -767,27 +767,21 @@
                         "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "intermediate-numbertheory",
-                        "date": "9/24/2025",
-                        "class_id": "4507",
-                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
                         "course": "intro-geometry",
                         "date": "9/24/2025",
                         "class_id": "4486",
                         "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
+                        "course": "calculus",
+                        "date": "9/24/2025",
+                        "class_id": "4445",
+                        "schedule": "Wed 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)"
+            },
+            {
                         "course": "prealgebra2",
                         "date": "9/25/2025",
                         "class_id": "4444",
-                        "schedule": "Thurs 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
-            },
-            {
-                        "course": "prealgebra1",
-                        "date": "9/25/2025",
-                        "class_id": "4437",
                         "schedule": "Thurs 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
             },
             {
@@ -857,28 +851,16 @@
                         "schedule": "Mon, Wed & Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "mathcounts-basics",
-                        "date": "10/6/2025",
-                        "class_id": "4511",
-                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
                         "course": "algebra-a",
                         "date": "10/6/2025",
                         "class_id": "4454",
                         "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "maa-amc10",
-                        "date": "10/7/2025",
-                        "class_id": "4528",
-                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
-            },
-            {
-                        "course": "maa-amc12",
-                        "date": "10/7/2025",
-                        "class_id": "4539",
-                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+                        "course": "mathcounts-basics",
+                        "date": "10/6/2025",
+                        "class_id": "4511",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
                         "course": "maa-amc12-final-five",
@@ -887,10 +869,16 @@
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "maa-amc10-final-five",
-                        "date": "10/8/2025",
-                        "class_id": "4534",
-                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+                        "course": "maa-amc12",
+                        "date": "10/7/2025",
+                        "class_id": "4539",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "maa-amc10",
+                        "date": "10/7/2025",
+                        "class_id": "4528",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
                         "course": "intermediate-algebra",
@@ -899,15 +887,27 @@
                         "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "mathcounts-basics",
-                        "date": "10/9/2025",
-                        "class_id": "4512",
-                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+                        "course": "maa-amc10-final-five",
+                        "date": "10/8/2025",
+                        "class_id": "4534",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
                         "course": "maa-amc10-final-five",
                         "date": "10/9/2025",
                         "class_id": "4535",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "10/9/2025",
+                        "class_id": "4437",
+                        "schedule": "Thurs 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "date": "10/9/2025",
+                        "class_id": "4512",
                         "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
@@ -1025,12 +1025,6 @@
                         "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
             },
             {
-                        "course": "prealgebra1",
-                        "date": "11/4/2025",
-                        "class_id": "4439",
-                        "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
-            },
-            {
                         "course": "intro-counting",
                         "date": "11/4/2025",
                         "class_id": "4463",
@@ -1047,6 +1041,12 @@
                         "date": "11/4/2025",
                         "class_id": "4480",
                         "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)"
+            },
+            {
+                        "course": "prealgebra1",
+                        "date": "11/4/2025",
+                        "class_id": "4439",
+                        "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)"
             },
             {
                         "course": "algebra-a",
