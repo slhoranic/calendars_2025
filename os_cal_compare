@@ -1,1 +1,3403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Schedule Calendar</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #0f172a;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #374151;
+        }
+        
+        select, input {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 150px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .calendar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .month-section {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .month-header {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .month-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #e5e7eb;
+        }
+        
+        .day-header {
+            background-color: #f3f4f6;
+            padding: 12px;
+            font-weight: 600;
+            text-align: center;
+            color: #374151;
+            border-bottom: 2px solid #d1d5db;
+        }
+        
+        .day-cell {
+            background-color: white;
+            min-height: 120px;
+            padding: 8px;
+            vertical-align: top;
+            position: relative;
+        }
+        
+        .day-number {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+        }
+        
+        .course-item {
+            background: #3b82f6;
+            color: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1.2;
+            word-wrap: break-word;
+        }
+        
+        .course-item:hover {
+            transform: scale(1.02);
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .course-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            min-width: 450px;
+            max-width: 600px;
+            width: auto;
+        }
+        
+        .course-popup h3 {
+            margin: 0 0 15px 0;
+            color: #1e293b;
+            font-size: 1.2rem;
+        }
+        
+        .course-popup .detail-row {
+            display: flex;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+        
+        .course-popup .detail-label {
+            font-weight: 600;
+            margin-right: 10px;
+            min-width: 80px;
+            color: #6b7280;
+            flex-shrink: 0;
+        }
+        
+        .course-popup .detail-value {
+            color: #374151;
+            flex: 1;
+            white-space: nowrap;
+            overflow: visible;
+        }
+        
+        .course-popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        .course-popup .close-btn:hover {
+            color: #374151;
+        }
+        
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        
+        .today {
+            background-color: #fef3c7 !important;
+            border: 2px solid #f59e0b;
+        }
+        
+        .other-month {
+            color: #9ca3af;
+            background-color: #f9fafb;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .month-grid {
+                font-size: 12px;
+            }
+            .day-cell {
+                min-height: 80px;
+                padding: 4px;
+            }
+            .course-item {
+                font-size: 9px;
+                padding: 2px 4px;
+            }
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AoPS Course Schedule Calendar</h1>
+        <p>Web Campus - Updated from Database on November 26, 2025 at 08:18 AM</p>
+    </div>
+    
+    <div class="controls">
+        <div class="filter-group">
+            <label for="monthSelect">Month:</label>
+            <select id="monthSelect">
+                <option value="all">All Months</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="yearSelect">Year:</label>
+            <select id="yearSelect">
+                <option value="all">All Years</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="levelFilter">Level:</label>
+            <select id="levelFilter">
+                <option value="all">All Levels</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number" id="totalCourses">0</div>
+            <div class="stat-label">Total Courses</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="uniqueTypes">0</div>
+            <div class="stat-label">Course Levels</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="avgPerMonth">0</div>
+            <div class="stat-label">Avg Per Month</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="totalEnrollments">0</div>
+            <div class="stat-label">Total Enrollments</div>
+        </div>
+    </div>
+    
+    <div class="legend" id="legend"></div>
+    
+    <div class="calendar-container" id="calendarContainer"></div>
 
+    <script>
+        const courseData = [
+            {
+                        "course": "maa-amc12",
+                        "course_name": "AMC 12 Problem Series",
+                        "date": "8/6/2025",
+                        "end_date": "10/29/2025",
+                        "class_id": "4360",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 22
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "8/6/2025",
+                        "end_date": "1/28/2026",
+                        "class_id": "4497",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 57
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "8/7/2025",
+                        "end_date": "11/20/2025",
+                        "class_id": "4474",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 51
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "8/8/2025",
+                        "end_date": "2/20/2026",
+                        "class_id": "4490",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 57
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "8/10/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4577",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 74
+            },
+            {
+                        "course": "maa-amc12",
+                        "course_name": "AMC 12 Problem Series",
+                        "date": "8/10/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4536",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 81
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "8/10/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4523",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 89
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "8/10/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4578",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 67
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "8/11/2025",
+                        "end_date": "11/3/2025",
+                        "class_id": "4458",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 48
+            },
+            {
+                        "course": "maa-amc12",
+                        "course_name": "AMC 12 Problem Series",
+                        "date": "8/11/2025",
+                        "end_date": "11/3/2025",
+                        "class_id": "4537",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 21
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "8/13/2025",
+                        "end_date": "11/5/2025",
+                        "class_id": "4465",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 32
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "8/13/2025",
+                        "end_date": "2/18/2026",
+                        "class_id": "4482",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 47
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "8/14/2025",
+                        "end_date": "10/30/2025",
+                        "class_id": "4524",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 75
+            },
+            {
+                        "course": "python1",
+                        "course_name": "Introduction to Programming with Python",
+                        "date": "8/14/2025",
+                        "end_date": "10/30/2025",
+                        "class_id": "4545",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2025,
+                        "enrollment": 35
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "8/15/2025",
+                        "end_date": "9/12/2025",
+                        "class_id": "4529",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 71
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "8/17/2025",
+                        "end_date": "11/9/2025",
+                        "class_id": "4506",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 78
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "8/17/2025",
+                        "end_date": "11/9/2025",
+                        "class_id": "4514",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 85
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "8/17/2025",
+                        "end_date": "12/14/2025",
+                        "class_id": "4431",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 63
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "8/17/2025",
+                        "end_date": "12/14/2025",
+                        "class_id": "4441",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 54
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "8/17/2025",
+                        "end_date": "12/14/2025",
+                        "class_id": "4449",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 73
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "8/18/2025",
+                        "end_date": "12/15/2025",
+                        "class_id": "4475",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 36
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "8/19/2025",
+                        "end_date": "11/4/2025",
+                        "class_id": "4525",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 90
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "8/26/2025",
+                        "end_date": "2/24/2026",
+                        "class_id": "4483",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 38
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "8/26/2025",
+                        "end_date": "2/24/2026",
+                        "class_id": "4491",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 73
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "8/26/2025",
+                        "end_date": "12/16/2025",
+                        "class_id": "4432",
+                        "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 39
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "8/26/2025",
+                        "end_date": "11/11/2025",
+                        "class_id": "4515",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 43
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "8/27/2025",
+                        "end_date": "1/7/2026",
+                        "class_id": "4450",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 55
+            },
+            {
+                        "course": "woot-math-2",
+                        "course_name": "MathWOOT - Level 2",
+                        "date": "9/2/2025",
+                        "end_date": "3/6/2026",
+                        "class_id": "4381",
+                        "schedule": "Tue & Fri 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 208
+            },
+            {
+                        "course": "woot-math-1",
+                        "course_name": "MathWOOT - Level 1",
+                        "date": "9/2/2025",
+                        "end_date": "3/8/2026",
+                        "class_id": "4380",
+                        "schedule": "Tue & Sun 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT), and Fri 9:30 - 11:30 PM ET (7:30 - 9:30 PM PT)",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 323
+            },
+            {
+                        "course": "maa-aimeb",
+                        "course_name": "AIME Problem Series B",
+                        "date": "9/2/2025",
+                        "end_date": "11/18/2025",
+                        "class_id": "4543",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 32
+            },
+            {
+                        "course": "intro-physics",
+                        "course_name": "Introduction to Physics",
+                        "date": "9/2/2025",
+                        "end_date": "11/18/2025",
+                        "class_id": "4469",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2025,
+                        "enrollment": 49
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "9/3/2025",
+                        "end_date": "12/3/2025",
+                        "class_id": "4508",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 57
+            },
+            {
+                        "course": "cs-bronze",
+                        "course_name": "USACO Bronze Problem Series",
+                        "date": "9/3/2025",
+                        "end_date": "12/3/2025",
+                        "class_id": "4549",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 53
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "9/3/2025",
+                        "end_date": "12/3/2025",
+                        "class_id": "4459",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 47
+            },
+            {
+                        "course": "maa-amc12-final-five",
+                        "course_name": "AMC 12 Final Fives",
+                        "date": "9/4/2025",
+                        "end_date": "9/25/2025",
+                        "class_id": "4540",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 25
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "9/4/2025",
+                        "end_date": "11/20/2025",
+                        "class_id": "4516",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 46
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "9/5/2025",
+                        "end_date": "1/16/2026",
+                        "class_id": "4451",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 41
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "9/5/2025",
+                        "end_date": "1/16/2026",
+                        "class_id": "4433",
+                        "schedule": "Fri 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 33
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "9/7/2025",
+                        "end_date": "9/28/2025",
+                        "class_id": "4530",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 65
+            },
+            {
+                        "course": "calculus",
+                        "course_name": "Calculus",
+                        "date": "9/7/2025",
+                        "end_date": "3/15/2026",
+                        "class_id": "4443",
+                        "schedule": "Sun 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Advanced",
+                        "year": 2025,
+                        "enrollment": 74
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "9/7/2025",
+                        "end_date": "9/28/2025",
+                        "class_id": "4659",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 58
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "9/7/2025",
+                        "end_date": "3/8/2026",
+                        "class_id": "4484",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 80
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "9/7/2025",
+                        "end_date": "1/11/2026",
+                        "class_id": "4476",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 69
+            },
+            {
+                        "course": "python1",
+                        "course_name": "Introduction to Programming with Python",
+                        "date": "9/7/2025",
+                        "end_date": "11/23/2025",
+                        "class_id": "4546",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2025,
+                        "enrollment": 60
+            },
+            {
+                        "course": "woot-code",
+                        "course_name": "CodeWOOT",
+                        "date": "9/8/2025",
+                        "end_date": "3/9/2026",
+                        "class_id": "4379",
+                        "schedule": "Mon 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 59
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "9/8/2025",
+                        "end_date": "1/12/2026",
+                        "class_id": "4434",
+                        "schedule": "Mon 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 59
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "9/9/2025",
+                        "end_date": "2/24/2026",
+                        "class_id": "4498",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 54
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "9/9/2025",
+                        "end_date": "9/30/2025",
+                        "class_id": "4531",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 39
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "9/9/2025",
+                        "end_date": "1/13/2026",
+                        "class_id": "4442",
+                        "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 52
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "9/11/2025",
+                        "end_date": "3/12/2026",
+                        "class_id": "4485",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 67
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "9/11/2025",
+                        "end_date": "1/15/2026",
+                        "class_id": "4452",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 37
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "9/12/2025",
+                        "end_date": "12/12/2025",
+                        "class_id": "4517",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 66
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "9/12/2025",
+                        "end_date": "12/12/2025",
+                        "class_id": "4466",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 47
+            },
+            {
+                        "course": "paradoxes-seminar",
+                        "course_name": "Paradoxes and Infinity Seminar",
+                        "date": "9/13/2025",
+                        "end_date": "9/14/2025",
+                        "class_id": "4558",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 22
+            },
+            {
+                        "course": "maa-amc12",
+                        "course_name": "AMC 12 Problem Series",
+                        "date": "9/15/2025",
+                        "end_date": "10/22/2025",
+                        "class_id": "4538",
+                        "schedule": "Mon & Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 74
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "9/15/2025",
+                        "end_date": "10/22/2025",
+                        "class_id": "4526",
+                        "schedule": "Mon & Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 64
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "9/15/2025",
+                        "end_date": "10/22/2025",
+                        "class_id": "4693",
+                        "schedule": "Mon & Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 64
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "9/15/2025",
+                        "end_date": "12/8/2025",
+                        "class_id": "4518",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 65
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "9/16/2025",
+                        "end_date": "12/9/2025",
+                        "class_id": "4510",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 57
+            },
+            {
+                        "course": "fma",
+                        "course_name": "F=ma Problem Series",
+                        "date": "9/16/2025",
+                        "end_date": "12/9/2025",
+                        "class_id": "4501",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 32
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "9/16/2025",
+                        "end_date": "1/20/2026",
+                        "class_id": "4436",
+                        "schedule": "Tue 4:30 - 5:45 PM ET (1:30 - 2:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 38
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "9/18/2025",
+                        "end_date": "1/22/2026",
+                        "class_id": "4477",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 33
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "9/21/2025",
+                        "end_date": "12/14/2025",
+                        "class_id": "4460",
+                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 41
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "9/21/2025",
+                        "end_date": "3/8/2026",
+                        "class_id": "4499",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 80
+            },
+            {
+                        "course": "physics1",
+                        "course_name": "Physics 1: Mechanics",
+                        "date": "9/21/2025",
+                        "end_date": "3/22/2026",
+                        "class_id": "4472",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2025,
+                        "enrollment": 81
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "9/21/2025",
+                        "end_date": "12/14/2025",
+                        "class_id": "4509",
+                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 70
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "9/21/2025",
+                        "end_date": "1/25/2026",
+                        "class_id": "4435",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 67
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "9/22/2025",
+                        "end_date": "10/13/2025",
+                        "class_id": "4532",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 71
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "9/24/2025",
+                        "end_date": "3/25/2026",
+                        "class_id": "4486",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 61
+            },
+            {
+                        "course": "woot-chem",
+                        "course_name": "ChemWOOT",
+                        "date": "9/24/2025",
+                        "end_date": "1/28/2026",
+                        "class_id": "4376",
+                        "schedule": "Wed 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 46
+            },
+            {
+                        "course": "calculus",
+                        "course_name": "Calculus",
+                        "date": "9/24/2025",
+                        "end_date": "4/1/2026",
+                        "class_id": "4445",
+                        "schedule": "Wed 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Advanced",
+                        "year": 2025,
+                        "enrollment": 48
+            },
+            {
+                        "course": "intermediate-numbertheory",
+                        "course_name": "Intermediate Number Theory",
+                        "date": "9/24/2025",
+                        "end_date": "12/17/2025",
+                        "class_id": "4507",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 50
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "9/24/2025",
+                        "end_date": "1/28/2026",
+                        "class_id": "4478",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 35
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "9/25/2025",
+                        "end_date": "1/29/2026",
+                        "class_id": "4444",
+                        "schedule": "Thurs 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 26
+            },
+            {
+                        "course": "woot-physics",
+                        "course_name": "PhysicsWOOT",
+                        "date": "9/25/2025",
+                        "end_date": "3/12/2026",
+                        "class_id": "4378",
+                        "schedule": "Thurs 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 104
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "9/28/2025",
+                        "end_date": "3/29/2026",
+                        "class_id": "4492",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 46
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "9/28/2025",
+                        "end_date": "10/19/2025",
+                        "class_id": "4694",
+                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 59
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "9/28/2025",
+                        "end_date": "2/1/2026",
+                        "class_id": "4453",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 66
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "9/28/2025",
+                        "end_date": "10/19/2025",
+                        "class_id": "4533",
+                        "schedule": "Sun 1:00 - 2:30 PM ET (10:00 - 11:30 AM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 78
+            },
+            {
+                        "course": "maa-amc12-final-five",
+                        "course_name": "AMC 12 Final Fives",
+                        "date": "9/28/2025",
+                        "end_date": "10/19/2025",
+                        "class_id": "4541",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 46
+            },
+            {
+                        "course": "intermediate-counting",
+                        "course_name": "Intermediate Counting & Probability",
+                        "date": "9/28/2025",
+                        "end_date": "2/15/2026",
+                        "class_id": "4504",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 42
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "9/28/2025",
+                        "end_date": "3/29/2026",
+                        "class_id": "4696",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 37
+            },
+            {
+                        "course": "python2",
+                        "course_name": "Intermediate Programming with Python",
+                        "date": "10/3/2025",
+                        "end_date": "1/16/2026",
+                        "class_id": "4548",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2025,
+                        "enrollment": 35
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "10/3/2025",
+                        "end_date": "1/16/2026",
+                        "class_id": "4461",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 37
+            },
+            {
+                        "course": "intro-physics",
+                        "course_name": "Introduction to Physics",
+                        "date": "10/5/2025",
+                        "end_date": "1/11/2026",
+                        "class_id": "4470",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2025,
+                        "enrollment": 35
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "10/5/2025",
+                        "end_date": "1/11/2026",
+                        "class_id": "4519",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 67
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "10/5/2025",
+                        "end_date": "1/11/2026",
+                        "class_id": "4698",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 64
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "10/6/2025",
+                        "end_date": "2/9/2026",
+                        "class_id": "4454",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 31
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "10/6/2025",
+                        "end_date": "11/3/2025",
+                        "class_id": "4527",
+                        "schedule": "Mon, Wed & Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 92
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "10/7/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4700",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 76
+            },
+            {
+                        "course": "maa-amc12",
+                        "course_name": "AMC 12 Problem Series",
+                        "date": "10/7/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4539",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 56
+            },
+            {
+                        "course": "maa-amc12-final-five",
+                        "course_name": "AMC 12 Final Fives",
+                        "date": "10/7/2025",
+                        "end_date": "10/28/2025",
+                        "class_id": "4542",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 43
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "10/7/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4528",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 71
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "10/8/2025",
+                        "end_date": "4/8/2026",
+                        "class_id": "4493",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 56
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "10/8/2025",
+                        "end_date": "10/29/2025",
+                        "class_id": "4534",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 73
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "10/9/2025",
+                        "end_date": "10/30/2025",
+                        "class_id": "4535",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 101
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "10/9/2025",
+                        "end_date": "2/12/2026",
+                        "class_id": "4437",
+                        "schedule": "Thurs 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 39
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "10/9/2025",
+                        "end_date": "1/15/2026",
+                        "class_id": "4512",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 72
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "10/15/2025",
+                        "end_date": "1/21/2026",
+                        "class_id": "4520",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 84
+            },
+            {
+                        "course": "fma",
+                        "course_name": "F=ma Problem Series",
+                        "date": "10/17/2025",
+                        "end_date": "1/30/2026",
+                        "class_id": "4503",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 65
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "10/19/2025",
+                        "end_date": "2/22/2026",
+                        "class_id": "4446",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 63
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "10/19/2025",
+                        "end_date": "1/25/2026",
+                        "class_id": "4462",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 45
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "10/20/2025",
+                        "end_date": "4/6/2026",
+                        "class_id": "4500",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 58
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "10/21/2025",
+                        "end_date": "2/24/2026",
+                        "class_id": "4455",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 33
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "10/22/2025",
+                        "end_date": "2/25/2026",
+                        "class_id": "4438",
+                        "schedule": "Wed 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 57
+            },
+            {
+                        "course": "prealgebra2-sp",
+                        "course_name": "Prealgebra 2 Self-Paced",
+                        "date": "10/22/2025",
+                        "end_date": "10/22/2055",
+                        "class_id": "4702",
+                        "schedule": "Schedule TBD",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 87
+            },
+            {
+                        "course": "prealgebra1-sp",
+                        "course_name": "Prealgebra 1 Self-Paced",
+                        "date": "10/22/2025",
+                        "end_date": "10/22/2055",
+                        "class_id": "4701",
+                        "schedule": "Schedule TBD",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 120
+            },
+            {
+                        "course": "algebra-b-sp",
+                        "course_name": "Introduction to Algebra B Self-Paced",
+                        "date": "10/22/2025",
+                        "end_date": "10/22/2055",
+                        "class_id": "4704",
+                        "schedule": "Schedule TBD",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 52
+            },
+            {
+                        "course": "algebra-a-sp",
+                        "course_name": "Introduction to Algebra A Self-Paced",
+                        "date": "10/22/2025",
+                        "end_date": "10/22/2055",
+                        "class_id": "4703",
+                        "schedule": "Schedule TBD",
+                        "level": "Other",
+                        "year": 2025,
+                        "enrollment": 111
+            },
+            {
+                        "course": "maa-aimea",
+                        "course_name": "AIME Problem Series A",
+                        "date": "10/23/2025",
+                        "end_date": "1/29/2026",
+                        "class_id": "4544",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 53
+            },
+            {
+                        "course": "maa-amc10-special",
+                        "course_name": "Special AMC 10 Problem Seminar A",
+                        "date": "10/25/2025",
+                        "end_date": "10/26/2025",
+                        "class_id": "4560",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 283
+            },
+            {
+                        "course": "maa-amc12-special",
+                        "course_name": "Special AMC 12 Problem Seminar A",
+                        "date": "10/25/2025",
+                        "end_date": "10/26/2025",
+                        "class_id": "4561",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 77
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "10/26/2025",
+                        "end_date": "2/1/2026",
+                        "class_id": "4467",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 62
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "10/26/2025",
+                        "end_date": "3/1/2026",
+                        "class_id": "4479",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 52
+            },
+            {
+                        "course": "physics1",
+                        "course_name": "Physics 1: Mechanics",
+                        "date": "10/26/2025",
+                        "end_date": "4/26/2026",
+                        "class_id": "4473",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2025,
+                        "enrollment": 92
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "10/26/2025",
+                        "end_date": "4/26/2026",
+                        "class_id": "4487",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 91
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "10/27/2025",
+                        "end_date": "3/2/2026",
+                        "class_id": "4447",
+                        "schedule": "Mon 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 19
+            },
+            {
+                        "course": "cs-bronze",
+                        "course_name": "USACO Bronze Problem Series",
+                        "date": "10/30/2025",
+                        "end_date": "2/5/2026",
+                        "class_id": "4550",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 22
+            },
+            {
+                        "course": "maa-amc10-special-b",
+                        "course_name": "Special AMC 10 Problem Seminar B",
+                        "date": "11/1/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4562",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 320
+            },
+            {
+                        "course": "maa-amc12-special-b",
+                        "course_name": "Special AMC 12 Problem Seminar B",
+                        "date": "11/1/2025",
+                        "end_date": "11/2/2025",
+                        "class_id": "4563",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 98
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "11/3/2025",
+                        "end_date": "5/4/2026",
+                        "class_id": "4488",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 44
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "11/4/2025",
+                        "end_date": "3/10/2026",
+                        "class_id": "4480",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 38
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "11/4/2025",
+                        "end_date": "3/10/2026",
+                        "class_id": "4439",
+                        "schedule": "Tue 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 35
+            },
+            {
+                        "course": "intermediate-counting",
+                        "course_name": "Intermediate Counting & Probability",
+                        "date": "11/4/2025",
+                        "end_date": "3/24/2026",
+                        "class_id": "4505",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 49
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "11/9/2025",
+                        "end_date": "3/15/2026",
+                        "class_id": "4456",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 74
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "11/12/2025",
+                        "end_date": "3/18/2026",
+                        "class_id": "4448",
+                        "schedule": "Wed 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 46
+            },
+            {
+                        "course": "calculus",
+                        "course_name": "Calculus",
+                        "date": "11/14/2025",
+                        "end_date": "5/22/2026",
+                        "class_id": "4496",
+                        "schedule": "Fri 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Advanced",
+                        "year": 2025,
+                        "enrollment": 88
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "11/16/2025",
+                        "end_date": "5/17/2026",
+                        "class_id": "4708",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 52
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "11/16/2025",
+                        "end_date": "5/17/2026",
+                        "class_id": "4494",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 52
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "12/1/2025",
+                        "end_date": "3/30/2026",
+                        "class_id": "4481",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 38
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "12/1/2025",
+                        "end_date": "3/2/2026",
+                        "class_id": "4468",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 39
+            },
+            {
+                        "course": "python1",
+                        "course_name": "Introduction to Programming with Python",
+                        "date": "12/2/2025",
+                        "end_date": "3/3/2026",
+                        "class_id": "4547",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2025,
+                        "enrollment": 44
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "12/2/2025",
+                        "end_date": "1/11/2026",
+                        "class_id": "4521",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 63
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "12/5/2025",
+                        "end_date": "4/3/2026",
+                        "class_id": "4457",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 33
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "12/5/2025",
+                        "end_date": "5/29/2026",
+                        "class_id": "4489",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 51
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "12/7/2025",
+                        "end_date": "3/8/2026",
+                        "class_id": "4464",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 40
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "12/8/2025",
+                        "end_date": "1/16/2026",
+                        "class_id": "4522",
+                        "schedule": "Mon, Wed & Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 49
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "12/9/2025",
+                        "end_date": "1/18/2026",
+                        "class_id": "4513",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2025,
+                        "enrollment": 46
+            },
+            {
+                        "course": "intro-physics",
+                        "course_name": "Introduction to Physics",
+                        "date": "12/10/2025",
+                        "end_date": "3/11/2026",
+                        "class_id": "4471",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2025,
+                        "enrollment": 25
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "12/11/2025",
+                        "end_date": "6/4/2026",
+                        "class_id": "4495",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 32
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "12/12/2025",
+                        "end_date": "4/10/2026",
+                        "class_id": "4440",
+                        "schedule": "Fri 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2025,
+                        "enrollment": 24
+            },
+            {
+                        "course": "relativity-seminar",
+                        "course_name": "Physics Seminar: Relativity",
+                        "date": "12/13/2025",
+                        "end_date": "12/14/2025",
+                        "class_id": "4557",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Science",
+                        "year": 2025,
+                        "enrollment": 15
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "12/14/2025",
+                        "end_date": "5/31/2026",
+                        "class_id": "4502",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2025,
+                        "enrollment": 73
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "1/4/2026",
+                        "end_date": "4/19/2026",
+                        "class_id": "4587",
+                        "schedule": "Sun 1:00 - 2:15 PM ET (10:00 - 11:15 AM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 12
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "1/4/2026",
+                        "end_date": "4/19/2026",
+                        "class_id": "4581",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 14
+            },
+            {
+                        "course": "cs-bronze",
+                        "course_name": "USACO Bronze Problem Series",
+                        "date": "1/4/2026",
+                        "end_date": "3/22/2026",
+                        "class_id": "4655",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 17
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "1/5/2026",
+                        "end_date": "6/22/2026",
+                        "class_id": "4617",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 8
+            },
+            {
+                        "course": "maa-aimea",
+                        "course_name": "AIME Problem Series A",
+                        "date": "1/5/2026",
+                        "end_date": "1/30/2026",
+                        "class_id": "4657",
+                        "schedule": "Mon, Wed & Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 9
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "1/5/2026",
+                        "end_date": "4/20/2026",
+                        "class_id": "4594",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 17
+            },
+            {
+                        "course": "maa-aimeb",
+                        "course_name": "AIME Problem Series B",
+                        "date": "1/6/2026",
+                        "end_date": "2/1/2026",
+                        "class_id": "4658",
+                        "schedule": "Tue, Thurs & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 11
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "1/7/2026",
+                        "end_date": "3/25/2026",
+                        "class_id": "4599",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 12
+            },
+            {
+                        "course": "maa-amc8-special",
+                        "course_name": "Special AMC 8 Problem Seminar A",
+                        "date": "1/10/2026",
+                        "end_date": "1/11/2026",
+                        "class_id": "4564",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 42
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "1/13/2026",
+                        "end_date": "6/23/2026",
+                        "class_id": "4623",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 11
+            },
+            {
+                        "course": "maa-amc8-special-b",
+                        "course_name": "Special AMC 8 Problem Seminar B",
+                        "date": "1/17/2026",
+                        "end_date": "1/18/2026",
+                        "class_id": "4565",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 34
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "1/19/2026",
+                        "end_date": "5/4/2026",
+                        "class_id": "4588",
+                        "schedule": "Mon 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 28
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "1/22/2026",
+                        "end_date": "4/9/2026",
+                        "class_id": "4600",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 17
+            },
+            {
+                        "course": "python1",
+                        "course_name": "Introduction to Programming with Python",
+                        "date": "1/23/2026",
+                        "end_date": "4/10/2026",
+                        "class_id": "4651",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2026,
+                        "enrollment": 8
+            },
+            {
+                        "course": "maa-aime-special",
+                        "course_name": "Special AIME Problem Seminar A",
+                        "date": "1/24/2026",
+                        "end_date": "1/25/2026",
+                        "class_id": "4568",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 7
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "1/25/2026",
+                        "end_date": "5/10/2026",
+                        "class_id": "4595",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 18
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "1/25/2026",
+                        "end_date": "7/19/2026",
+                        "class_id": "4618",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 17
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "1/25/2026",
+                        "end_date": "6/28/2026",
+                        "class_id": "4629",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 16
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "1/26/2026",
+                        "end_date": "5/11/2026",
+                        "class_id": "4582",
+                        "schedule": "Mon 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 4
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "1/26/2026",
+                        "end_date": "4/13/2026",
+                        "class_id": "4604",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 8
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "1/27/2026",
+                        "end_date": "5/12/2026",
+                        "class_id": "4589",
+                        "schedule": "Tue 4:30 - 5:45 PM ET (1:30 - 2:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 12
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "1/30/2026",
+                        "end_date": "5/15/2026",
+                        "class_id": "4612",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 35
+            },
+            {
+                        "course": "maa-aime-special-b",
+                        "course_name": "Special AIME Problem Seminar B",
+                        "date": "1/31/2026",
+                        "end_date": "2/1/2026",
+                        "class_id": "4569",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 5
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "2/1/2026",
+                        "end_date": "7/26/2026",
+                        "class_id": "4624",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 10
+            },
+            {
+                        "course": "intro-physics",
+                        "course_name": "Introduction to Physics",
+                        "date": "2/3/2026",
+                        "end_date": "4/21/2026",
+                        "class_id": "4608",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2026,
+                        "enrollment": 7
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "2/6/2026",
+                        "end_date": "5/22/2026",
+                        "class_id": "4590",
+                        "schedule": "Fri 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 15
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "2/6/2026",
+                        "end_date": "4/24/2026",
+                        "class_id": "4641",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "2/8/2026",
+                        "end_date": "4/26/2026",
+                        "class_id": "4646",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 26
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "2/8/2026",
+                        "end_date": "4/26/2026",
+                        "class_id": "4601",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 23
+            },
+            {
+                        "course": "physics1",
+                        "course_name": "Physics 1: Mechanics",
+                        "date": "2/8/2026",
+                        "end_date": "8/2/2026",
+                        "class_id": "4610",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2026,
+                        "enrollment": 14
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "2/11/2026",
+                        "end_date": "7/22/2026",
+                        "class_id": "4619",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 6
+            },
+            {
+                        "course": "intermediate-counting",
+                        "course_name": "Intermediate Counting & Probability",
+                        "date": "2/12/2026",
+                        "end_date": "6/11/2026",
+                        "class_id": "4633",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 18
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "2/12/2026",
+                        "end_date": "5/28/2026",
+                        "class_id": "4583",
+                        "schedule": "Thurs 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "2/12/2026",
+                        "end_date": "5/28/2026",
+                        "class_id": "4596",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 6
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "2/15/2026",
+                        "end_date": "5/3/2026",
+                        "class_id": "4644",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 12
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "2/15/2026",
+                        "end_date": "6/7/2026",
+                        "class_id": "4613",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 10
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "2/15/2026",
+                        "end_date": "5/3/2026",
+                        "class_id": "4605",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 13
+            },
+            {
+                        "course": "python1",
+                        "course_name": "Introduction to Programming with Python",
+                        "date": "2/15/2026",
+                        "end_date": "5/3/2026",
+                        "class_id": "4652",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2026,
+                        "enrollment": 5
+            },
+            {
+                        "course": "fma",
+                        "course_name": "F=ma Problem Series",
+                        "date": "2/16/2026",
+                        "end_date": "5/4/2026",
+                        "class_id": "4640",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 4
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "2/18/2026",
+                        "end_date": "7/29/2026",
+                        "class_id": "4625",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 10
+            },
+            {
+                        "course": "maa-amc12",
+                        "course_name": "AMC 12 Problem Series",
+                        "date": "2/18/2026",
+                        "end_date": "5/6/2026",
+                        "class_id": "4650",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 6
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "2/22/2026",
+                        "end_date": "6/14/2026",
+                        "class_id": "4591",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 15
+            },
+            {
+                        "course": "intermediate-numbertheory",
+                        "course_name": "Intermediate Number Theory",
+                        "date": "2/22/2026",
+                        "end_date": "5/10/2026",
+                        "class_id": "4635",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 13
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "2/27/2026",
+                        "end_date": "7/31/2026",
+                        "class_id": "4630",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 11
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "3/1/2026",
+                        "end_date": "6/21/2026",
+                        "class_id": "4584",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 1
+            },
+            {
+                        "course": "olympiad-geometry",
+                        "course_name": "Olympiad Geometry",
+                        "date": "3/1/2026",
+                        "end_date": "5/17/2026",
+                        "class_id": "4639",
+                        "schedule": "Sun 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Advanced",
+                        "year": 2026,
+                        "enrollment": 16
+            },
+            {
+                        "course": "calculus",
+                        "course_name": "Calculus",
+                        "date": "3/3/2026",
+                        "end_date": "8/18/2026",
+                        "class_id": "4637",
+                        "schedule": "Tue 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Advanced",
+                        "year": 2026,
+                        "enrollment": 12
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "3/3/2026",
+                        "end_date": "6/16/2026",
+                        "class_id": "4614",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 8
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "3/5/2026",
+                        "end_date": "8/13/2026",
+                        "class_id": "4620",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 6
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "3/5/2026",
+                        "end_date": "5/21/2026",
+                        "class_id": "4647",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 3
+            },
+            {
+                        "course": "relativity-seminar",
+                        "course_name": "Physics Seminar: Relativity",
+                        "date": "3/7/2026",
+                        "end_date": "3/8/2026",
+                        "class_id": "4690",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Science",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "3/8/2026",
+                        "end_date": "6/28/2026",
+                        "class_id": "4597",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 5
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "3/9/2026",
+                        "end_date": "8/24/2026",
+                        "class_id": "4626",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "python2",
+                        "course_name": "Intermediate Programming with Python",
+                        "date": "3/10/2026",
+                        "end_date": "5/26/2026",
+                        "class_id": "4654",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2026,
+                        "enrollment": 14
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "3/10/2026",
+                        "end_date": "3/31/2026",
+                        "class_id": "4649",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 6
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "3/17/2026",
+                        "end_date": "8/11/2026",
+                        "class_id": "4631",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 7
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "3/18/2026",
+                        "end_date": "7/1/2026",
+                        "class_id": "4585",
+                        "schedule": "Wed 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "3/18/2026",
+                        "end_date": "7/1/2026",
+                        "class_id": "4592",
+                        "schedule": "Wed 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 3
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "3/19/2026",
+                        "end_date": "6/4/2026",
+                        "class_id": "4606",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 5
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "3/22/2026",
+                        "end_date": "7/19/2026",
+                        "class_id": "4615",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 7
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "3/22/2026",
+                        "end_date": "6/14/2026",
+                        "class_id": "4602",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 10
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "3/22/2026",
+                        "end_date": "9/20/2026",
+                        "class_id": "4621",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 3
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "3/22/2026",
+                        "end_date": "6/14/2026",
+                        "class_id": "4642",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 4
+            },
+            {
+                        "course": "python1",
+                        "course_name": "Introduction to Programming with Python",
+                        "date": "3/23/2026",
+                        "end_date": "6/15/2026",
+                        "class_id": "4653",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2026,
+                        "enrollment": 1
+            },
+            {
+                        "course": "physics1",
+                        "course_name": "Physics 1: Mechanics",
+                        "date": "3/24/2026",
+                        "end_date": "9/1/2026",
+                        "class_id": "4611",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2026,
+                        "enrollment": 10
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "3/29/2026",
+                        "end_date": "9/27/2026",
+                        "class_id": "4627",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 5
+            },
+            {
+                        "course": "intro-physics",
+                        "course_name": "Introduction to Physics",
+                        "date": "3/29/2026",
+                        "end_date": "6/21/2026",
+                        "class_id": "4609",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2026,
+                        "enrollment": 4
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "4/3/2026",
+                        "end_date": "6/19/2026",
+                        "class_id": "4648",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 7
+            },
+            {
+                        "course": "intermediate-counting",
+                        "course_name": "Intermediate Counting & Probability",
+                        "date": "4/5/2026",
+                        "end_date": "8/16/2026",
+                        "class_id": "4634",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 12
+            },
+            {
+                        "course": "cs-bronze",
+                        "course_name": "USACO Bronze Problem Series",
+                        "date": "4/8/2026",
+                        "end_date": "6/24/2026",
+                        "class_id": "4656",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 1
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "4/8/2026",
+                        "end_date": "7/22/2026",
+                        "class_id": "4598",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "4/10/2026",
+                        "end_date": "6/26/2026",
+                        "class_id": "4645",
+                        "schedule": "Fri 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "4/12/2026",
+                        "end_date": "8/9/2026",
+                        "class_id": "4586",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "4/12/2026",
+                        "end_date": "8/9/2026",
+                        "class_id": "4593",
+                        "schedule": "Sun 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "calculus",
+                        "course_name": "Calculus",
+                        "date": "4/12/2026",
+                        "end_date": "10/18/2026",
+                        "class_id": "4638",
+                        "schedule": "Sun 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Advanced",
+                        "year": 2026,
+                        "enrollment": 12
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "4/12/2026",
+                        "end_date": "9/27/2026",
+                        "class_id": "4632",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 6
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "4/13/2026",
+                        "end_date": "7/6/2026",
+                        "class_id": "4603",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "intermediate-numbertheory",
+                        "course_name": "Intermediate Number Theory",
+                        "date": "4/13/2026",
+                        "end_date": "7/6/2026",
+                        "class_id": "4636",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 13
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "4/14/2026",
+                        "end_date": "6/30/2026",
+                        "class_id": "4643",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "4/15/2026",
+                        "end_date": "7/29/2026",
+                        "class_id": "4616",
+                        "schedule": "Wed 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 3
+            },
+            {
+                        "course": "paradoxes-seminar",
+                        "course_name": "Paradoxes and Infinity Seminar",
+                        "date": "4/18/2026",
+                        "end_date": "4/19/2026",
+                        "class_id": "4661",
+                        "schedule": "Sat & Sun 4:00 - 7:00 PM ET (1:00 - 4:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 13
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "4/19/2026",
+                        "end_date": "7/19/2026",
+                        "class_id": "4607",
+                        "schedule": "Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 4
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "4/21/2026",
+                        "end_date": "9/29/2026",
+                        "class_id": "4622",
+                        "schedule": "Tue 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 2
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "4/30/2026",
+                        "end_date": "10/8/2026",
+                        "class_id": "4628",
+                        "schedule": "Thurs 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 7
+            },
+            {
+                        "course": "prealgebra1",
+                        "course_name": "Prealgebra 1",
+                        "date": "6/1/2026",
+                        "end_date": "9/21/2026",
+                        "class_id": "4663",
+                        "schedule": "Mon 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "prealgebra2",
+                        "course_name": "Prealgebra 2",
+                        "date": "6/1/2026",
+                        "end_date": "9/21/2026",
+                        "class_id": "4664",
+                        "schedule": "Mon 7:30 - 8:45 PM ET (4:30 - 5:45 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "intro-numbertheory",
+                        "course_name": "Introduction to Number Theory",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4667",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "algebra-a",
+                        "course_name": "Introduction to Algebra A",
+                        "date": "6/1/2026",
+                        "end_date": "9/21/2026",
+                        "class_id": "4665",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "algebra-b",
+                        "course_name": "Introduction to Algebra B",
+                        "date": "6/1/2026",
+                        "end_date": "9/21/2026",
+                        "class_id": "4668",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "intro-counting",
+                        "course_name": "Introduction to Counting & Probability",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4666",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "intermediate-numbertheory",
+                        "course_name": "Intermediate Number Theory",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4672",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "intermediate-counting",
+                        "course_name": "Intermediate Counting & Probability",
+                        "date": "6/1/2026",
+                        "end_date": "10/5/2026",
+                        "class_id": "4671",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "mathcounts-basics",
+                        "course_name": "MATHCOUNTS/AMC 8 Basics",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4676",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "precalc",
+                        "course_name": "Precalculus",
+                        "date": "6/1/2026",
+                        "end_date": "11/2/2026",
+                        "class_id": "4673",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "mathcounts-advanced",
+                        "course_name": "MATHCOUNTS/AMC 8 Advanced",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4677",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "calculus",
+                        "course_name": "Calculus",
+                        "date": "6/1/2026",
+                        "end_date": "11/30/2026",
+                        "class_id": "4674",
+                        "schedule": "Mon 7:30 - 9:30 PM ET (4:30 - 6:30 PM PT)",
+                        "level": "Advanced",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "maa-amc10",
+                        "course_name": "AMC 10 Problem Series",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4678",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "cs-bronze",
+                        "course_name": "USACO Bronze Problem Series",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4675",
+                        "schedule": "Mon & Sun 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "maa-aimeb",
+                        "course_name": "AIME Problem Series B",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4684",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "maa-amc10-final-five",
+                        "course_name": "AMC 10 Final Fives",
+                        "date": "6/1/2026",
+                        "end_date": "6/22/2026",
+                        "class_id": "4679",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "fma",
+                        "course_name": "F=ma Problem Series",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4685",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "maa-amc12",
+                        "course_name": "AMC 12 Problem Series",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4681",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "python2",
+                        "course_name": "Intermediate Programming with Python",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4687",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "maa-amc12-final-five",
+                        "course_name": "AMC 12 Final Fives",
+                        "date": "6/1/2026",
+                        "end_date": "6/22/2026",
+                        "class_id": "4682",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "intro-physics",
+                        "course_name": "Introduction to Physics",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4688",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "maa-aimea",
+                        "course_name": "AIME Problem Series A",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4683",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Contest",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "intermediate-algebra",
+                        "course_name": "Intermediate Algebra",
+                        "date": "6/1/2026",
+                        "end_date": "11/16/2026",
+                        "class_id": "4670",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Intermediate",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "python1",
+                        "course_name": "Introduction to Programming with Python",
+                        "date": "6/1/2026",
+                        "end_date": "8/17/2026",
+                        "class_id": "4686",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Programming",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "physics1",
+                        "course_name": "Physics 1: Mechanics",
+                        "date": "6/1/2026",
+                        "end_date": "11/16/2026",
+                        "class_id": "4689",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Science",
+                        "year": 2026,
+                        "enrollment": 0
+            },
+            {
+                        "course": "intro-geometry",
+                        "course_name": "Introduction to Geometry",
+                        "date": "6/1/2026",
+                        "end_date": "11/16/2026",
+                        "class_id": "4669",
+                        "schedule": "Mon 7:30 - 9:00 PM ET (4:30 - 6:00 PM PT)",
+                        "level": "Introductory",
+                        "year": 2026,
+                        "enrollment": 0
+            }
+];
+
+        // Process data with level-based categorization
+        const processedData = courseData.map(item => {
+            const [month, day, year] = item.date.split('/');
+            const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+            
+            return {
+                ...item,
+                fullDate: date,
+                month: parseInt(month),
+                day: parseInt(day),
+                year: parseInt(year),
+                displayName: item.course_name
+            };
+        });
+
+        // Updated level-based color scheme matching your CSV data
+        const levelColors = {
+            'Introductory': '#10b981',    // Green
+            'Intermediate': '#3b82f6',    // Blue  
+            'Advanced': '#ef4444',        // Red
+            'Contest': '#8b5cf6',         // Purple
+            'Programming': '#f59e0b',     // Orange
+            'Science': '#06b6d4',         // Cyan
+            'Other': '#6b7280'           // Gray
+        };
+
+        // Get unique years for dropdown
+        const years = [...new Set(processedData.map(item => item.year))].sort();
+        const levels = [...new Set(processedData.map(item => item.level))].sort();
+        const months = [...new Set(processedData.map(item => item.month))].sort((a, b) => a - b);
+        const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        
+        function populateDropdowns() {
+            // Populate year dropdown
+            const yearSelect = document.getElementById('yearSelect');
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            });
+            
+            // Populate level dropdown
+            const levelSelect = document.getElementById('levelFilter');
+            levels.forEach(level => {
+                const option = document.createElement('option');
+                option.value = level;
+                option.textContent = level;
+                levelSelect.appendChild(option);
+            });
+        }
+
+        function showCoursePopup(course) {
+            const existingPopup = document.querySelector('.popup-overlay');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            overlay.onclick = () => overlay.remove();
+            
+            const popup = document.createElement('div');
+            popup.className = 'course-popup';
+            
+            popup.innerHTML = `
+                <button class="close-btn" onclick="this.closest('.popup-overlay').remove()">&times;</button>
+                <h3>${course.displayName}</h3>
+                <div class="detail-row">
+                    <span class="detail-label">📅 Start:</span>
+                    <span class="detail-value">${course.date}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🏁 End:</span>
+                    <span class="detail-value">${course.end_date}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🕒 Schedule:</span>
+                    <span class="detail-value">${course.schedule}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">📊 Level:</span>
+                    <span class="detail-value">${course.level}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">🆔 Class ID:</span>
+                    <span class="detail-value">${course.class_id}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">👥 Enrollment:</span>
+                    <span class="detail-value">${course.enrollment} students</span>
+                </div>
+            `;
+            
+            overlay.appendChild(popup);
+            document.body.appendChild(overlay);
+            popup.onclick = (e) => e.stopPropagation();
+        }
+
+        function getFilteredData() {
+            const monthFilter = document.getElementById('monthSelect').value;
+            const yearFilter = document.getElementById('yearSelect').value;
+            const levelFilter = document.getElementById('levelFilter').value;
+            
+            let filtered = processedData;
+            
+            if (monthFilter !== 'all') {
+                filtered = filtered.filter(item => item.month === parseInt(monthFilter));
+            }
+            
+            if (yearFilter !== 'all') {
+                filtered = filtered.filter(item => item.year === parseInt(yearFilter));
+            }
+            
+            if (levelFilter !== 'all') {
+                filtered = filtered.filter(item => item.level === levelFilter);
+            }
+            
+            return filtered;
+        }
+
+        function updateStats() {
+            const filtered = getFilteredData();
+            document.getElementById('totalCourses').textContent = filtered.length;
+            
+            const uniqueLevels = [...new Set(filtered.map(item => item.level))];
+            document.getElementById('uniqueTypes').textContent = uniqueLevels.length;
+            
+            const monthsWithCourses = [...new Set(filtered.map(item => item.month))].length;
+            const avgPerMonth = monthsWithCourses > 0 ? Math.round(filtered.length / monthsWithCourses) : 0;
+            document.getElementById('avgPerMonth').textContent = avgPerMonth;
+            
+            const totalEnrollments = filtered.reduce((sum, course) => sum + (course.enrollment || 0), 0);
+            document.getElementById('totalEnrollments').textContent = totalEnrollments;
+        }
+
+        function createLegend() {
+            const legend = document.getElementById('legend');
+            legend.innerHTML = '';
+            
+            const uniqueLevels = [...new Set(processedData.map(item => item.level))].sort();
+            
+            uniqueLevels.forEach(level => {
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                
+                const color = document.createElement('div');
+                color.className = 'legend-color';
+                color.style.backgroundColor = levelColors[level] || '#6b7280';
+                
+                const label = document.createElement('span');
+                label.textContent = level;
+                
+                item.appendChild(color);
+                item.appendChild(label);
+                legend.appendChild(item);
+            });
+        }
+
+        function getDaysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function getFirstDayOfMonth(month, year) {
+            return new Date(year, month - 1, 1).getDay();
+        }
+
+        function createCalendar() {
+            const container = document.getElementById('calendarContainer');
+            container.innerHTML = '';
+            
+            const monthFilter = document.getElementById('monthSelect').value;
+            const yearFilter = document.getElementById('yearSelect').value;
+            
+            let monthsToShow;
+            if (monthFilter !== 'all') {
+                monthsToShow = [parseInt(monthFilter)];
+            } else {
+                const filteredByYear = yearFilter !== 'all' 
+                    ? processedData.filter(item => item.year === parseInt(yearFilter))
+                    : processedData;
+                monthsToShow = [...new Set(filteredByYear.map(item => item.month))].sort((a, b) => a - b);
+            }
+            
+            monthsToShow.forEach(month => {
+                const monthSection = document.createElement('div');
+                monthSection.className = 'month-section';
+                
+                const monthHeader = document.createElement('div');
+                monthHeader.className = 'month-header';
+                const headerYear = yearFilter !== 'all' ? yearFilter : 'All Years';
+                monthHeader.textContent = `${monthNames[month]} ${headerYear}`;
+                
+                const monthGrid = document.createElement('div');
+                monthGrid.className = 'month-grid';
+                
+                const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                dayHeaders.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.className = 'day-header';
+                    dayHeader.textContent = day;
+                    monthGrid.appendChild(dayHeader);
+                });
+                
+                const calendarYear = yearFilter !== 'all' ? parseInt(yearFilter) : 2025;
+                const daysInMonth = getDaysInMonth(month, calendarYear);
+                const firstDay = getFirstDayOfMonth(month, calendarYear);
+                
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'day-cell other-month';
+                    monthGrid.appendChild(emptyCell);
+                }
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayCell = document.createElement('div');
+                    dayCell.className = 'day-cell';
+                    
+                    const today = new Date();
+                    if (today.getFullYear() === calendarYear && 
+                        today.getMonth() === month - 1 && 
+                        today.getDate() === day) {
+                        dayCell.classList.add('today');
+                    }
+                    
+                    const dayNumber = document.createElement('div');
+                    dayNumber.className = 'day-number';
+                    dayNumber.textContent = day;
+                    dayCell.appendChild(dayNumber);
+                    
+                    const filtered = getFilteredData();
+                    const coursesForDay = filtered.filter(item => 
+                        item.month === month && item.day === day && 
+                        (yearFilter === 'all' || item.year === parseInt(yearFilter))
+                    );
+                    
+                    coursesForDay.forEach(course => {
+                        const courseItem = document.createElement('div');
+                        courseItem.className = 'course-item';
+                        courseItem.textContent = course.displayName;
+                        courseItem.style.backgroundColor = levelColors[course.level] || '#6b7280';
+                        courseItem.onclick = () => showCoursePopup(course);
+                        courseItem.title = `Click for details: ${course.displayName} (${course.enrollment} enrolled)`;
+                        dayCell.appendChild(courseItem);
+                    });
+                    
+                    monthGrid.appendChild(dayCell);
+                }
+                
+                const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+                const cellsUsed = firstDay + daysInMonth;
+                for (let i = cellsUsed; i < totalCells; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'day-cell other-month';
+                    monthGrid.appendChild(emptyCell);
+                }
+                
+                monthSection.appendChild(monthHeader);
+                monthSection.appendChild(monthGrid);
+                container.appendChild(monthSection);
+            });
+        }
+
+        // Event listeners
+        ['monthSelect', 'yearSelect', 'levelFilter'].forEach(id => {
+            document.getElementById(id).addEventListener('change', () => {
+                createCalendar();
+                updateStats();
+            });
+        });
+
+        // Initialize
+        populateDropdowns();
+        createLegend();
+        createCalendar();
+        updateStats();
+    </script>
+</body>
+</html>
