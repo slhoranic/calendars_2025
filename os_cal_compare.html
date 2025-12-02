@@ -198,7 +198,7 @@
         
         .month-grid {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(7, minmax(140px, 1fr));
             gap: 1px;
             background: #e5e7eb;
             border: 1px solid #e5e7eb;
@@ -217,9 +217,13 @@
         
         .day-cell {
             background: white;
-            min-height: 100px;
+            min-height: 120px;
+            max-height: 120px;
+            height: 120px;
             padding: 8px;
             position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
         
         .day-cell.other-month {
@@ -248,7 +252,10 @@
             font-weight: 500;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            white-space: normal;
+            word-wrap: break-word;
+            line-height: 1.2;
+            max-width: 100%;
         }
         
         .course-item:hover {
