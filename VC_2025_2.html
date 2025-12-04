@@ -201,10 +201,9 @@
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            min-height: 120px;
+            min-height: 100px;
             padding: 8px;
             position: relative;
-            width: 100%;
         }
         
         .day-cell.today {
@@ -233,9 +232,9 @@
             margin-bottom: 4px;
             cursor: pointer;
             transition: all 0.2s;
-            white-space: normal;
-            word-wrap: break-word;
-            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .course-item:hover {
@@ -5365,19 +5364,6 @@
     "schedule": "[[\"2025-12-14\",\"18:45\",\"20:45\"]]"
   },
   {
-    "courseId": "vacad-math-4cd-1pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-01-11",
-    "endDate": "2026-05-10",
-    "year": 2026,
-    "month": 1,
-    "day": 11,
-    "level": "Elementary",
-    "enrollment": 6,
-    "classId": "35386",
-    "schedule": "[[\"2026-01-11\",\"15:45\",\"17:30\"]]"
-  },
-  {
     "courseId": "vacad-math-3cd-1pw",
     "displayName": "Honors Math 3C/3D",
     "startDate": "2026-01-11",
@@ -5391,30 +5377,17 @@
     "schedule": "[[\"2026-01-11\",\"10:30\",\"12:15\"]]"
   },
   {
-    "courseId": "vacad-la-7b-v2",
-    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
-    "startDate": "2026-01-13",
-    "endDate": "2026-05-12",
+    "courseId": "vacad-math-4cd-1pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-01-11",
+    "endDate": "2026-05-10",
     "year": 2026,
     "month": 1,
-    "day": 13,
-    "level": "Language Arts",
-    "enrollment": 4,
-    "classId": "35552",
-    "schedule": "[[\"2026-01-13\",\"19:00\",\"20:00\"]]"
-  },
-  {
-    "courseId": "vacad-math-5ab-2pw",
-    "displayName": "Honors Math 5A/5B",
-    "startDate": "2026-01-13",
-    "endDate": "2026-05-14",
-    "year": 2026,
-    "month": 1,
-    "day": 13,
+    "day": 11,
     "level": "Elementary",
-    "enrollment": 8,
-    "classId": "35389",
-    "schedule": "[[\"2026-01-13\",\"18:20\",\"19:15\"],[\"2026-01-15\",\"18:20\",\"19:15\"]]"
+    "enrollment": 6,
+    "classId": "35386",
+    "schedule": "[[\"2026-01-11\",\"15:45\",\"17:30\"]]"
   },
   {
     "courseId": "vacad-math-3cd-2pw",
@@ -5430,6 +5403,19 @@
     "schedule": "[[\"2026-01-13\",\"18:20\",\"19:15\"],[\"2026-01-15\",\"18:20\",\"19:15\"]]"
   },
   {
+    "courseId": "vacad-math-5ab-2pw",
+    "displayName": "Honors Math 5A/5B",
+    "startDate": "2026-01-13",
+    "endDate": "2026-05-14",
+    "year": 2026,
+    "month": 1,
+    "day": 13,
+    "level": "Elementary",
+    "enrollment": 8,
+    "classId": "35389",
+    "schedule": "[[\"2026-01-13\",\"18:20\",\"19:15\"],[\"2026-01-15\",\"18:20\",\"19:15\"]]"
+  },
+  {
     "courseId": "vacad-la-3b-2pw",
     "displayName": "Honors Language Arts 3B",
     "startDate": "2026-01-13",
@@ -5441,6 +5427,19 @@
     "enrollment": 8,
     "classId": "35514",
     "schedule": "[[\"2026-01-13\",\"18:20\",\"19:15\"],[\"2026-01-15\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-la-7b-v2",
+    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
+    "startDate": "2026-01-13",
+    "endDate": "2026-05-12",
+    "year": 2026,
+    "month": 1,
+    "day": 13,
+    "level": "Language Arts",
+    "enrollment": 4,
+    "classId": "35552",
+    "schedule": "[[\"2026-01-13\",\"19:00\",\"20:00\"]]"
   },
   {
     "courseId": "vacad-math-4cd-2pw",
@@ -5508,17 +5507,17 @@
     "schedule": "[[\"2026-01-18\",\"12:45\",\"14:30\"]]"
   },
   {
-    "courseId": "vacad-math-5cd-1pw",
-    "displayName": "Honors Math 5C/5D",
+    "courseId": "vacad-math-honors6b",
+    "displayName": "Honors Math 6: Prealgebra B",
     "startDate": "2026-01-18",
     "endDate": "2026-05-17",
     "year": 2026,
     "month": 1,
     "day": 18,
-    "level": "Elementary",
-    "enrollment": 8,
-    "classId": "35414",
-    "schedule": "[[\"2026-01-18\",\"15:45\",\"17:30\"]]"
+    "level": "Honors",
+    "enrollment": 10,
+    "classId": "35440",
+    "schedule": "[[\"2026-01-18\",\"12:45\",\"14:30\"]]"
   },
   {
     "courseId": "vacad-math-contest6b",
@@ -5534,17 +5533,17 @@
     "schedule": "[[\"2026-01-18\",\"15:45\",\"17:45\"]]"
   },
   {
-    "courseId": "vacad-math-honors6b",
-    "displayName": "Honors Math 6: Prealgebra B",
+    "courseId": "vacad-la-4b",
+    "displayName": "Honors Language Arts 4B",
     "startDate": "2026-01-18",
     "endDate": "2026-05-17",
     "year": 2026,
     "month": 1,
     "day": 18,
-    "level": "Honors",
-    "enrollment": 10,
-    "classId": "35440",
-    "schedule": "[[\"2026-01-18\",\"12:45\",\"14:30\"]]"
+    "level": "Language Arts",
+    "enrollment": 8,
+    "classId": "35528",
+    "schedule": "[[\"2026-01-18\",\"15:45\",\"17:30\"]]"
   },
   {
     "courseId": "vacad-math-honors7b",
@@ -5560,16 +5559,16 @@
     "schedule": "[[\"2026-01-18\",\"18:45\",\"20:30\"]]"
   },
   {
-    "courseId": "vacad-la-4b",
-    "displayName": "Honors Language Arts 4B",
+    "courseId": "vacad-math-5cd-1pw",
+    "displayName": "Honors Math 5C/5D",
     "startDate": "2026-01-18",
     "endDate": "2026-05-17",
     "year": 2026,
     "month": 1,
     "day": 18,
-    "level": "Language Arts",
+    "level": "Elementary",
     "enrollment": 8,
-    "classId": "35528",
+    "classId": "35414",
     "schedule": "[[\"2026-01-18\",\"15:45\",\"17:30\"]]"
   },
   {
@@ -5612,8 +5611,8 @@
     "schedule": "[[\"2026-01-19\",\"19:15\",\"21:00\"]]"
   },
   {
-    "courseId": "vacad-math-3cd-2pw",
-    "displayName": "Honors Math 3C/3D",
+    "courseId": "vacad-math-2ab-2pw",
+    "displayName": "Honors Math 2A/2B",
     "startDate": "2026-01-20",
     "endDate": "2026-05-21",
     "year": 2026,
@@ -5621,7 +5620,7 @@
     "day": 20,
     "level": "Elementary",
     "enrollment": 3,
-    "classId": "35346",
+    "classId": "35319",
     "schedule": "[[\"2026-01-20\",\"19:45\",\"20:40\"],[\"2026-01-22\",\"19:45\",\"20:40\"]]"
   },
   {
@@ -5646,8 +5645,60 @@
     "month": 1,
     "day": 20,
     "level": "Elementary",
-    "enrollment": 8,
-    "classId": "35373",
+    "enrollment": 6,
+    "classId": "35370",
+    "schedule": "[[\"2026-01-20\",\"18:20\",\"19:15\"],[\"2026-01-22\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-3cd-2pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-01-20",
+    "endDate": "2026-05-21",
+    "year": 2026,
+    "month": 1,
+    "day": 20,
+    "level": "Elementary",
+    "enrollment": 5,
+    "classId": "35342",
+    "schedule": "[[\"2026-01-20\",\"16:45\",\"17:40\"],[\"2026-01-22\",\"16:45\",\"17:40\"]]"
+  },
+  {
+    "courseId": "vacad-la-5b-2pw",
+    "displayName": "Honors Language Arts 5B",
+    "startDate": "2026-01-20",
+    "endDate": "2026-05-21",
+    "year": 2026,
+    "month": 1,
+    "day": 20,
+    "level": "Language Arts",
+    "enrollment": 7,
+    "classId": "35532",
+    "schedule": "[[\"2026-01-20\",\"18:20\",\"19:15\"],[\"2026-01-22\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-la-6b",
+    "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
+    "startDate": "2026-01-20",
+    "endDate": "2026-05-19",
+    "year": 2026,
+    "month": 1,
+    "day": 20,
+    "level": "Language Arts",
+    "enrollment": 3,
+    "classId": "35541",
+    "schedule": "[[\"2026-01-20\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-3cd-2pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-01-20",
+    "endDate": "2026-05-21",
+    "year": 2026,
+    "month": 1,
+    "day": 20,
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35346",
     "schedule": "[[\"2026-01-20\",\"19:45\",\"20:40\"],[\"2026-01-22\",\"19:45\",\"20:40\"]]"
   },
   {
@@ -5664,17 +5715,17 @@
     "schedule": "[[\"2026-01-20\",\"19:45\",\"20:40\"],[\"2026-01-22\",\"19:45\",\"20:40\"]]"
   },
   {
-    "courseId": "vacad-math-5cd-2pw",
-    "displayName": "Honors Math 5C/5D",
+    "courseId": "vacad-math-4cd-2pw",
+    "displayName": "Honors Math 4C/4D",
     "startDate": "2026-01-20",
     "endDate": "2026-05-21",
     "year": 2026,
     "month": 1,
     "day": 20,
     "level": "Elementary",
-    "enrollment": 6,
-    "classId": "35400",
-    "schedule": "[[\"2026-01-20\",\"18:20\",\"19:15\"],[\"2026-01-22\",\"18:20\",\"19:15\"]]"
+    "enrollment": 8,
+    "classId": "35373",
+    "schedule": "[[\"2026-01-20\",\"19:45\",\"20:40\"],[\"2026-01-22\",\"19:45\",\"20:40\"]]"
   },
   {
     "courseId": "vacad-math-honors6b-2pw",
@@ -5687,6 +5738,19 @@
     "level": "Honors",
     "enrollment": 13,
     "classId": "35431",
+    "schedule": "[[\"2026-01-20\",\"18:20\",\"19:15\"],[\"2026-01-22\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-2pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-01-20",
+    "endDate": "2026-05-21",
+    "year": 2026,
+    "month": 1,
+    "day": 20,
+    "level": "Elementary",
+    "enrollment": 6,
+    "classId": "35400",
     "schedule": "[[\"2026-01-20\",\"18:20\",\"19:15\"],[\"2026-01-22\",\"18:20\",\"19:15\"]]"
   },
   {
@@ -5703,19 +5767,6 @@
     "schedule": "[[\"2026-01-20\",\"19:45\",\"20:40\"],[\"2026-01-22\",\"19:45\",\"20:40\"]]"
   },
   {
-    "courseId": "vacad-math-3cd-2pw",
-    "displayName": "Honors Math 3C/3D",
-    "startDate": "2026-01-20",
-    "endDate": "2026-05-21",
-    "year": 2026,
-    "month": 1,
-    "day": 20,
-    "level": "Elementary",
-    "enrollment": 5,
-    "classId": "35342",
-    "schedule": "[[\"2026-01-20\",\"16:45\",\"17:40\"],[\"2026-01-22\",\"16:45\",\"17:40\"]]"
-  },
-  {
     "courseId": "vacad-la-4b-2pw",
     "displayName": "Honors Language Arts 4B",
     "startDate": "2026-01-20",
@@ -5729,58 +5780,6 @@
     "schedule": "[[\"2026-01-20\",\"19:45\",\"20:40\"],[\"2026-01-22\",\"19:45\",\"20:40\"]]"
   },
   {
-    "courseId": "vacad-la-6b",
-    "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
-    "startDate": "2026-01-20",
-    "endDate": "2026-05-19",
-    "year": 2026,
-    "month": 1,
-    "day": 20,
-    "level": "Language Arts",
-    "enrollment": 3,
-    "classId": "35541",
-    "schedule": "[[\"2026-01-20\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-2ab-2pw",
-    "displayName": "Honors Math 2A/2B",
-    "startDate": "2026-01-20",
-    "endDate": "2026-05-21",
-    "year": 2026,
-    "month": 1,
-    "day": 20,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35319",
-    "schedule": "[[\"2026-01-20\",\"19:45\",\"20:40\"],[\"2026-01-22\",\"19:45\",\"20:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-2pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-01-20",
-    "endDate": "2026-05-21",
-    "year": 2026,
-    "month": 1,
-    "day": 20,
-    "level": "Elementary",
-    "enrollment": 6,
-    "classId": "35370",
-    "schedule": "[[\"2026-01-20\",\"18:20\",\"19:15\"],[\"2026-01-22\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-la-5b-2pw",
-    "displayName": "Honors Language Arts 5B",
-    "startDate": "2026-01-20",
-    "endDate": "2026-05-21",
-    "year": 2026,
-    "month": 1,
-    "day": 20,
-    "level": "Language Arts",
-    "enrollment": 7,
-    "classId": "35532",
-    "schedule": "[[\"2026-01-20\",\"18:20\",\"19:15\"],[\"2026-01-22\",\"18:20\",\"19:15\"]]"
-  },
-  {
     "courseId": "vacad-math-2cd-2pw",
     "displayName": "Honors Math 2C/2D",
     "startDate": "2026-01-21",
@@ -5791,84 +5790,6 @@
     "level": "Elementary",
     "enrollment": 6,
     "classId": "35327",
-    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors6b-2pw",
-    "displayName": "Honors Math 6: Prealgebra B",
-    "startDate": "2026-01-21",
-    "endDate": "2026-05-22",
-    "year": 2026,
-    "month": 1,
-    "day": 21,
-    "level": "Honors",
-    "enrollment": 10,
-    "classId": "35435",
-    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-4ab-2pw",
-    "displayName": "Honors Math 4A/4B",
-    "startDate": "2026-01-21",
-    "endDate": "2026-05-22",
-    "year": 2026,
-    "month": 1,
-    "day": 21,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35362",
-    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7b",
-    "displayName": "Honors Math 7: Introduction to Algebra B",
-    "startDate": "2026-01-21",
-    "endDate": "2026-05-20",
-    "year": 2026,
-    "month": 1,
-    "day": 21,
-    "level": "Honors",
-    "enrollment": 3,
-    "classId": "35466",
-    "schedule": "[[\"2026-01-21\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-1pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-01-21",
-    "endDate": "2026-05-20",
-    "year": 2026,
-    "month": 1,
-    "day": 21,
-    "level": "Elementary",
-    "enrollment": 14,
-    "classId": "35377",
-    "schedule": "[[\"2026-01-21\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-la-5b-2pw",
-    "displayName": "Honors Language Arts 5B",
-    "startDate": "2026-01-21",
-    "endDate": "2026-05-22",
-    "year": 2026,
-    "month": 1,
-    "day": 21,
-    "level": "Language Arts",
-    "enrollment": 10,
-    "classId": "35535",
-    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-5ab-2pw",
-    "displayName": "Honors Math 5A/5B",
-    "startDate": "2026-01-21",
-    "endDate": "2026-05-22",
-    "year": 2026,
-    "month": 1,
-    "day": 21,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35392",
     "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
   },
   {
@@ -5911,6 +5832,19 @@
     "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
   },
   {
+    "courseId": "vacad-math-4ab-2pw",
+    "displayName": "Honors Math 4A/4B",
+    "startDate": "2026-01-21",
+    "endDate": "2026-05-22",
+    "year": 2026,
+    "month": 1,
+    "day": 21,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35362",
+    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
+  },
+  {
     "courseId": "vacad-la-3b-2pw",
     "displayName": "Honors Language Arts 3B",
     "startDate": "2026-01-21",
@@ -5924,6 +5858,19 @@
     "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
   },
   {
+    "courseId": "vacad-math-4cd-1pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-01-21",
+    "endDate": "2026-05-20",
+    "year": 2026,
+    "month": 1,
+    "day": 21,
+    "level": "Elementary",
+    "enrollment": 14,
+    "classId": "35377",
+    "schedule": "[[\"2026-01-21\",\"19:00\",\"20:45\"]]"
+  },
+  {
     "courseId": "vacad-la-4b-2pw",
     "displayName": "Honors Language Arts 4B",
     "startDate": "2026-01-21",
@@ -5934,6 +5881,58 @@
     "level": "Language Arts",
     "enrollment": 12,
     "classId": "35525",
+    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-5ab-2pw",
+    "displayName": "Honors Math 5A/5B",
+    "startDate": "2026-01-21",
+    "endDate": "2026-05-22",
+    "year": 2026,
+    "month": 1,
+    "day": 21,
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35392",
+    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors6b-2pw",
+    "displayName": "Honors Math 6: Prealgebra B",
+    "startDate": "2026-01-21",
+    "endDate": "2026-05-22",
+    "year": 2026,
+    "month": 1,
+    "day": 21,
+    "level": "Honors",
+    "enrollment": 10,
+    "classId": "35435",
+    "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7b",
+    "displayName": "Honors Math 7: Introduction to Algebra B",
+    "startDate": "2026-01-21",
+    "endDate": "2026-05-20",
+    "year": 2026,
+    "month": 1,
+    "day": 21,
+    "level": "Honors",
+    "enrollment": 3,
+    "classId": "35466",
+    "schedule": "[[\"2026-01-21\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-la-5b-2pw",
+    "displayName": "Honors Language Arts 5B",
+    "startDate": "2026-01-21",
+    "endDate": "2026-05-22",
+    "year": 2026,
+    "month": 1,
+    "day": 21,
+    "level": "Language Arts",
+    "enrollment": 10,
+    "classId": "35535",
     "schedule": "[[\"2026-01-21\",\"19:00\",\"19:55\"],[\"2026-01-23\",\"19:00\",\"19:55\"]]"
   },
   {
@@ -5989,110 +5988,6 @@
     "schedule": "[[\"2026-01-23\",\"19:00\",\"21:00\"]]"
   },
   {
-    "courseId": "vacad-math-2cd-1pw",
-    "displayName": "Honors Math 2C/2D",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35329",
-    "schedule": "[[\"2026-01-25\",\"10:30\",\"12:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7b",
-    "displayName": "Honors Math 7: Introduction to Algebra B",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Honors",
-    "enrollment": 7,
-    "classId": "35471",
-    "schedule": "[[\"2026-01-25\",\"10:30\",\"12:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-1pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Elementary",
-    "enrollment": 9,
-    "classId": "35411",
-    "schedule": "[[\"2026-01-25\",\"10:30\",\"12:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-contest7b",
-    "displayName": "Contest Math 7: Introduction to Algebra B",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Contest",
-    "enrollment": 2,
-    "classId": "35486",
-    "schedule": "[[\"2026-01-25\",\"12:45\",\"14:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7a",
-    "displayName": "Honors Math 7: Introduction to Algebra A",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Honors",
-    "enrollment": 8,
-    "classId": "35457",
-    "schedule": "[[\"2026-01-25\",\"15:45\",\"17:30\"]]"
-  },
-  {
-    "courseId": "vacad-la-5b",
-    "displayName": "Honors Language Arts 5B",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Language Arts",
-    "enrollment": 9,
-    "classId": "35539",
-    "schedule": "[[\"2026-01-25\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-la-6b",
-    "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Language Arts",
-    "enrollment": 15,
-    "classId": "35548",
-    "schedule": "[[\"2026-01-25\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-la-7b-v2",
-    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
-    "startDate": "2026-01-25",
-    "endDate": "2026-05-31",
-    "year": 2026,
-    "month": 1,
-    "day": 25,
-    "level": "Language Arts",
-    "enrollment": 3,
-    "classId": "35559",
-    "schedule": "[[\"2026-01-25\",\"15:45\",\"16:45\"]]"
-  },
-  {
     "courseId": "vacad-math-contest6b",
     "displayName": "Contest Math 6: Prealgebra B",
     "startDate": "2026-01-25",
@@ -6119,6 +6014,19 @@
     "schedule": "[[\"2026-01-25\",\"10:30\",\"12:15\"]]"
   },
   {
+    "courseId": "vacad-math-2cd-1pw",
+    "displayName": "Honors Math 2C/2D",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35329",
+    "schedule": "[[\"2026-01-25\",\"10:30\",\"12:15\"]]"
+  },
+  {
     "courseId": "vacad-math-honors6b",
     "displayName": "Honors Math 6: Prealgebra B",
     "startDate": "2026-01-25",
@@ -6130,6 +6038,110 @@
     "enrollment": 11,
     "classId": "35443",
     "schedule": "[[\"2026-01-25\",\"18:45\",\"20:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-1pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Elementary",
+    "enrollment": 9,
+    "classId": "35411",
+    "schedule": "[[\"2026-01-25\",\"10:30\",\"12:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7b",
+    "displayName": "Honors Math 7: Introduction to Algebra B",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Honors",
+    "enrollment": 7,
+    "classId": "35471",
+    "schedule": "[[\"2026-01-25\",\"10:30\",\"12:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7a",
+    "displayName": "Honors Math 7: Introduction to Algebra A",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Honors",
+    "enrollment": 8,
+    "classId": "35457",
+    "schedule": "[[\"2026-01-25\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest7b",
+    "displayName": "Contest Math 7: Introduction to Algebra B",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Contest",
+    "enrollment": 2,
+    "classId": "35486",
+    "schedule": "[[\"2026-01-25\",\"12:45\",\"14:45\"]]"
+  },
+  {
+    "courseId": "vacad-la-6b",
+    "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Language Arts",
+    "enrollment": 15,
+    "classId": "35548",
+    "schedule": "[[\"2026-01-25\",\"12:45\",\"14:30\"]]"
+  },
+  {
+    "courseId": "vacad-la-5b",
+    "displayName": "Honors Language Arts 5B",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Language Arts",
+    "enrollment": 9,
+    "classId": "35539",
+    "schedule": "[[\"2026-01-25\",\"12:45\",\"14:30\"]]"
+  },
+  {
+    "courseId": "vacad-la-7b-v2",
+    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
+    "startDate": "2026-01-25",
+    "endDate": "2026-05-31",
+    "year": 2026,
+    "month": 1,
+    "day": 25,
+    "level": "Language Arts",
+    "enrollment": 3,
+    "classId": "35559",
+    "schedule": "[[\"2026-01-25\",\"15:45\",\"16:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest7b",
+    "displayName": "Contest Math 7: Introduction to Algebra B",
+    "startDate": "2026-01-26",
+    "endDate": "2026-06-01",
+    "year": 2026,
+    "month": 1,
+    "day": 26,
+    "level": "Contest",
+    "enrollment": 7,
+    "classId": "35480",
+    "schedule": "[[\"2026-01-26\",\"19:00\",\"21:00\"]]"
   },
   {
     "courseId": "vacad-math-honors7a",
@@ -6184,123 +6196,6 @@
     "schedule": "[[\"2026-01-26\",\"19:00\",\"21:00\"]]"
   },
   {
-    "courseId": "vacad-math-contest7b",
-    "displayName": "Contest Math 7: Introduction to Algebra B",
-    "startDate": "2026-01-26",
-    "endDate": "2026-06-01",
-    "year": 2026,
-    "month": 1,
-    "day": 26,
-    "level": "Contest",
-    "enrollment": 7,
-    "classId": "35480",
-    "schedule": "[[\"2026-01-26\",\"19:00\",\"21:00\"]]"
-  },
-  {
-    "courseId": "vacad-math-4ab-2pw",
-    "displayName": "Honors Math 4A/4B",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Elementary",
-    "enrollment": 1,
-    "classId": "35359",
-    "schedule": "[[\"2026-01-27\",\"18:20\",\"19:15\"],[\"2026-01-29\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-2cd-2pw",
-    "displayName": "Honors Math 2C/2D",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35322",
-    "schedule": "[[\"2026-01-27\",\"14:00\",\"14:55\"],[\"2026-01-29\",\"14:00\",\"14:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-2pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Elementary",
-    "enrollment": 16,
-    "classId": "35368",
-    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-3cd-2pw",
-    "displayName": "Honors Math 3C/3D",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35347",
-    "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-2pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Elementary",
-    "enrollment": 13,
-    "classId": "35399",
-    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-2pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Elementary",
-    "enrollment": 9,
-    "classId": "35371",
-    "schedule": "[[\"2026-01-27\",\"18:20\",\"19:15\"],[\"2026-01-29\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-la-7b-v2",
-    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-26",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Language Arts",
-    "enrollment": 6,
-    "classId": "35553",
-    "schedule": "[[\"2026-01-27\",\"19:00\",\"20:00\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors6a-2pw",
-    "displayName": "Honors Math 6: Prealgebra A",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Honors",
-    "enrollment": 5,
-    "classId": "35418",
-    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
-  },
-  {
     "courseId": "vacad-math-2cd-2pw",
     "displayName": "Honors Math 2C/2D",
     "startDate": "2026-01-27",
@@ -6311,32 +6206,6 @@
     "level": "Elementary",
     "enrollment": 3,
     "classId": "35325",
-    "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
-  },
-  {
-    "courseId": "vacad-la-5b-2pw",
-    "displayName": "Honors Language Arts 5B",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Language Arts",
-    "enrollment": 9,
-    "classId": "35534",
-    "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-5ab-2pw",
-    "displayName": "Honors Math 5A/5B",
-    "startDate": "2026-01-27",
-    "endDate": "2026-05-28",
-    "year": 2026,
-    "month": 1,
-    "day": 27,
-    "level": "Elementary",
-    "enrollment": 5,
-    "classId": "35391",
     "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
   },
   {
@@ -6353,17 +6222,17 @@
     "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
   },
   {
-    "courseId": "vacad-la-4b-2pw",
-    "displayName": "Honors Language Arts 4B",
+    "courseId": "vacad-math-5ab-2pw",
+    "displayName": "Honors Math 5A/5B",
     "startDate": "2026-01-27",
     "endDate": "2026-05-28",
     "year": 2026,
     "month": 1,
     "day": 27,
-    "level": "Language Arts",
-    "enrollment": 7,
-    "classId": "35521",
-    "schedule": "[[\"2026-01-27\",\"18:20\",\"19:15\"],[\"2026-01-29\",\"18:20\",\"19:15\"]]"
+    "level": "Elementary",
+    "enrollment": 5,
+    "classId": "35391",
+    "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
   },
   {
     "courseId": "vacad-math-honors6b-2pw",
@@ -6387,9 +6256,9 @@
     "month": 1,
     "day": 27,
     "level": "Language Arts",
-    "enrollment": 4,
-    "classId": "35530",
-    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
+    "enrollment": 7,
+    "classId": "35521",
+    "schedule": "[[\"2026-01-27\",\"18:20\",\"19:15\"],[\"2026-01-29\",\"18:20\",\"19:15\"]]"
   },
   {
     "courseId": "vacad-la-3b-2pw",
@@ -6403,6 +6272,123 @@
     "enrollment": 8,
     "classId": "35515",
     "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
+  },
+  {
+    "courseId": "vacad-la-4b-2pw",
+    "displayName": "Honors Language Arts 4B",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Language Arts",
+    "enrollment": 4,
+    "classId": "35530",
+    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-2cd-2pw",
+    "displayName": "Honors Math 2C/2D",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35322",
+    "schedule": "[[\"2026-01-27\",\"14:00\",\"14:55\"],[\"2026-01-29\",\"14:00\",\"14:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-4ab-2pw",
+    "displayName": "Honors Math 4A/4B",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Elementary",
+    "enrollment": 1,
+    "classId": "35359",
+    "schedule": "[[\"2026-01-27\",\"18:20\",\"19:15\"],[\"2026-01-29\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-3cd-2pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35347",
+    "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-4cd-2pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Elementary",
+    "enrollment": 16,
+    "classId": "35368",
+    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-4cd-2pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Elementary",
+    "enrollment": 9,
+    "classId": "35371",
+    "schedule": "[[\"2026-01-27\",\"18:20\",\"19:15\"],[\"2026-01-29\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-2pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Elementary",
+    "enrollment": 13,
+    "classId": "35399",
+    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors6a-2pw",
+    "displayName": "Honors Math 6: Prealgebra A",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Honors",
+    "enrollment": 5,
+    "classId": "35418",
+    "schedule": "[[\"2026-01-27\",\"16:45\",\"17:40\"],[\"2026-01-29\",\"16:45\",\"17:40\"]]"
+  },
+  {
+    "courseId": "vacad-la-7b-v2",
+    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-26",
+    "year": 2026,
+    "month": 1,
+    "day": 27,
+    "level": "Language Arts",
+    "enrollment": 6,
+    "classId": "35553",
+    "schedule": "[[\"2026-01-27\",\"19:00\",\"20:00\"]]"
   },
   {
     "courseId": "vacad-math-4cd-2pw",
@@ -6420,28 +6406,15 @@
   {
     "courseId": "vacad-la-5b-2pw",
     "displayName": "Honors Language Arts 5B",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-29",
+    "startDate": "2026-01-27",
+    "endDate": "2026-05-28",
     "year": 2026,
     "month": 1,
-    "day": 28,
+    "day": 27,
     "level": "Language Arts",
-    "enrollment": 7,
-    "classId": "35537",
-    "schedule": "[[\"2026-01-28\",\"20:25\",\"21:20\"],[\"2026-01-30\",\"20:25\",\"21:20\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-2pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-29",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Elementary",
-    "enrollment": 8,
-    "classId": "35379",
-    "schedule": "[[\"2026-01-28\",\"19:00\",\"19:55\"],[\"2026-01-30\",\"19:00\",\"19:55\"]]"
+    "enrollment": 9,
+    "classId": "35534",
+    "schedule": "[[\"2026-01-27\",\"19:45\",\"20:40\"],[\"2026-01-29\",\"19:45\",\"20:40\"]]"
   },
   {
     "courseId": "vacad-math-2ab-2pw",
@@ -6457,110 +6430,6 @@
     "schedule": "[[\"2026-01-28\",\"19:00\",\"19:55\"],[\"2026-01-30\",\"19:00\",\"19:55\"]]"
   },
   {
-    "courseId": "vacad-math-5cd-2pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-29",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Elementary",
-    "enrollment": 6,
-    "classId": "35406",
-    "schedule": "[[\"2026-01-28\",\"17:30\",\"18:25\"],[\"2026-01-30\",\"17:30\",\"18:25\"]]"
-  },
-  {
-    "courseId": "vacad-math-3ab-1pw",
-    "displayName": "Honors Math 3A/3B",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-27",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Elementary",
-    "enrollment": 2,
-    "classId": "35336",
-    "schedule": "[[\"2026-01-28\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-2pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-29",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35408",
-    "schedule": "[[\"2026-01-28\",\"19:00\",\"19:55\"],[\"2026-01-30\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-contest6a",
-    "displayName": "Contest Math 6: Prealgebra A",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-27",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Contest",
-    "enrollment": 4,
-    "classId": "35421",
-    "schedule": "[[\"2026-01-28\",\"19:00\",\"21:00\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7-5a",
-    "displayName": "Honors Math 7.5: Introduction to Counting and Probability ",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-27",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Honors",
-    "enrollment": 16,
-    "classId": "35498",
-    "schedule": "[[\"2026-01-28\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors6b-2pw",
-    "displayName": "Honors Math 6: Prealgebra B",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-29",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Honors",
-    "enrollment": 5,
-    "classId": "35437",
-    "schedule": "[[\"2026-01-28\",\"20:25\",\"21:20\"],[\"2026-01-30\",\"20:25\",\"21:20\"]]"
-  },
-  {
-    "courseId": "vacad-math-contest6b",
-    "displayName": "Contest Math 6: Prealgebra B",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-27",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Contest",
-    "enrollment": 0,
-    "classId": "36223",
-    "schedule": "[[\"2026-01-28\",\"19:00\",\"21:00\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7b",
-    "displayName": "Honors Math 7: Introduction to Algebra B",
-    "startDate": "2026-01-28",
-    "endDate": "2026-05-27",
-    "year": 2026,
-    "month": 1,
-    "day": 28,
-    "level": "Honors",
-    "enrollment": 10,
-    "classId": "35465",
-    "schedule": "[[\"2026-01-28\",\"16:45\",\"18:30\"]]"
-  },
-  {
     "courseId": "vacad-math-3cd-1pw",
     "displayName": "Honors Math 3C/3D",
     "startDate": "2026-01-28",
@@ -6574,16 +6443,16 @@
     "schedule": "[[\"2026-01-28\",\"16:45\",\"18:30\"]]"
   },
   {
-    "courseId": "vacad-math-honors10",
-    "displayName": "Honors Math 10: Precalculus",
+    "courseId": "vacad-math-3ab-1pw",
+    "displayName": "Honors Math 3A/3B",
     "startDate": "2026-01-28",
-    "endDate": "2026-10-07",
+    "endDate": "2026-05-27",
     "year": 2026,
     "month": 1,
     "day": 28,
-    "level": "Advanced",
-    "enrollment": 4,
-    "classId": "35509",
+    "level": "Elementary",
+    "enrollment": 2,
+    "classId": "35336",
     "schedule": "[[\"2026-01-28\",\"19:00\",\"20:45\"]]"
   },
   {
@@ -6600,6 +6469,110 @@
     "schedule": "[[\"2026-01-28\",\"19:00\",\"21:00\"]]"
   },
   {
+    "courseId": "vacad-math-contest6a",
+    "displayName": "Contest Math 6: Prealgebra A",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-27",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Contest",
+    "enrollment": 4,
+    "classId": "35421",
+    "schedule": "[[\"2026-01-28\",\"19:00\",\"21:00\"]]"
+  },
+  {
+    "courseId": "vacad-math-4cd-2pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-29",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Elementary",
+    "enrollment": 8,
+    "classId": "35379",
+    "schedule": "[[\"2026-01-28\",\"19:00\",\"19:55\"],[\"2026-01-30\",\"19:00\",\"19:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors6b-2pw",
+    "displayName": "Honors Math 6: Prealgebra B",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-29",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Honors",
+    "enrollment": 5,
+    "classId": "35437",
+    "schedule": "[[\"2026-01-28\",\"20:25\",\"21:20\"],[\"2026-01-30\",\"20:25\",\"21:20\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-2pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-29",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Elementary",
+    "enrollment": 6,
+    "classId": "35406",
+    "schedule": "[[\"2026-01-28\",\"17:30\",\"18:25\"],[\"2026-01-30\",\"17:30\",\"18:25\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7b",
+    "displayName": "Honors Math 7: Introduction to Algebra B",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-27",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Honors",
+    "enrollment": 10,
+    "classId": "35465",
+    "schedule": "[[\"2026-01-28\",\"16:45\",\"18:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-2pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-29",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35408",
+    "schedule": "[[\"2026-01-28\",\"19:00\",\"19:55\"],[\"2026-01-30\",\"19:00\",\"19:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors10",
+    "displayName": "Honors Math 10: Precalculus",
+    "startDate": "2026-01-28",
+    "endDate": "2026-10-07",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Advanced",
+    "enrollment": 4,
+    "classId": "35509",
+    "schedule": "[[\"2026-01-28\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7-5a",
+    "displayName": "Honors Math 7.5: Introduction to Counting and Probability ",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-27",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Honors",
+    "enrollment": 16,
+    "classId": "35498",
+    "schedule": "[[\"2026-01-28\",\"19:00\",\"20:45\"]]"
+  },
+  {
     "courseId": "vacad-la-6b",
     "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
     "startDate": "2026-01-28",
@@ -6611,6 +6584,32 @@
     "enrollment": 4,
     "classId": "35543",
     "schedule": "[[\"2026-01-28\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest6b",
+    "displayName": "Contest Math 6: Prealgebra B",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-27",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Contest",
+    "enrollment": 0,
+    "classId": "36223",
+    "schedule": "[[\"2026-01-28\",\"19:00\",\"21:00\"]]"
+  },
+  {
+    "courseId": "vacad-la-5b-2pw",
+    "displayName": "Honors Language Arts 5B",
+    "startDate": "2026-01-28",
+    "endDate": "2026-05-29",
+    "year": 2026,
+    "month": 1,
+    "day": 28,
+    "level": "Language Arts",
+    "enrollment": 7,
+    "classId": "35537",
+    "schedule": "[[\"2026-01-28\",\"20:25\",\"21:20\"],[\"2026-01-30\",\"20:25\",\"21:20\"]]"
   },
   {
     "courseId": "vacad-la-6b",
@@ -6691,162 +6690,6 @@
     "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
   },
   {
-    "courseId": "vacad-math-4ab-1pw",
-    "displayName": "Honors Math 4A/4B",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Elementary",
-    "enrollment": 1,
-    "classId": "35364",
-    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-5ab-1pw",
-    "displayName": "Honors Math 5A/5B",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35395",
-    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-1pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35387",
-    "schedule": "[[\"2026-02-01\",\"18:45\",\"20:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-1pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35412",
-    "schedule": "[[\"2026-02-01\",\"10:30\",\"12:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors6b",
-    "displayName": "Honors Math 6: Prealgebra B",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Honors",
-    "enrollment": 5,
-    "classId": "35442",
-    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors6a",
-    "displayName": "Honors Math 6: Prealgebra A",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Honors",
-    "enrollment": 3,
-    "classId": "35426",
-    "schedule": "[[\"2026-02-01\",\"18:45\",\"20:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-contest7a",
-    "displayName": "Contest Math 7: Introduction to Algebra A",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Contest",
-    "enrollment": 4,
-    "classId": "35461",
-    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7b",
-    "displayName": "Honors Math 7: Introduction to Algebra B",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Honors",
-    "enrollment": 3,
-    "classId": "35474",
-    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors9",
-    "displayName": "Honors Math 9: Intermediate Algebra",
-    "startDate": "2026-02-01",
-    "endDate": "2026-10-25",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Advanced",
-    "enrollment": 3,
-    "classId": "35504",
-    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors8",
-    "displayName": "Honors Math 8: Introduction to Geometry",
-    "startDate": "2026-02-01",
-    "endDate": "2026-10-25",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Honors",
-    "enrollment": 3,
-    "classId": "35493",
-    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-la-3b",
-    "displayName": "Honors Language Arts 3B",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Language Arts",
-    "enrollment": 10,
-    "classId": "35520",
-    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors10",
-    "displayName": "Honors Math 10: Precalculus",
-    "startDate": "2026-02-01",
-    "endDate": "2026-10-25",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Advanced",
-    "enrollment": 3,
-    "classId": "35510",
-    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
-  },
-  {
     "courseId": "vacad-math-4cd-1pw",
     "displayName": "Honors Math 4C/4D",
     "startDate": "2026-02-01",
@@ -6860,17 +6703,17 @@
     "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
   },
   {
-    "courseId": "vacad-la-6b",
-    "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
+    "courseId": "vacad-math-3cd-1pw",
+    "displayName": "Honors Math 3C/3D",
     "startDate": "2026-02-01",
     "endDate": "2026-06-07",
     "year": 2026,
     "month": 2,
     "day": 1,
-    "level": "Language Arts",
-    "enrollment": 8,
-    "classId": "35551",
-    "schedule": "[[\"2026-02-01\",\"18:45\",\"20:30\"]]"
+    "level": "Elementary",
+    "enrollment": 10,
+    "classId": "35355",
+    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
   },
   {
     "courseId": "vacad-math-honors7b",
@@ -6894,9 +6737,9 @@
     "month": 2,
     "day": 1,
     "level": "Elementary",
-    "enrollment": 10,
-    "classId": "35355",
-    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
+    "enrollment": 8,
+    "classId": "35356",
+    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
   },
   {
     "courseId": "vacad-math-calculus",
@@ -6912,19 +6755,6 @@
     "schedule": "[[\"2026-02-01\",\"18:45\",\"20:30\"]]"
   },
   {
-    "courseId": "vacad-math-3cd-1pw",
-    "displayName": "Honors Math 3C/3D",
-    "startDate": "2026-02-01",
-    "endDate": "2026-06-07",
-    "year": 2026,
-    "month": 2,
-    "day": 1,
-    "level": "Elementary",
-    "enrollment": 8,
-    "classId": "35356",
-    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
-  },
-  {
     "courseId": "vacad-math-contest6b",
     "displayName": "Contest Math 6: Prealgebra B",
     "startDate": "2026-02-01",
@@ -6938,6 +6768,19 @@
     "schedule": "[[\"2026-02-01\",\"12:45\",\"14:45\"]]"
   },
   {
+    "courseId": "vacad-math-4ab-1pw",
+    "displayName": "Honors Math 4A/4B",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Elementary",
+    "enrollment": 1,
+    "classId": "35364",
+    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
+  },
+  {
     "courseId": "vacad-math-contest7b",
     "displayName": "Contest Math 7: Introduction to Algebra B",
     "startDate": "2026-02-01",
@@ -6949,6 +6792,188 @@
     "enrollment": 1,
     "classId": "35488",
     "schedule": "[[\"2026-02-01\",\"15:45\",\"17:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-4cd-1pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35387",
+    "schedule": "[[\"2026-02-01\",\"18:45\",\"20:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-5ab-1pw",
+    "displayName": "Honors Math 5A/5B",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35395",
+    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors6b",
+    "displayName": "Honors Math 6: Prealgebra B",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Honors",
+    "enrollment": 5,
+    "classId": "35442",
+    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-1pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35412",
+    "schedule": "[[\"2026-02-01\",\"10:30\",\"12:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest7a",
+    "displayName": "Contest Math 7: Introduction to Algebra A",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Contest",
+    "enrollment": 4,
+    "classId": "35461",
+    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors6a",
+    "displayName": "Honors Math 6: Prealgebra A",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Honors",
+    "enrollment": 3,
+    "classId": "35426",
+    "schedule": "[[\"2026-02-01\",\"18:45\",\"20:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors9",
+    "displayName": "Honors Math 9: Intermediate Algebra",
+    "startDate": "2026-02-01",
+    "endDate": "2026-10-25",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Advanced",
+    "enrollment": 3,
+    "classId": "35504",
+    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7b",
+    "displayName": "Honors Math 7: Introduction to Algebra B",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Honors",
+    "enrollment": 3,
+    "classId": "35474",
+    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-la-3b",
+    "displayName": "Honors Language Arts 3B",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Language Arts",
+    "enrollment": 10,
+    "classId": "35520",
+    "schedule": "[[\"2026-02-01\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors8",
+    "displayName": "Honors Math 8: Introduction to Geometry",
+    "startDate": "2026-02-01",
+    "endDate": "2026-10-25",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Honors",
+    "enrollment": 3,
+    "classId": "35493",
+    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors10",
+    "displayName": "Honors Math 10: Precalculus",
+    "startDate": "2026-02-01",
+    "endDate": "2026-10-25",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Advanced",
+    "enrollment": 3,
+    "classId": "35510",
+    "schedule": "[[\"2026-02-01\",\"12:45\",\"14:30\"]]"
+  },
+  {
+    "courseId": "vacad-la-6b",
+    "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
+    "startDate": "2026-02-01",
+    "endDate": "2026-06-07",
+    "year": 2026,
+    "month": 2,
+    "day": 1,
+    "level": "Language Arts",
+    "enrollment": 8,
+    "classId": "35551",
+    "schedule": "[[\"2026-02-01\",\"18:45\",\"20:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest7b",
+    "displayName": "Contest Math 7: Introduction to Algebra B",
+    "startDate": "2026-02-02",
+    "endDate": "2026-06-08",
+    "year": 2026,
+    "month": 2,
+    "day": 2,
+    "level": "Contest",
+    "enrollment": 4,
+    "classId": "35479",
+    "schedule": "[[\"2026-02-02\",\"16:45\",\"18:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-3cd-1pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-02-02",
+    "endDate": "2026-06-08",
+    "year": 2026,
+    "month": 2,
+    "day": 2,
+    "level": "Elementary",
+    "enrollment": 11,
+    "classId": "35340",
+    "schedule": "[[\"2026-02-02\",\"19:00\",\"20:45\"]]"
   },
   {
     "courseId": "vacad-math-honors6b",
@@ -6990,19 +7015,6 @@
     "schedule": "[[\"2026-02-02\",\"19:00\",\"21:00\"]]"
   },
   {
-    "courseId": "vacad-math-3cd-1pw",
-    "displayName": "Honors Math 3C/3D",
-    "startDate": "2026-02-02",
-    "endDate": "2026-06-08",
-    "year": 2026,
-    "month": 2,
-    "day": 2,
-    "level": "Elementary",
-    "enrollment": 11,
-    "classId": "35340",
-    "schedule": "[[\"2026-02-02\",\"19:00\",\"20:45\"]]"
-  },
-  {
     "courseId": "vacad-math-honors7b",
     "displayName": "Honors Math 7: Introduction to Algebra B",
     "startDate": "2026-02-02",
@@ -7014,19 +7026,6 @@
     "enrollment": 5,
     "classId": "35463",
     "schedule": "[[\"2026-02-02\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-contest7b",
-    "displayName": "Contest Math 7: Introduction to Algebra B",
-    "startDate": "2026-02-02",
-    "endDate": "2026-06-08",
-    "year": 2026,
-    "month": 2,
-    "day": 2,
-    "level": "Contest",
-    "enrollment": 4,
-    "classId": "35479",
-    "schedule": "[[\"2026-02-02\",\"16:45\",\"18:45\"]]"
   },
   {
     "courseId": "vacad-math-2cd-2pw",
@@ -7055,17 +7054,43 @@
     "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
   },
   {
-    "courseId": "vacad-math-3ab-2pw",
-    "displayName": "Honors Math 3A/3B",
+    "courseId": "vacad-math-honors6a-2pw",
+    "displayName": "Honors Math 6: Prealgebra A",
     "startDate": "2026-02-03",
     "endDate": "2026-06-04",
     "year": 2026,
     "month": 2,
     "day": 3,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35331",
+    "level": "Honors",
+    "enrollment": 4,
+    "classId": "35419",
+    "schedule": "[[\"2026-02-03\",\"18:20\",\"19:15\"],[\"2026-02-05\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-la-3b-2pw",
+    "displayName": "Honors Language Arts 3B",
+    "startDate": "2026-02-03",
+    "endDate": "2026-06-04",
+    "year": 2026,
+    "month": 2,
+    "day": 3,
+    "level": "Language Arts",
+    "enrollment": 7,
+    "classId": "35513",
     "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
+  },
+  {
+    "courseId": "vacad-la-3b-2pw",
+    "displayName": "Honors Language Arts 3B",
+    "startDate": "2026-02-03",
+    "endDate": "2026-06-04",
+    "year": 2026,
+    "month": 2,
+    "day": 3,
+    "level": "Language Arts",
+    "enrollment": 4,
+    "classId": "35516",
+    "schedule": "[[\"2026-02-03\",\"19:45\",\"20:40\"],[\"2026-02-05\",\"19:45\",\"20:40\"]]"
   },
   {
     "courseId": "vacad-math-4ab-2pw",
@@ -7081,16 +7106,16 @@
     "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
   },
   {
-    "courseId": "vacad-math-3cd-2pw",
-    "displayName": "Honors Math 3C/3D",
+    "courseId": "vacad-la-5b-2pw",
+    "displayName": "Honors Language Arts 5B",
     "startDate": "2026-02-03",
     "endDate": "2026-06-04",
     "year": 2026,
     "month": 2,
     "day": 3,
-    "level": "Elementary",
-    "enrollment": 7,
-    "classId": "35343",
+    "level": "Language Arts",
+    "enrollment": 6,
+    "classId": "35531",
     "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
   },
   {
@@ -7107,6 +7132,32 @@
     "schedule": "[[\"2026-02-03\",\"19:00\",\"20:00\"]]"
   },
   {
+    "courseId": "vacad-math-3ab-2pw",
+    "displayName": "Honors Math 3A/3B",
+    "startDate": "2026-02-03",
+    "endDate": "2026-06-04",
+    "year": 2026,
+    "month": 2,
+    "day": 3,
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35331",
+    "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-3cd-2pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-02-03",
+    "endDate": "2026-06-04",
+    "year": 2026,
+    "month": 2,
+    "day": 3,
+    "level": "Elementary",
+    "enrollment": 7,
+    "classId": "35343",
+    "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
+  },
+  {
     "courseId": "vacad-math-4cd-2pw",
     "displayName": "Honors Math 4C/4D",
     "startDate": "2026-02-03",
@@ -7118,19 +7169,6 @@
     "enrollment": 8,
     "classId": "35367",
     "schedule": "[[\"2026-02-03\",\"14:00\",\"14:55\"],[\"2026-02-05\",\"14:00\",\"14:55\"]]"
-  },
-  {
-    "courseId": "vacad-la-3b-2pw",
-    "displayName": "Honors Language Arts 3B",
-    "startDate": "2026-02-03",
-    "endDate": "2026-06-04",
-    "year": 2026,
-    "month": 2,
-    "day": 3,
-    "level": "Language Arts",
-    "enrollment": 7,
-    "classId": "35513",
-    "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
   },
   {
     "courseId": "vacad-math-4cd-2pw",
@@ -7185,159 +7223,16 @@
     "schedule": "[[\"2026-02-03\",\"19:45\",\"20:40\"],[\"2026-02-05\",\"19:45\",\"20:40\"]]"
   },
   {
-    "courseId": "vacad-math-honors6a-2pw",
-    "displayName": "Honors Math 6: Prealgebra A",
-    "startDate": "2026-02-03",
-    "endDate": "2026-06-04",
-    "year": 2026,
-    "month": 2,
-    "day": 3,
-    "level": "Honors",
-    "enrollment": 4,
-    "classId": "35419",
-    "schedule": "[[\"2026-02-03\",\"18:20\",\"19:15\"],[\"2026-02-05\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-la-3b-2pw",
-    "displayName": "Honors Language Arts 3B",
-    "startDate": "2026-02-03",
-    "endDate": "2026-06-04",
-    "year": 2026,
-    "month": 2,
-    "day": 3,
-    "level": "Language Arts",
-    "enrollment": 4,
-    "classId": "35516",
-    "schedule": "[[\"2026-02-03\",\"19:45\",\"20:40\"],[\"2026-02-05\",\"19:45\",\"20:40\"]]"
-  },
-  {
-    "courseId": "vacad-la-5b-2pw",
-    "displayName": "Honors Language Arts 5B",
-    "startDate": "2026-02-03",
-    "endDate": "2026-06-04",
-    "year": 2026,
-    "month": 2,
-    "day": 3,
-    "level": "Language Arts",
-    "enrollment": 6,
-    "classId": "35531",
-    "schedule": "[[\"2026-02-03\",\"16:45\",\"17:40\"],[\"2026-02-05\",\"16:45\",\"17:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-2cd-2pw",
-    "displayName": "Honors Math 2C/2D",
+    "courseId": "vacad-math-5cd-1pw",
+    "displayName": "Honors Math 5C/5D",
     "startDate": "2026-02-04",
-    "endDate": "2026-06-05",
+    "endDate": "2026-06-03",
     "year": 2026,
     "month": 2,
     "day": 4,
     "level": "Elementary",
-    "enrollment": 0,
-    "classId": "35328",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-3ab-2pw",
-    "displayName": "Honors Math 3A/3B",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-05",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Elementary",
-    "enrollment": 1,
-    "classId": "35337",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-3cd-2pw",
-    "displayName": "Honors Math 3C/3D",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-05",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Elementary",
-    "enrollment": 6,
-    "classId": "35353",
-    "schedule": "[[\"2026-02-04\",\"20:25\",\"21:20\"],[\"2026-02-06\",\"20:25\",\"21:20\"]]"
-  },
-  {
-    "courseId": "vacad-math-5ab-2pw",
-    "displayName": "Honors Math 5A/5B",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-05",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Elementary",
-    "enrollment": 5,
-    "classId": "35393",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-contest6b",
-    "displayName": "Contest Math 6: Prealgebra B",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-03",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Contest",
-    "enrollment": 16,
-    "classId": "35446",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"21:00\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors6b",
-    "displayName": "Honors Math 6: Prealgebra B",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-03",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Honors",
-    "enrollment": 5,
-    "classId": "35434",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7a",
-    "displayName": "Honors Math 7: Introduction to Algebra A",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-03",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Honors",
-    "enrollment": 0,
-    "classId": "35454",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-contest6b",
-    "displayName": "Contest Math 6: Prealgebra B",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-03",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Contest",
-    "enrollment": 5,
-    "classId": "35445",
-    "schedule": "[[\"2026-02-04\",\"16:45\",\"18:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7b",
-    "displayName": "Honors Math 7: Introduction to Algebra B",
-    "startDate": "2026-02-04",
-    "endDate": "2026-06-03",
-    "year": 2026,
-    "month": 2,
-    "day": 4,
-    "level": "Honors",
     "enrollment": 9,
-    "classId": "35467",
+    "classId": "35405",
     "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
   },
   {
@@ -7354,17 +7249,17 @@
     "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
   },
   {
-    "courseId": "vacad-math-5cd-1pw",
-    "displayName": "Honors Math 5C/5D",
+    "courseId": "vacad-math-contest7b",
+    "displayName": "Contest Math 7: Introduction to Algebra B",
     "startDate": "2026-02-04",
     "endDate": "2026-06-03",
     "year": 2026,
     "month": 2,
     "day": 4,
-    "level": "Elementary",
-    "enrollment": 9,
-    "classId": "35405",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
+    "level": "Contest",
+    "enrollment": 4,
+    "classId": "35482",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"21:00\"]]"
   },
   {
     "courseId": "vacad-math-4cd-1pw",
@@ -7380,17 +7275,17 @@
     "schedule": "[[\"2026-02-04\",\"16:45\",\"18:30\"]]"
   },
   {
-    "courseId": "vacad-math-contest7b",
-    "displayName": "Contest Math 7: Introduction to Algebra B",
+    "courseId": "vacad-la-5b-2pw",
+    "displayName": "Honors Language Arts 5B",
     "startDate": "2026-02-04",
-    "endDate": "2026-06-03",
+    "endDate": "2026-06-05",
     "year": 2026,
     "month": 2,
     "day": 4,
-    "level": "Contest",
+    "level": "Language Arts",
     "enrollment": 4,
-    "classId": "35482",
-    "schedule": "[[\"2026-02-04\",\"19:00\",\"21:00\"]]"
+    "classId": "35536",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
   },
   {
     "courseId": "vacad-math-honors6a-2pw",
@@ -7406,16 +7301,16 @@
     "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
   },
   {
-    "courseId": "vacad-la-5b-2pw",
-    "displayName": "Honors Language Arts 5B",
+    "courseId": "vacad-math-2cd-2pw",
+    "displayName": "Honors Math 2C/2D",
     "startDate": "2026-02-04",
     "endDate": "2026-06-05",
     "year": 2026,
     "month": 2,
     "day": 4,
-    "level": "Language Arts",
-    "enrollment": 4,
-    "classId": "35536",
+    "level": "Elementary",
+    "enrollment": 0,
+    "classId": "35328",
     "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
   },
   {
@@ -7432,6 +7327,19 @@
     "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
   },
   {
+    "courseId": "vacad-math-3cd-2pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-05",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Elementary",
+    "enrollment": 6,
+    "classId": "35353",
+    "schedule": "[[\"2026-02-04\",\"20:25\",\"21:20\"],[\"2026-02-06\",\"20:25\",\"21:20\"]]"
+  },
+  {
     "courseId": "vacad-math-honors7-5b",
     "displayName": "Honors Math 7.5: Introduction to Number Theory",
     "startDate": "2026-02-04",
@@ -7443,6 +7351,97 @@
     "enrollment": 10,
     "classId": "35500",
     "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest6b",
+    "displayName": "Contest Math 6: Prealgebra B",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-03",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Contest",
+    "enrollment": 16,
+    "classId": "35446",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"21:00\"]]"
+  },
+  {
+    "courseId": "vacad-math-3ab-2pw",
+    "displayName": "Honors Math 3A/3B",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-05",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Elementary",
+    "enrollment": 1,
+    "classId": "35337",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7a",
+    "displayName": "Honors Math 7: Introduction to Algebra A",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-03",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Honors",
+    "enrollment": 0,
+    "classId": "35454",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-5ab-2pw",
+    "displayName": "Honors Math 5A/5B",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-05",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Elementary",
+    "enrollment": 5,
+    "classId": "35393",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"19:55\"],[\"2026-02-06\",\"19:00\",\"19:55\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors7b",
+    "displayName": "Honors Math 7: Introduction to Algebra B",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-03",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Honors",
+    "enrollment": 9,
+    "classId": "35467",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors6b",
+    "displayName": "Honors Math 6: Prealgebra B",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-03",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Honors",
+    "enrollment": 5,
+    "classId": "35434",
+    "schedule": "[[\"2026-02-04\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest6b",
+    "displayName": "Contest Math 6: Prealgebra B",
+    "startDate": "2026-02-04",
+    "endDate": "2026-06-03",
+    "year": 2026,
+    "month": 2,
+    "day": 4,
+    "level": "Contest",
+    "enrollment": 5,
+    "classId": "35445",
+    "schedule": "[[\"2026-02-04\",\"16:45\",\"18:45\"]]"
   },
   {
     "courseId": "vacad-la-7b-v2",
@@ -7484,32 +7483,6 @@
     "schedule": "[[\"2026-02-05\",\"19:00\",\"20:45\"]]"
   },
   {
-    "courseId": "vacad-math-honors7b",
-    "displayName": "Honors Math 7: Introduction to Algebra B",
-    "startDate": "2026-02-06",
-    "endDate": "2026-06-05",
-    "year": 2026,
-    "month": 2,
-    "day": 6,
-    "level": "Honors",
-    "enrollment": 2,
-    "classId": "35470",
-    "schedule": "[[\"2026-02-06\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-1pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-02-06",
-    "endDate": "2026-06-05",
-    "year": 2026,
-    "month": 2,
-    "day": 6,
-    "level": "Elementary",
-    "enrollment": 9,
-    "classId": "35410",
-    "schedule": "[[\"2026-02-06\",\"16:30\",\"18:15\"]]"
-  },
-  {
     "courseId": "vacad-la-6b",
     "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
     "startDate": "2026-02-06",
@@ -7525,106 +7498,28 @@
   {
     "courseId": "vacad-math-5cd-1pw",
     "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-02-08",
-    "endDate": "2026-06-14",
+    "startDate": "2026-02-06",
+    "endDate": "2026-06-05",
     "year": 2026,
     "month": 2,
-    "day": 8,
+    "day": 6,
     "level": "Elementary",
-    "enrollment": 8,
-    "classId": "35416",
-    "schedule": "[[\"2026-02-08\",\"18:45\",\"20:30\"]]"
+    "enrollment": 9,
+    "classId": "35410",
+    "schedule": "[[\"2026-02-06\",\"16:30\",\"18:15\"]]"
   },
   {
-    "courseId": "vacad-math-hscm",
-    "displayName": "High School Contest Math",
-    "startDate": "2026-02-08",
-    "endDate": "2026-11-01",
+    "courseId": "vacad-math-honors7b",
+    "displayName": "Honors Math 7: Introduction to Algebra B",
+    "startDate": "2026-02-06",
+    "endDate": "2026-06-05",
     "year": 2026,
     "month": 2,
-    "day": 8,
-    "level": "Contest",
+    "day": 6,
+    "level": "Honors",
     "enrollment": 2,
-    "classId": "35508",
-    "schedule": "[[\"2026-02-08\",\"12:45\",\"14:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors9",
-    "displayName": "Honors Math 9: Intermediate Algebra",
-    "startDate": "2026-02-08",
-    "endDate": "2026-11-01",
-    "year": 2026,
-    "month": 2,
-    "day": 8,
-    "level": "Advanced",
-    "enrollment": 1,
-    "classId": "35505",
-    "schedule": "[[\"2026-02-08\",\"15:45\",\"17:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-2cd-1pw",
-    "displayName": "Honors Math 2C/2D",
-    "startDate": "2026-02-08",
-    "endDate": "2026-06-14",
-    "year": 2026,
-    "month": 2,
-    "day": 8,
-    "level": "Elementary",
-    "enrollment": 5,
-    "classId": "35330",
-    "schedule": "[[\"2026-02-08\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-la-4b",
-    "displayName": "Honors Language Arts 4B",
-    "startDate": "2026-02-08",
-    "endDate": "2026-06-14",
-    "year": 2026,
-    "month": 2,
-    "day": 8,
-    "level": "Language Arts",
-    "enrollment": 5,
-    "classId": "35529",
-    "schedule": "[[\"2026-02-08\",\"15:45\",\"17:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-4ab-1pw",
-    "displayName": "Honors Math 4A/4B",
-    "startDate": "2026-02-08",
-    "endDate": "2026-06-14",
-    "year": 2026,
-    "month": 2,
-    "day": 8,
-    "level": "Elementary",
-    "enrollment": 7,
-    "classId": "35363",
-    "schedule": "[[\"2026-02-08\",\"10:30\",\"12:15\"]]"
-  },
-  {
-    "courseId": "vacad-la-7b-v2",
-    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
-    "startDate": "2026-02-08",
-    "endDate": "2026-06-14",
-    "year": 2026,
-    "month": 2,
-    "day": 8,
-    "level": "Language Arts",
-    "enrollment": 5,
-    "classId": "35558",
-    "schedule": "[[\"2026-02-08\",\"12:45\",\"13:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-1pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-02-08",
-    "endDate": "2026-06-14",
-    "year": 2026,
-    "month": 2,
-    "day": 8,
-    "level": "Elementary",
-    "enrollment": 5,
-    "classId": "35382",
-    "schedule": "[[\"2026-02-08\",\"10:30\",\"12:15\"]]"
+    "classId": "35470",
+    "schedule": "[[\"2026-02-06\",\"19:00\",\"20:45\"]]"
   },
   {
     "courseId": "vacad-math-5ab-1pw",
@@ -7640,17 +7535,17 @@
     "schedule": "[[\"2026-02-08\",\"12:45\",\"14:30\"]]"
   },
   {
-    "courseId": "vacad-math-contest7b",
-    "displayName": "Contest Math 7: Introduction to Algebra B",
+    "courseId": "vacad-math-2cd-1pw",
+    "displayName": "Honors Math 2C/2D",
     "startDate": "2026-02-08",
     "endDate": "2026-06-14",
     "year": 2026,
     "month": 2,
     "day": 8,
-    "level": "Contest",
-    "enrollment": 4,
-    "classId": "35489",
-    "schedule": "[[\"2026-02-08\",\"15:45\",\"17:45\"]]"
+    "level": "Elementary",
+    "enrollment": 5,
+    "classId": "35330",
+    "schedule": "[[\"2026-02-08\",\"12:45\",\"14:30\"]]"
   },
   {
     "courseId": "vacad-math-honors6b",
@@ -7663,6 +7558,19 @@
     "level": "Honors",
     "enrollment": 2,
     "classId": "35439",
+    "schedule": "[[\"2026-02-08\",\"10:30\",\"12:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-4ab-1pw",
+    "displayName": "Honors Math 4A/4B",
+    "startDate": "2026-02-08",
+    "endDate": "2026-06-14",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Elementary",
+    "enrollment": 7,
+    "classId": "35363",
     "schedule": "[[\"2026-02-08\",\"10:30\",\"12:15\"]]"
   },
   {
@@ -7679,6 +7587,19 @@
     "schedule": "[[\"2026-02-08\",\"18:45\",\"20:30\"]]"
   },
   {
+    "courseId": "vacad-math-4cd-1pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-02-08",
+    "endDate": "2026-06-14",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Elementary",
+    "enrollment": 5,
+    "classId": "35382",
+    "schedule": "[[\"2026-02-08\",\"10:30\",\"12:15\"]]"
+  },
+  {
     "courseId": "vacad-math-honors7b",
     "displayName": "Honors Math 7: Introduction to Algebra B",
     "startDate": "2026-02-08",
@@ -7690,6 +7611,19 @@
     "enrollment": 1,
     "classId": "35475",
     "schedule": "[[\"2026-02-08\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-contest7b",
+    "displayName": "Contest Math 7: Introduction to Algebra B",
+    "startDate": "2026-02-08",
+    "endDate": "2026-06-14",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Contest",
+    "enrollment": 4,
+    "classId": "35489",
+    "schedule": "[[\"2026-02-08\",\"15:45\",\"17:45\"]]"
   },
   {
     "courseId": "vacad-math-contest8",
@@ -7705,6 +7639,32 @@
     "schedule": "[[\"2026-02-08\",\"18:45\",\"20:45\"]]"
   },
   {
+    "courseId": "vacad-math-hscm",
+    "displayName": "High School Contest Math",
+    "startDate": "2026-02-08",
+    "endDate": "2026-11-01",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Contest",
+    "enrollment": 2,
+    "classId": "35508",
+    "schedule": "[[\"2026-02-08\",\"12:45\",\"14:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-1pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-02-08",
+    "endDate": "2026-06-14",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Elementary",
+    "enrollment": 8,
+    "classId": "35416",
+    "schedule": "[[\"2026-02-08\",\"18:45\",\"20:30\"]]"
+  },
+  {
     "courseId": "vacad-la-6b",
     "displayName": "Honors LA 6: Foundations in Middle School Language Arts B",
     "startDate": "2026-02-08",
@@ -7716,6 +7676,45 @@
     "enrollment": 8,
     "classId": "35550",
     "schedule": "[[\"2026-02-08\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors9",
+    "displayName": "Honors Math 9: Intermediate Algebra",
+    "startDate": "2026-02-08",
+    "endDate": "2026-11-01",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Advanced",
+    "enrollment": 1,
+    "classId": "35505",
+    "schedule": "[[\"2026-02-08\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-la-4b",
+    "displayName": "Honors Language Arts 4B",
+    "startDate": "2026-02-08",
+    "endDate": "2026-06-14",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Language Arts",
+    "enrollment": 5,
+    "classId": "35529",
+    "schedule": "[[\"2026-02-08\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-la-7b-v2",
+    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
+    "startDate": "2026-02-08",
+    "endDate": "2026-06-14",
+    "year": 2026,
+    "month": 2,
+    "day": 8,
+    "level": "Language Arts",
+    "enrollment": 5,
+    "classId": "35558",
+    "schedule": "[[\"2026-02-08\",\"12:45\",\"13:45\"]]"
   },
   {
     "courseId": "vacad-math-honors6b",
@@ -7783,6 +7782,32 @@
     "schedule": "[[\"2026-02-09\",\"19:00\",\"20:45\"]]"
   },
   {
+    "courseId": "vacad-math-3cd-2pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-02-10",
+    "endDate": "2026-06-11",
+    "year": 2026,
+    "month": 2,
+    "day": 10,
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35348",
+    "schedule": "[[\"2026-02-10\",\"19:45\",\"20:40\"],[\"2026-02-12\",\"19:45\",\"20:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-2cd-2pw",
+    "displayName": "Honors Math 2C/2D",
+    "startDate": "2026-02-10",
+    "endDate": "2026-06-11",
+    "year": 2026,
+    "month": 2,
+    "day": 10,
+    "level": "Elementary",
+    "enrollment": 5,
+    "classId": "35324",
+    "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
+  },
+  {
     "courseId": "vacad-math-4ab-2pw",
     "displayName": "Honors Math 4A/4B",
     "startDate": "2026-02-10",
@@ -7796,17 +7821,17 @@
     "schedule": "[[\"2026-02-10\",\"19:45\",\"20:40\"],[\"2026-02-12\",\"19:45\",\"20:40\"]]"
   },
   {
-    "courseId": "vacad-math-3ab-2pw",
-    "displayName": "Honors Math 3A/3B",
+    "courseId": "vacad-math-5ab-2pw",
+    "displayName": "Honors Math 5A/5B",
     "startDate": "2026-02-10",
     "endDate": "2026-06-11",
     "year": 2026,
     "month": 2,
     "day": 10,
     "level": "Elementary",
-    "enrollment": 1,
-    "classId": "35335",
-    "schedule": "[[\"2026-02-10\",\"19:45\",\"20:40\"],[\"2026-02-12\",\"19:45\",\"20:40\"]]"
+    "enrollment": 10,
+    "classId": "35390",
+    "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
   },
   {
     "courseId": "vacad-math-honors6b-2pw",
@@ -7822,16 +7847,16 @@
     "schedule": "[[\"2026-02-10\",\"16:45\",\"17:40\"],[\"2026-02-12\",\"16:45\",\"17:40\"]]"
   },
   {
-    "courseId": "vacad-math-4cd-2pw",
-    "displayName": "Honors Math 4C/4D",
+    "courseId": "vacad-la-5b-2pw",
+    "displayName": "Honors Language Arts 5B",
     "startDate": "2026-02-10",
     "endDate": "2026-06-11",
     "year": 2026,
     "month": 2,
     "day": 10,
-    "level": "Elementary",
-    "enrollment": 7,
-    "classId": "35372",
+    "level": "Language Arts",
+    "enrollment": 3,
+    "classId": "35533",
     "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
   },
   {
@@ -7848,6 +7873,32 @@
     "schedule": "[[\"2026-02-10\",\"19:00\",\"20:45\"]]"
   },
   {
+    "courseId": "vacad-math-3ab-2pw",
+    "displayName": "Honors Math 3A/3B",
+    "startDate": "2026-02-10",
+    "endDate": "2026-06-11",
+    "year": 2026,
+    "month": 2,
+    "day": 10,
+    "level": "Elementary",
+    "enrollment": 1,
+    "classId": "35335",
+    "schedule": "[[\"2026-02-10\",\"19:45\",\"20:40\"],[\"2026-02-12\",\"19:45\",\"20:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-4cd-2pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-02-10",
+    "endDate": "2026-06-11",
+    "year": 2026,
+    "month": 2,
+    "day": 10,
+    "level": "Elementary",
+    "enrollment": 7,
+    "classId": "35372",
+    "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
+  },
+  {
     "courseId": "vacad-math-5cd-2pw",
     "displayName": "Honors Math 5C/5D",
     "startDate": "2026-02-10",
@@ -7858,19 +7909,6 @@
     "level": "Elementary",
     "enrollment": 7,
     "classId": "35404",
-    "schedule": "[[\"2026-02-10\",\"19:45\",\"20:40\"],[\"2026-02-12\",\"19:45\",\"20:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-3cd-2pw",
-    "displayName": "Honors Math 3C/3D",
-    "startDate": "2026-02-10",
-    "endDate": "2026-06-11",
-    "year": 2026,
-    "month": 2,
-    "day": 10,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35348",
     "schedule": "[[\"2026-02-10\",\"19:45\",\"20:40\"],[\"2026-02-12\",\"19:45\",\"20:40\"]]"
   },
   {
@@ -7887,55 +7925,16 @@
     "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
   },
   {
-    "courseId": "vacad-math-2cd-2pw",
-    "displayName": "Honors Math 2C/2D",
-    "startDate": "2026-02-10",
-    "endDate": "2026-06-11",
-    "year": 2026,
-    "month": 2,
-    "day": 10,
-    "level": "Elementary",
-    "enrollment": 5,
-    "classId": "35324",
-    "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-5ab-2pw",
-    "displayName": "Honors Math 5A/5B",
-    "startDate": "2026-02-10",
-    "endDate": "2026-06-11",
-    "year": 2026,
-    "month": 2,
-    "day": 10,
-    "level": "Elementary",
-    "enrollment": 10,
-    "classId": "35390",
-    "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-la-5b-2pw",
-    "displayName": "Honors Language Arts 5B",
-    "startDate": "2026-02-10",
-    "endDate": "2026-06-11",
-    "year": 2026,
-    "month": 2,
-    "day": 10,
-    "level": "Language Arts",
-    "enrollment": 3,
-    "classId": "35533",
-    "schedule": "[[\"2026-02-10\",\"18:20\",\"19:15\"],[\"2026-02-12\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-la-3b-2pw",
-    "displayName": "Honors Language Arts 3B",
+    "courseId": "vacad-math-4cd-2pw",
+    "displayName": "Honors Math 4C/4D",
     "startDate": "2026-02-11",
     "endDate": "2026-06-12",
     "year": 2026,
     "month": 2,
     "day": 11,
-    "level": "Language Arts",
-    "enrollment": 2,
-    "classId": "35518",
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35380",
     "schedule": "[[\"2026-02-11\",\"19:00\",\"19:55\"],[\"2026-02-13\",\"19:00\",\"19:55\"]]"
   },
   {
@@ -7952,16 +7951,16 @@
     "schedule": "[[\"2026-02-11\",\"19:00\",\"21:00\"]]"
   },
   {
-    "courseId": "vacad-math-4cd-2pw",
-    "displayName": "Honors Math 4C/4D",
+    "courseId": "vacad-la-3b-2pw",
+    "displayName": "Honors Language Arts 3B",
     "startDate": "2026-02-11",
     "endDate": "2026-06-12",
     "year": 2026,
     "month": 2,
     "day": 11,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35380",
+    "level": "Language Arts",
+    "enrollment": 2,
+    "classId": "35518",
     "schedule": "[[\"2026-02-11\",\"19:00\",\"19:55\"],[\"2026-02-13\",\"19:00\",\"19:55\"]]"
   },
   {
@@ -7991,6 +7990,84 @@
     "schedule": "[[\"2026-02-13\",\"19:00\",\"21:00\"]]"
   },
   {
+    "courseId": "vacad-math-3cd-1pw",
+    "displayName": "Honors Math 3C/3D",
+    "startDate": "2026-02-15",
+    "endDate": "2026-06-21",
+    "year": 2026,
+    "month": 2,
+    "day": 15,
+    "level": "Elementary",
+    "enrollment": 3,
+    "classId": "35357",
+    "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-1pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-02-15",
+    "endDate": "2026-06-21",
+    "year": 2026,
+    "month": 2,
+    "day": 15,
+    "level": "Elementary",
+    "enrollment": 9,
+    "classId": "35413",
+    "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors10",
+    "displayName": "Honors Math 10: Precalculus",
+    "startDate": "2026-02-15",
+    "endDate": "2026-11-08",
+    "year": 2026,
+    "month": 2,
+    "day": 15,
+    "level": "Advanced",
+    "enrollment": 8,
+    "classId": "35511",
+    "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors8",
+    "displayName": "Honors Math 8: Introduction to Geometry",
+    "startDate": "2026-02-15",
+    "endDate": "2026-11-08",
+    "year": 2026,
+    "month": 2,
+    "day": 15,
+    "level": "Honors",
+    "enrollment": 4,
+    "classId": "35494",
+    "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
+  },
+  {
+    "courseId": "vacad-la-7b-v2",
+    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
+    "startDate": "2026-02-15",
+    "endDate": "2026-06-21",
+    "year": 2026,
+    "month": 2,
+    "day": 15,
+    "level": "Language Arts",
+    "enrollment": 3,
+    "classId": "35560",
+    "schedule": "[[\"2026-02-15\",\"15:45\",\"16:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-2ab-1pw",
+    "displayName": "Honors Math 2A/2B",
+    "startDate": "2026-02-15",
+    "endDate": "2026-06-21",
+    "year": 2026,
+    "month": 2,
+    "day": 15,
+    "level": "Elementary",
+    "enrollment": 1,
+    "classId": "35321",
+    "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
+  },
+  {
     "courseId": "vacad-math-honors6a",
     "displayName": "Honors Math 6: Prealgebra A",
     "startDate": "2026-02-15",
@@ -8004,16 +8081,16 @@
     "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
   },
   {
-    "courseId": "vacad-math-2ab-1pw",
-    "displayName": "Honors Math 2A/2B",
+    "courseId": "vacad-math-4cd-1pw",
+    "displayName": "Honors Math 4C/4D",
     "startDate": "2026-02-15",
     "endDate": "2026-06-21",
     "year": 2026,
     "month": 2,
     "day": 15,
     "level": "Elementary",
-    "enrollment": 1,
-    "classId": "35321",
+    "enrollment": 3,
+    "classId": "35385",
     "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
   },
   {
@@ -8030,32 +8107,6 @@
     "schedule": "[[\"2026-02-15\",\"18:45\",\"20:45\"]]"
   },
   {
-    "courseId": "vacad-math-4cd-1pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-02-15",
-    "endDate": "2026-06-21",
-    "year": 2026,
-    "month": 2,
-    "day": 15,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35385",
-    "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors7-5a",
-    "displayName": "Honors Math 7.5: Introduction to Counting and Probability ",
-    "startDate": "2026-02-15",
-    "endDate": "2026-06-21",
-    "year": 2026,
-    "month": 2,
-    "day": 15,
-    "level": "Honors",
-    "enrollment": 6,
-    "classId": "35499",
-    "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
-  },
-  {
     "courseId": "vacad-math-5cd-1pw",
     "displayName": "Honors Math 5C/5D",
     "startDate": "2026-02-15",
@@ -8069,16 +8120,16 @@
     "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
   },
   {
-    "courseId": "vacad-math-honors7-5b",
-    "displayName": "Honors Math 7.5: Introduction to Number Theory",
+    "courseId": "vacad-math-honors7-5a",
+    "displayName": "Honors Math 7.5: Introduction to Counting and Probability ",
     "startDate": "2026-02-15",
     "endDate": "2026-06-21",
     "year": 2026,
     "month": 2,
     "day": 15,
     "level": "Honors",
-    "enrollment": 9,
-    "classId": "35501",
+    "enrollment": 6,
+    "classId": "35499",
     "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
   },
   {
@@ -8095,17 +8146,17 @@
     "schedule": "[[\"2026-02-15\",\"12:45\",\"14:45\"]]"
   },
   {
-    "courseId": "vacad-math-3cd-1pw",
-    "displayName": "Honors Math 3C/3D",
+    "courseId": "vacad-math-honors7-5b",
+    "displayName": "Honors Math 7.5: Introduction to Number Theory",
     "startDate": "2026-02-15",
     "endDate": "2026-06-21",
     "year": 2026,
     "month": 2,
     "day": 15,
-    "level": "Elementary",
-    "enrollment": 3,
-    "classId": "35357",
-    "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
+    "level": "Honors",
+    "enrollment": 9,
+    "classId": "35501",
+    "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
   },
   {
     "courseId": "vacad-math-honors7b",
@@ -8121,19 +8172,6 @@
     "schedule": "[[\"2026-02-15\",\"18:45\",\"20:30\"]]"
   },
   {
-    "courseId": "vacad-math-honors10",
-    "displayName": "Honors Math 10: Precalculus",
-    "startDate": "2026-02-15",
-    "endDate": "2026-11-08",
-    "year": 2026,
-    "month": 2,
-    "day": 15,
-    "level": "Advanced",
-    "enrollment": 8,
-    "classId": "35511",
-    "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
-  },
-  {
     "courseId": "vacad-math-contest8",
     "displayName": "Contest Math 8: Intro to Geometry",
     "startDate": "2026-02-15",
@@ -8145,45 +8183,6 @@
     "enrollment": 5,
     "classId": "35496",
     "schedule": "[[\"2026-02-15\",\"12:45\",\"14:45\"]]"
-  },
-  {
-    "courseId": "vacad-la-7b-v2",
-    "displayName": "Honors Language Arts 7B: Persuasive Writing and Rhetoric",
-    "startDate": "2026-02-15",
-    "endDate": "2026-06-21",
-    "year": 2026,
-    "month": 2,
-    "day": 15,
-    "level": "Language Arts",
-    "enrollment": 3,
-    "classId": "35560",
-    "schedule": "[[\"2026-02-15\",\"15:45\",\"16:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-1pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-02-15",
-    "endDate": "2026-06-21",
-    "year": 2026,
-    "month": 2,
-    "day": 15,
-    "level": "Elementary",
-    "enrollment": 9,
-    "classId": "35413",
-    "schedule": "[[\"2026-02-15\",\"12:45\",\"14:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-honors8",
-    "displayName": "Honors Math 8: Introduction to Geometry",
-    "startDate": "2026-02-15",
-    "endDate": "2026-11-08",
-    "year": 2026,
-    "month": 2,
-    "day": 15,
-    "level": "Honors",
-    "enrollment": 4,
-    "classId": "35494",
-    "schedule": "[[\"2026-02-15\",\"15:45\",\"17:30\"]]"
   },
   {
     "courseId": "vacad-math-honors6b",
@@ -8225,58 +8224,6 @@
     "schedule": "[[\"2026-02-16\",\"19:00\",\"21:00\"]]"
   },
   {
-    "courseId": "vacad-math-2cd-2pw",
-    "displayName": "Honors Math 2C/2D",
-    "startDate": "2026-02-17",
-    "endDate": "2026-06-18",
-    "year": 2026,
-    "month": 2,
-    "day": 17,
-    "level": "Elementary",
-    "enrollment": 8,
-    "classId": "35326",
-    "schedule": "[[\"2026-02-17\",\"19:45\",\"20:40\"],[\"2026-02-19\",\"19:45\",\"20:40\"]]"
-  },
-  {
-    "courseId": "vacad-math-3ab-2pw",
-    "displayName": "Honors Math 3A/3B",
-    "startDate": "2026-02-17",
-    "endDate": "2026-06-18",
-    "year": 2026,
-    "month": 2,
-    "day": 17,
-    "level": "Elementary",
-    "enrollment": 0,
-    "classId": "35333",
-    "schedule": "[[\"2026-02-17\",\"18:20\",\"19:15\"],[\"2026-02-19\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-2pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-02-17",
-    "endDate": "2026-06-18",
-    "year": 2026,
-    "month": 2,
-    "day": 17,
-    "level": "Elementary",
-    "enrollment": 1,
-    "classId": "35401",
-    "schedule": "[[\"2026-02-17\",\"18:20\",\"19:15\"],[\"2026-02-19\",\"18:20\",\"19:15\"]]"
-  },
-  {
-    "courseId": "vacad-math-4cd-2pw",
-    "displayName": "Honors Math 4C/4D",
-    "startDate": "2026-02-17",
-    "endDate": "2026-06-18",
-    "year": 2026,
-    "month": 2,
-    "day": 17,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35375",
-    "schedule": "[[\"2026-02-17\",\"19:45\",\"20:40\"],[\"2026-02-19\",\"19:45\",\"20:40\"]]"
-  },
-  {
     "courseId": "vacad-math-3cd-2pw",
     "displayName": "Honors Math 3C/3D",
     "startDate": "2026-02-17",
@@ -8290,17 +8237,17 @@
     "schedule": "[[\"2026-02-17\",\"18:20\",\"19:15\"],[\"2026-02-19\",\"18:20\",\"19:15\"]]"
   },
   {
-    "courseId": "vacad-math-honors6b-2pw",
-    "displayName": "Honors Math 6: Prealgebra B",
+    "courseId": "vacad-math-3cd-2pw",
+    "displayName": "Honors Math 3C/3D",
     "startDate": "2026-02-17",
     "endDate": "2026-06-18",
     "year": 2026,
     "month": 2,
     "day": 17,
-    "level": "Honors",
-    "enrollment": 4,
-    "classId": "35433",
-    "schedule": "[[\"2026-02-17\",\"19:45\",\"20:40\"],[\"2026-02-19\",\"19:45\",\"20:40\"]]"
+    "level": "Elementary",
+    "enrollment": 5,
+    "classId": "35341",
+    "schedule": "[[\"2026-02-17\",\"14:00\",\"14:55\"],[\"2026-02-19\",\"14:00\",\"14:55\"]]"
   },
   {
     "courseId": "vacad-la-7b-v2",
@@ -8316,17 +8263,69 @@
     "schedule": "[[\"2026-02-17\",\"19:00\",\"20:00\"]]"
   },
   {
-    "courseId": "vacad-math-3cd-2pw",
-    "displayName": "Honors Math 3C/3D",
+    "courseId": "vacad-math-3ab-2pw",
+    "displayName": "Honors Math 3A/3B",
     "startDate": "2026-02-17",
     "endDate": "2026-06-18",
     "year": 2026,
     "month": 2,
     "day": 17,
     "level": "Elementary",
-    "enrollment": 5,
-    "classId": "35341",
-    "schedule": "[[\"2026-02-17\",\"14:00\",\"14:55\"],[\"2026-02-19\",\"14:00\",\"14:55\"]]"
+    "enrollment": 0,
+    "classId": "35333",
+    "schedule": "[[\"2026-02-17\",\"18:20\",\"19:15\"],[\"2026-02-19\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-2cd-2pw",
+    "displayName": "Honors Math 2C/2D",
+    "startDate": "2026-02-17",
+    "endDate": "2026-06-18",
+    "year": 2026,
+    "month": 2,
+    "day": 17,
+    "level": "Elementary",
+    "enrollment": 8,
+    "classId": "35326",
+    "schedule": "[[\"2026-02-17\",\"19:45\",\"20:40\"],[\"2026-02-19\",\"19:45\",\"20:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-4cd-2pw",
+    "displayName": "Honors Math 4C/4D",
+    "startDate": "2026-02-17",
+    "endDate": "2026-06-18",
+    "year": 2026,
+    "month": 2,
+    "day": 17,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35375",
+    "schedule": "[[\"2026-02-17\",\"19:45\",\"20:40\"],[\"2026-02-19\",\"19:45\",\"20:40\"]]"
+  },
+  {
+    "courseId": "vacad-math-5cd-2pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-02-17",
+    "endDate": "2026-06-18",
+    "year": 2026,
+    "month": 2,
+    "day": 17,
+    "level": "Elementary",
+    "enrollment": 1,
+    "classId": "35401",
+    "schedule": "[[\"2026-02-17\",\"18:20\",\"19:15\"],[\"2026-02-19\",\"18:20\",\"19:15\"]]"
+  },
+  {
+    "courseId": "vacad-math-honors6b-2pw",
+    "displayName": "Honors Math 6: Prealgebra B",
+    "startDate": "2026-02-17",
+    "endDate": "2026-06-18",
+    "year": 2026,
+    "month": 2,
+    "day": 17,
+    "level": "Honors",
+    "enrollment": 4,
+    "classId": "35433",
+    "schedule": "[[\"2026-02-17\",\"19:45\",\"20:40\"],[\"2026-02-19\",\"19:45\",\"20:40\"]]"
   },
   {
     "courseId": "vacad-math-4cd-2pw",
@@ -8355,6 +8354,19 @@
     "schedule": "[[\"2026-02-17\",\"19:45\",\"20:40\"],[\"2026-02-19\",\"19:45\",\"20:40\"]]"
   },
   {
+    "courseId": "vacad-math-5cd-2pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-02-18",
+    "endDate": "2026-06-19",
+    "year": 2026,
+    "month": 2,
+    "day": 18,
+    "level": "Elementary",
+    "enrollment": 4,
+    "classId": "35409",
+    "schedule": "[[\"2026-02-18\",\"19:00\",\"19:55\"],[\"2026-02-20\",\"19:00\",\"19:55\"]]"
+  },
+  {
     "courseId": "vacad-math-4ab-1pw",
     "displayName": "Honors Math 4A/4B",
     "startDate": "2026-02-18",
@@ -8379,45 +8391,6 @@
     "enrollment": 3,
     "classId": "35468",
     "schedule": "[[\"2026-02-18\",\"19:00\",\"20:45\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-2pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-02-18",
-    "endDate": "2026-06-19",
-    "year": 2026,
-    "month": 2,
-    "day": 18,
-    "level": "Elementary",
-    "enrollment": 4,
-    "classId": "35409",
-    "schedule": "[[\"2026-02-18\",\"19:00\",\"19:55\"],[\"2026-02-20\",\"19:00\",\"19:55\"]]"
-  },
-  {
-    "courseId": "vacad-math-5ab-1pw",
-    "displayName": "Honors Math 5A/5B",
-    "startDate": "2026-02-22",
-    "endDate": "2026-06-28",
-    "year": 2026,
-    "month": 2,
-    "day": 22,
-    "level": "Elementary",
-    "enrollment": 1,
-    "classId": "35396",
-    "schedule": "[[\"2026-02-22\",\"18:45\",\"20:30\"]]"
-  },
-  {
-    "courseId": "vacad-math-5cd-1pw",
-    "displayName": "Honors Math 5C/5D",
-    "startDate": "2026-02-22",
-    "endDate": "2026-06-28",
-    "year": 2026,
-    "month": 2,
-    "day": 22,
-    "level": "Elementary",
-    "enrollment": 0,
-    "classId": "35600",
-    "schedule": "[[\"2026-02-22\",\"12:45\",\"14:30\"]]"
   },
   {
     "courseId": "vacad-math-4cd-1pw",
@@ -8537,6 +8510,19 @@
     "schedule": "[[\"2026-02-22\",\"18:45\",\"20:30\"]]"
   },
   {
+    "courseId": "vacad-math-5cd-1pw",
+    "displayName": "Honors Math 5C/5D",
+    "startDate": "2026-02-22",
+    "endDate": "2026-06-28",
+    "year": 2026,
+    "month": 2,
+    "day": 22,
+    "level": "Elementary",
+    "enrollment": 0,
+    "classId": "35600",
+    "schedule": "[[\"2026-02-22\",\"12:45\",\"14:30\"]]"
+  },
+  {
     "courseId": "vacad-la-3b",
     "displayName": "Honors Language Arts 3B",
     "startDate": "2026-02-22",
@@ -8576,6 +8562,19 @@
     "schedule": "[[\"2026-02-22\",\"12:45\",\"14:30\"]]"
   },
   {
+    "courseId": "vacad-math-5ab-1pw",
+    "displayName": "Honors Math 5A/5B",
+    "startDate": "2026-02-22",
+    "endDate": "2026-06-28",
+    "year": 2026,
+    "month": 2,
+    "day": 22,
+    "level": "Elementary",
+    "enrollment": 1,
+    "classId": "35396",
+    "schedule": "[[\"2026-02-22\",\"18:45\",\"20:30\"]]"
+  },
+  {
     "courseId": "vacad-math-4cd-1pw",
     "displayName": "Honors Math 4C/4D",
     "startDate": "2026-02-23",
@@ -8589,16 +8588,16 @@
     "schedule": "[[\"2026-02-23\",\"19:15\",\"21:00\"]]"
   },
   {
-    "courseId": "vacad-math-honors6b-2pw",
-    "displayName": "Honors Math 6: Prealgebra B",
+    "courseId": "vacad-math-2ab-2pw",
+    "displayName": "Honors Math 2A/2B",
     "startDate": "2026-02-24",
     "endDate": "2026-06-25",
     "year": 2026,
     "month": 2,
     "day": 24,
-    "level": "Honors",
-    "enrollment": 1,
-    "classId": "35432",
+    "level": "Elementary",
+    "enrollment": 0,
+    "classId": "35562",
     "schedule": "[[\"2026-02-24\",\"18:20\",\"19:15\"],[\"2026-02-26\",\"18:20\",\"19:15\"]]"
   },
   {
@@ -8615,16 +8614,16 @@
     "schedule": "[[\"2026-02-24\",\"18:20\",\"19:15\"],[\"2026-02-26\",\"18:20\",\"19:15\"]]"
   },
   {
-    "courseId": "vacad-math-2ab-2pw",
-    "displayName": "Honors Math 2A/2B",
+    "courseId": "vacad-math-5cd-2pw",
+    "displayName": "Honors Math 5C/5D",
     "startDate": "2026-02-24",
     "endDate": "2026-06-25",
     "year": 2026,
     "month": 2,
     "day": 24,
     "level": "Elementary",
-    "enrollment": 0,
-    "classId": "35562",
+    "enrollment": 1,
+    "classId": "35598",
     "schedule": "[[\"2026-02-24\",\"18:20\",\"19:15\"],[\"2026-02-26\",\"18:20\",\"19:15\"]]"
   },
   {
@@ -8641,16 +8640,16 @@
     "schedule": "[[\"2026-02-24\",\"19:45\",\"20:40\"],[\"2026-02-26\",\"19:45\",\"20:40\"]]"
   },
   {
-    "courseId": "vacad-math-5cd-2pw",
-    "displayName": "Honors Math 5C/5D",
+    "courseId": "vacad-math-honors6b-2pw",
+    "displayName": "Honors Math 6: Prealgebra B",
     "startDate": "2026-02-24",
     "endDate": "2026-06-25",
     "year": 2026,
     "month": 2,
     "day": 24,
-    "level": "Elementary",
+    "level": "Honors",
     "enrollment": 1,
-    "classId": "35598",
+    "classId": "35432",
     "schedule": "[[\"2026-02-24\",\"18:20\",\"19:15\"],[\"2026-02-26\",\"18:20\",\"19:15\"]]"
   },
   {
@@ -8862,19 +8861,6 @@
     "schedule": "[[\"2026-03-23\",\"19:00\",\"20:45\"]]"
   },
   {
-    "courseId": "vacad-math-4ab-2pw",
-    "displayName": "Honors Math 4A/4B",
-    "startDate": "2026-03-24",
-    "endDate": "2026-07-30",
-    "year": 2026,
-    "month": 3,
-    "day": 24,
-    "level": "Elementary",
-    "enrollment": 0,
-    "classId": "36199",
-    "schedule": "[[\"2026-03-24\",\"18:20\",\"19:15\"],[\"2026-03-26\",\"18:20\",\"19:15\"]]"
-  },
-  {
     "courseId": "vacad-math-5ab-2pw",
     "displayName": "Honors Math 5A/5B",
     "startDate": "2026-03-24",
@@ -8912,6 +8898,19 @@
     "enrollment": 0,
     "classId": "36220",
     "schedule": "[[\"2026-03-24\",\"19:00\",\"20:45\"]]"
+  },
+  {
+    "courseId": "vacad-math-4ab-2pw",
+    "displayName": "Honors Math 4A/4B",
+    "startDate": "2026-03-24",
+    "endDate": "2026-07-30",
+    "year": 2026,
+    "month": 3,
+    "day": 24,
+    "level": "Elementary",
+    "enrollment": 0,
+    "classId": "36199",
+    "schedule": "[[\"2026-03-24\",\"18:20\",\"19:15\"],[\"2026-03-26\",\"18:20\",\"19:15\"]]"
   },
   {
     "courseId": "vacad-math-contest7b",
@@ -19765,29 +19764,13 @@
             const years = [...new Set(data.map(item => item.year))].sort((a, b) => a - b);
             const levels = [...new Set(data.map(item => item.level))].sort();
             
-            // Determine default month and year based on panel
-            const today = new Date();
-            const currentMonth = today.getMonth() + 1; // JavaScript months are 0-indexed
-            const currentYear = today.getFullYear();
-            const priorYear = currentYear - 1;
-            
-            // For current panel, use today's date; for prior panel, use one year ago
-            const defaultMonth = panelId === 'current' ? currentMonth : currentMonth;
-            const defaultYear = panelId === 'current' ? currentYear : priorYear;
-            
             const monthSelect = document.getElementById(`monthSelect-${panelId}`);
             monthSelect.innerHTML = '<option value="all">All Months</option>' +
-                months.map(m => {
-                    const selected = m === defaultMonth ? ' selected' : '';
-                    return `<option value="${m}"${selected}>${monthNames[m]}</option>`;
-                }).join('');
+                months.map(m => `<option value="${m}">${monthNames[m]}</option>`).join('');
             
             const yearSelect = document.getElementById(`yearSelect-${panelId}`);
             yearSelect.innerHTML = '<option value="all">All Years</option>' +
-                years.map(y => {
-                    const selected = y === defaultYear ? ' selected' : '';
-                    return `<option value="${y}"${selected}>${y}</option>`;
-                }).join('');
+                years.map(y => `<option value="${y}">${y}</option>`).join('');
             
             const levelFilter = document.getElementById(`levelFilter-${panelId}`);
             levelFilter.innerHTML = '<option value="all">All Levels</option>' +
